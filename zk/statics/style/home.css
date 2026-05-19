@@ -1,0 +1,19 @@
+/* Homepage specific styles */
+.pain-card .num {
+  display: block;
+  font-size: 34px;
+  line-height: 1;
+  color: var(--gold);
+  font-family: Georgia, serif;
+  font-weight: 700;
+}
+
+.pain-card h3 {
+  margin-top: 22px;
+}
+
+@media (max-width: 680px) {
+  .pain-card .num {
+    font-size: 30px;
+  }
+}
