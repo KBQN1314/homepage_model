@@ -48,7 +48,20 @@ function setupUnifiedLinks() {
   const activeClass = page => (active === page ? ' class="nav-active"' : '');
 
   const brand = document.querySelector('.brand');
-  if (brand) brand.setAttribute('href', link('index.html'));
+  if (brand) {
+    brand.setAttribute('href', link('index.html'));
+    brand.innerHTML = `
+      <img
+        src="${link('statics/images/logo.svg')}"
+        alt="中科心智能 Logo"
+        style="width:50px;height:50px;display:block;flex:none;object-fit:contain;filter:drop-shadow(0 8px 18px rgba(16,27,23,.18));"
+      >
+      <span>
+        <strong>中科心智能</strong>
+        <span>Education Platform</span>
+      </span>
+    `;
+  }
 
   const nav = document.querySelector('header nav');
   if (nav) {
