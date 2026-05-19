@@ -78,11 +78,6 @@ function setupHeroTracker(){
     <div class="pointer">
       <span class="pulse"></span>
       <span class="dot"></span>
-      <div class="bubble">
-        <b>学习力成长体系</b>
-        <span>先测评、再训练、持续反馈，让孩子的成长过程更清楚。</span>
-        <em>Find More</em>
-      </div>
     </div>`;
   hero.appendChild(tracker);
   setTimeout(()=>tracker.classList.add('show'),1500);
