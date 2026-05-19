@@ -7,6 +7,7 @@ const slides = [...document.querySelectorAll('.slide')];
 const dots = [...document.querySelectorAll('.hero-dots button')];
 const hamburger = document.querySelector('.hamb');
 const modal = document.getElementById('modal');
+const HERO_SLIDE_DURATION = 7000;
 let current = slides.findIndex(slide => slide.classList.contains('active'));
 if (current < 0) current = 0;
 let slideTimer = null;
@@ -180,9 +181,17 @@ function restartHeroIntro() {
 
 function restartProgress() {
   if (!progress) return;
+
   progress.classList.remove('cur');
+  progress.style.transition = 'none';
+  progress.style.left = '-100%';
   void progress.offsetWidth;
-  progress.classList.add('cur');
+  progress.style.transition = '';
+  progress.style.left = '';
+
+  requestAnimationFrame(() => {
+    progress.classList.add('cur');
+  });
 }
 
 function syncSlideClasses(nextIndex) {
@@ -202,11 +211,16 @@ function go(n) {
   syncSlideClasses(current);
   restartHeroIntro();
   restartProgress();
+  startSlideTimer();
 }
 
 function startSlideTimer() {
-  clearInterval(slideTimer);
-  slideTimer = setInterval(() => go(current + 1), 7000);
+  clearTimeout(slideTimer);
+
+  if (!slides.length) return;
+
+  // Fallback timer: the real trigger is the progress bar transitionend event.
+  slideTimer = setTimeout(() => go(current + 1), HERO_SLIDE_DURATION + 250);
 }
 
 function setupRevealAnimation() {
@@ -274,17 +288,22 @@ function setupModal() {
 }
 
 function setupSlideControls() {
+  if (!slides.length) return;
+
   syncSlideClasses(current);
 
-  dots.forEach((dot, index) => dot.addEventListener('click', () => {
-    go(index);
-    startSlideTimer();
-  }));
-
-  if (hero) {
-    hero.addEventListener('mouseenter', () => clearInterval(slideTimer));
-    hero.addEventListener('mouseleave', startSlideTimer);
+  if (progress) {
+    progress.addEventListener('transitionend', event => {
+      if (event.propertyName !== 'left' || !progress.classList.contains('cur')) return;
+      clearTimeout(slideTimer);
+      go(current + 1);
+    });
   }
+
+  dots.forEach((dot, index) => dot.addEventListener('click', () => {
+    clearTimeout(slideTimer);
+    go(index);
+  }));
 
   restartHeroIntro();
   restartProgress();
