@@ -69,20 +69,6 @@ function startSlideTimer(){
   slideTimer=setInterval(()=>go(current+1),7000);
 }
 
-function setupHeroTracker(){
-  if(!hero || hero.querySelector('.hero-tracker')) return;
-  const tracker=document.createElement('div');
-  tracker.className='hero-tracker';
-  tracker.innerHTML=`
-    <svg aria-hidden="true"><line x1="12" y1="5" x2="200" y2="100"></line></svg>
-    <div class="pointer">
-      <span class="pulse"></span>
-      <span class="dot"></span>
-    </div>`;
-  hero.appendChild(tracker);
-  setTimeout(()=>tracker.classList.add('show'),1500);
-}
-
 function setupRevealAnimation(){
   const revealEls=[...document.querySelectorAll('.reveal')];
   revealEls.forEach(el=>el.classList.remove('show'));
@@ -157,7 +143,6 @@ setupCurtainLoading();
 setupHeader();
 setupMobileNav();
 setupSlideControls();
-setupHeroTracker();
 setupRevealAnimation();
 setupModal();
 window.addEventListener('load',finishCurtainLoading);
