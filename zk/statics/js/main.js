@@ -6,7 +6,6 @@ const progress = document.querySelector('.progress-line');
 const slides = [...document.querySelectorAll('.slide')];
 const dots = [...document.querySelectorAll('.hero-dots button')];
 const hamburger = document.querySelector('.hamb');
-const nav = document.querySelector('header nav');
 const modal = document.getElementById('modal');
 let current = slides.findIndex(slide => slide.classList.contains('active'));
 if (current < 0) current = 0;
@@ -51,6 +50,7 @@ function setupUnifiedLinks() {
   const brand = document.querySelector('.brand');
   if (brand) brand.setAttribute('href', link('index.html'));
 
+  const nav = document.querySelector('header nav');
   if (nav) {
     nav.innerHTML = `
       <a${activeClass('about')} href="${link('about.html')}">关于我们</a>
@@ -71,6 +71,31 @@ function setupUnifiedLinks() {
     `;
   }
 
+  if (!document.querySelector('.footer')) {
+    const footer = document.createElement('footer');
+    footer.className = 'footer';
+    footer.innerHTML = '<div class="container"><div class="footer-grid"></div><div class="copyright">© 2026 中科心智能教育科技服务平台 · 官网动态演示版</div></div>';
+    document.body.insertBefore(footer, document.querySelector('script[src*="main.js"]') || null);
+  }
+
+  const footerGrid = document.querySelector('.footer-grid');
+  if (footerGrid) {
+    footerGrid.innerHTML = `
+      <div><div class="brand-mini">中科心智能</div></div>
+      <div><h4>关于我们</h4><a href="${link('about.html')}">公司简介</a><a href="${link('about.html')}">服务方向</a><a href="${link('about.html')}">发展愿景</a></div>
+      <div><h4>课程产品</h4><a href="${link('courses.html')}">课程总览</a><a href="${link('course-detail.html')}">学习力成长体系</a><a href="${link('evaluation-detail.html')}">测评体验课</a><a href="${link('camp-detail.html')}">寒暑假强化营</a></div>
+      <div><h4>团队案例</h4><a href="${link('team.html')}">专家团队</a><a href="${link('cases.html')}">成功案例</a></div>
+      <div><h4>新闻活动</h4><a href="${link('company-news.html')}">公司动态</a><a href="${link('growth-news.html')}">成长资讯</a><a href="${link('limited-activity.html')}">限时活动</a></div>
+      <div><h4>加盟合作</h4><a href="${link('join.html')}">合作对象</a><a href="${link('join.html')}#join-form">在线申请</a><a href="${link('contact.html')}">联系我们</a></div>
+    `;
+  }
+
+  if (!document.querySelector('.sticky')) {
+    const sticky = document.createElement('div');
+    sticky.className = 'sticky';
+    document.body.insertBefore(sticky, document.querySelector('script[src*="main.js"]') || null);
+  }
+
   const sticky = document.querySelector('.sticky');
   if (sticky) {
     sticky.innerHTML = `
@@ -79,79 +104,36 @@ function setupUnifiedLinks() {
     `;
   }
 
-  const footerGrid = document.querySelector('.footer-grid');
-  if (footerGrid) {
-    footerGrid.innerHTML = `
-      <div>
-        <div class="brand-mini">中科心智能</div>
-      </div>
-      <div>
-        <h4>关于我们</h4>
-        <a href="${link('about.html')}">公司简介</a>
-        <a href="${link('about.html')}">服务方向</a>
-        <a href="${link('about.html')}">发展愿景</a>
-      </div>
-      <div>
-        <h4>课程产品</h4>
-        <a href="${link('courses.html')}">课程总览</a>
-        <a href="${link('course-detail.html')}">学习力成长体系</a>
-        <a href="${link('evaluation-detail.html')}">测评体验课</a>
-        <a href="${link('camp-detail.html')}">寒暑假强化营</a>
-      </div>
-      <div>
-        <h4>团队案例</h4>
-        <a href="${link('team.html')}">专家团队</a>
-        <a href="${link('cases.html')}">成功案例</a>
-      </div>
-      <div>
-        <h4>新闻活动</h4>
-        <a href="${link('company-news.html')}">公司动态</a>
-        <a href="${link('growth-news.html')}">成长资讯</a>
-        <a href="${link('limited-activity.html')}">限时活动</a>
-      </div>
-      <div>
-        <h4>加盟合作</h4>
-        <a href="${link('join.html')}">合作对象</a>
-        <a href="${link('join.html')}#join-form">在线申请</a>
-        <a href="${link('contact.html')}">联系我们</a>
-      </div>
-    `;
-  }
+  const replacements = {
+    '#course': link('courses.html'),
+    '#team': link('team.html'),
+    '#news': link('news.html'),
+    '#join': link('join.html'),
+    '#contact': link('contact.html'),
+    '#assessment': `${link('contact.html')}#contact-form`,
+    'index.html#course': link('courses.html'),
+    'index.html#team': link('team.html'),
+    'index.html#news': link('news.html'),
+    'index.html#join': link('join.html'),
+    'index.html#contact': link('contact.html'),
+    'index.html#assessment': `${link('contact.html')}#contact-form`,
+    '../index.html#course': link('courses.html'),
+    '../index.html#team': link('team.html'),
+    '../index.html#news': link('news.html'),
+    '../index.html#join': link('join.html'),
+    '../index.html#contact': link('contact.html'),
+    '../index.html#assessment': `${link('contact.html')}#contact-form`,
+    '../../index.html#course': link('courses.html'),
+    '../../index.html#team': link('team.html'),
+    '../../index.html#news': link('news.html'),
+    '../../index.html#join': link('join.html'),
+    '../../index.html#contact': link('contact.html'),
+    '../../index.html#assessment': `${link('contact.html')}#contact-form`
+  };
 
   document.querySelectorAll('a[href]').forEach(anchor => {
     const rawHref = anchor.getAttribute('href');
-    if (!rawHref) return;
-
-    const replacements = {
-      '#course': link('courses.html'),
-      '#team': link('team.html'),
-      '#news': link('news.html'),
-      '#join': link('join.html'),
-      '#contact': link('contact.html'),
-      '#assessment': `${link('contact.html')}#contact-form`,
-      'index.html#course': link('courses.html'),
-      'index.html#team': link('team.html'),
-      'index.html#news': link('news.html'),
-      'index.html#join': link('join.html'),
-      'index.html#contact': link('contact.html'),
-      'index.html#assessment': `${link('contact.html')}#contact-form`,
-      '../index.html#course': link('courses.html'),
-      '../index.html#team': link('team.html'),
-      '../index.html#news': link('news.html'),
-      '../index.html#join': link('join.html'),
-      '../index.html#contact': link('contact.html'),
-      '../index.html#assessment': `${link('contact.html')}#contact-form`,
-      '../../index.html#course': link('courses.html'),
-      '../../index.html#team': link('team.html'),
-      '../../index.html#news': link('news.html'),
-      '../../index.html#join': link('join.html'),
-      '../../index.html#contact': link('contact.html'),
-      '../../index.html#assessment': `${link('contact.html')}#contact-form`
-    };
-
-    if (replacements[rawHref]) {
-      anchor.setAttribute('href', replacements[rawHref]);
-    }
+    if (replacements[rawHref]) anchor.setAttribute('href', replacements[rawHref]);
   });
 }
 
@@ -193,7 +175,6 @@ function restartProgress() {
 function syncSlideClasses(nextIndex) {
   slides.forEach((slide, index) => {
     slide.classList.remove('active', 'prev', 'next');
-
     if (index === nextIndex) slide.classList.add('active');
     else if (index < nextIndex) slide.classList.add('prev');
     else slide.classList.add('next');
