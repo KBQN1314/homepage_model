@@ -62,10 +62,10 @@
 }
 
 .partner-grid {
-  width: min(820px, 86vw);
+  width: min(1100px, 86vw);
   margin: 0 auto;
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   border: 1px solid rgba(199, 175, 130, .22);
   background: rgba(16, 27, 23, .96);
   box-shadow: 0 18px 48px rgba(16, 27, 23, .12);
@@ -81,6 +81,10 @@
   border-right: 1px solid rgba(255, 255, 255, .12);
   border-bottom: 1px solid rgba(255, 255, 255, .12);
   transition: .35s ease;
+}
+
+.partner-card:last-child {
+  border-right: 0;
 }
 
 .partner-card:hover {
@@ -154,5 +158,6 @@
 
   .partner-card {
     height: 130px;
+    border-right: 0;
   }
 }
