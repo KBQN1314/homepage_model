@@ -54,6 +54,54 @@
   background: url('../images/news-limited.svg') center/cover no-repeat;
 }
 
+/* Homepage contact QR */
+.contact-map {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+  min-height: 360px;
+  background:
+    radial-gradient(circle at 78% 18%, rgba(199, 175, 130, .22), transparent 28%),
+    linear-gradient(135deg, rgba(4, 92, 57, .88), rgba(16, 27, 23, .9)),
+    url('../images/hero-2.svg') center/cover;
+}
+
+.contact-map::before {
+  content: '';
+  position: relative;
+  z-index: 2;
+  width: 154px;
+  height: 154px;
+  padding: 12px;
+  background: #fff url('../images/QR.svg') center/82% no-repeat;
+  border-radius: 18px;
+  box-shadow:
+    0 22px 46px rgba(0, 0, 0, .22),
+    0 0 0 1px rgba(255, 255, 255, .35),
+    inset 0 0 0 1px rgba(199, 175, 130, .16);
+}
+
+.contact-map > div {
+  position: relative;
+  z-index: 2;
+}
+
+.contact-map h3 {
+  font-size: 26px;
+  margin-bottom: 8px;
+  letter-spacing: 2px;
+}
+
+.contact-map p {
+  max-width: 460px;
+  margin: 0 auto;
+  color: rgba(255, 255, 255, .82);
+}
+
 /* Partners */
 .partners {
   background: #fff;
@@ -163,6 +211,11 @@
 @media (max-width: 680px) {
   .pain-card .num {
     font-size: 30px;
+  }
+
+  .contact-map::before {
+    width: 128px;
+    height: 128px;
   }
 
   .partner-grid {
