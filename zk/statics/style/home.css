@@ -41,6 +41,19 @@
     url('../images/hero-3.svg');
 }
 
+/* Homepage news category images */
+.news-card:nth-child(1) .news-img {
+  background: url('../images/news-company.svg') center/cover no-repeat;
+}
+
+.news-card:nth-child(2) .news-img {
+  background: url('../images/news-growth.svg') center/cover no-repeat;
+}
+
+.news-card:nth-child(3) .news-img {
+  background: url('../images/news-limited.svg') center/cover no-repeat;
+}
+
 /* Partners */
 .partners {
   background: #fff;
