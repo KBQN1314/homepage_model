@@ -1,31 +1,44 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 320" preserveAspectRatio="xMidYMid slice">
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#045c39"/>
-      <stop offset="0.55" stop-color="#0f6f4d"/>
-      <stop offset="1" stop-color="#12352c"/>
+      <stop offset="0" stop-color="#064b34"/>
+      <stop offset="0.5" stop-color="#0b7650"/>
+      <stop offset="1" stop-color="#17352d"/>
     </linearGradient>
-    <radialGradient id="glow" cx="72%" cy="25%" r="56%">
-      <stop offset="0" stop-color="#d8c08c" stop-opacity="0.26"/>
+    <radialGradient id="light" cx="76%" cy="22%" r="62%">
+      <stop offset="0" stop-color="#d8c08c" stop-opacity="0.27"/>
       <stop offset="1" stop-color="#d8c08c" stop-opacity="0"/>
     </radialGradient>
+    <linearGradient id="card" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.22"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0.07"/>
+    </linearGradient>
   </defs>
+
   <rect width="720" height="320" fill="url(#bg)"/>
-  <rect width="720" height="320" fill="url(#glow)"/>
-  <g fill="none" stroke="#ffffff" stroke-opacity="0.13" stroke-width="2">
-    <path d="M-40 240C160 170 255 270 430 170S620 65 780 135"/>
-    <circle cx="590" cy="70" r="60"/>
+  <rect width="720" height="320" fill="url(#light)"/>
+
+  <g opacity="0.15" fill="none" stroke="#ffffff" stroke-width="2">
+    <path d="M-60 225 C115 145 260 250 415 160 S615 75 790 140"/>
+    <path d="M-70 108 C80 52 225 118 365 76 S575 22 790 88"/>
+    <circle cx="594" cy="74" r="62"/>
   </g>
-  <g transform="translate(142 70)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M108 178V104" stroke-width="9" opacity="0.9"/>
-    <path d="M108 140C72 114 52 80 62 42C101 51 127 76 129 116" stroke-width="8" opacity="0.88"/>
-    <path d="M110 142C154 120 182 84 178 42C136 48 108 78 108 118" stroke-width="8" opacity="0.72"/>
-    <path d="M50 188h190" stroke-width="8" opacity="0.66"/>
-    <path d="M286 188V82" stroke-width="7" opacity="0.34"/>
-    <path d="M324 188V120" stroke-width="7" opacity="0.48"/>
-    <path d="M362 188V58" stroke-width="7" opacity="0.78"/>
-    <path d="M404 188V98" stroke-width="7" opacity="0.58"/>
-    <path d="M284 62C324 76 358 48 404 68" stroke-width="6" opacity="0.82"/>
+
+  <g transform="translate(96 58)">
+    <rect x="0" y="14" width="252" height="172" rx="24" fill="url(#card)" stroke="#ffffff" stroke-opacity="0.2"/>
+    <path d="M72 146V92" stroke="#ffffff" stroke-width="9" stroke-linecap="round" opacity="0.86"/>
+    <path d="M72 118C42 98 28 70 39 42C72 48 90 70 91 101" fill="none" stroke="#ffffff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" opacity="0.82"/>
+    <path d="M75 119C109 101 126 72 122 42C91 48 73 71 72 101" fill="none" stroke="#ffffff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" opacity="0.62"/>
+    <path d="M130 146h74" stroke="#ffffff" stroke-width="7" stroke-linecap="round" opacity="0.42"/>
+    <path d="M130 112h42M130 82h68" stroke="#ffffff" stroke-width="7" stroke-linecap="round" opacity="0.3"/>
   </g>
-  <text x="112" y="282" fill="#ffffff" fill-opacity="0.18" font-family="Arial, Microsoft YaHei, sans-serif" font-size="34" letter-spacing="5">GROWTH INSIGHTS</text>
+
+  <g transform="translate(388 74)" opacity="0.92">
+    <path d="M0 154h214" stroke="#ffffff" stroke-width="2" stroke-opacity="0.36"/>
+    <rect x="26" y="92" width="24" height="62" rx="8" fill="#ffffff" fill-opacity="0.18"/>
+    <rect x="72" y="62" width="24" height="92" rx="8" fill="#ffffff" fill-opacity="0.28"/>
+    <rect x="118" y="28" width="24" height="126" rx="8" fill="#ffffff" fill-opacity="0.38"/>
+    <path d="M24 62C64 70 92 34 136 26" fill="none" stroke="#d8c08c" stroke-width="6" stroke-linecap="round" opacity="0.88"/>
+    <circle cx="136" cy="26" r="6" fill="#d8c08c"/>
+  </g>
 </svg>
