@@ -17,170 +17,7 @@
   display: none;
 }
 
-/* Homepage item dropdown navigation */
-.nav-dropdowns {
-  display: flex;
-  align-items: stretch;
-  gap: 0;
-  height: 68px;
-  overflow: visible;
-}
-
-.nav-item {
-  position: relative;
-  display: flex;
-  align-items: center;
-}
-
-.nav-link {
-  height: 68px;
-  padding: 0 18px;
-  border: 0;
-  background: transparent;
-  color: inherit;
-  font: inherit;
-  font-size: 15px;
-  cursor: pointer;
-  white-space: nowrap;
-  transition: .28s ease;
-}
-
-.nav-link::after {
-  content: '';
-  position: absolute;
-  left: 50%;
-  bottom: 12px;
-  width: 0;
-  height: 1px;
-  background: var(--gold);
-  transform: translateX(-50%);
-  transition: .28s ease;
-}
-
-.nav-item:hover .nav-link,
-.nav-item.open .nav-link {
-  color: var(--gold);
-}
-
-.nav-item:hover .nav-link::after,
-.nav-item.open .nav-link::after {
-  width: calc(100% - 34px);
-}
-
-.nav-panel {
-  position: absolute;
-  top: 68px;
-  left: 50%;
-  min-width: 164px;
-  padding: 15px 0;
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, .34), rgba(247, 245, 239, .16)),
-    linear-gradient(135deg, rgba(4, 92, 57, .14), rgba(199, 175, 130, .08));
-  border: 1px solid rgba(255, 255, 255, .36);
-  border-top: 3px solid rgba(199, 175, 130, .76);
-  box-shadow:
-    0 24px 56px rgba(0, 0, 0, .18),
-    inset 0 1px 0 rgba(255, 255, 255, .52),
-    inset 0 -1px 0 rgba(255, 255, 255, .12);
-  backdrop-filter: blur(32px) saturate(165%);
-  -webkit-backdrop-filter: blur(32px) saturate(165%);
-  transform: translate(-50%, 12px);
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-  overflow: hidden;
-  transition: opacity .26s ease, transform .26s ease, visibility .26s ease;
-}
-
-.nav-panel::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(circle at 50% 0, rgba(255, 255, 255, .38), transparent 52%),
-    linear-gradient(90deg, rgba(255, 255, 255, .14), transparent 36%, rgba(199, 175, 130, .08));
-  pointer-events: none;
-}
-
-.nav-panel::after {
-  content: '';
-  position: absolute;
-  inset: 8px;
-  border: 1px solid rgba(255, 255, 255, .12);
-  pointer-events: none;
-}
-
-.nav-item.open .nav-panel,
-.nav-item:hover .nav-panel {
-  opacity: 1;
-  visibility: visible;
-  pointer-events: auto;
-  transform: translate(-50%, 0);
-}
-
-.nav-panel a {
-  position: relative;
-  z-index: 1;
-  display: block;
-  padding: 12px 30px;
-  color: rgba(255, 255, 255, .92);
-  font-size: 15px;
-  line-height: 1.35;
-  text-align: center;
-  white-space: nowrap;
-  letter-spacing: .5px;
-  text-shadow: 0 1px 8px rgba(0, 0, 0, .28);
-  transition: .25s ease;
-}
-
-.nav-panel a::after {
-  display: none;
-}
-
-.nav-panel a:hover {
-  color: #fff;
-  background: rgba(199, 175, 130, .18);
-}
-
-.nav-panel a:hover::before {
-  content: '';
-  position: absolute;
-  left: 18px;
-  top: 50%;
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: var(--gold);
-  transform: translateY(-50%);
-}
-
-header.scrolled .nav-panel {
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, .58), rgba(247, 245, 239, .34)),
-    linear-gradient(135deg, rgba(4, 92, 57, .05), rgba(199, 175, 130, .04));
-  border-color: rgba(255, 255, 255, .56);
-  border-top-color: var(--gold);
-  box-shadow:
-    0 22px 50px rgba(16, 27, 23, .12),
-    inset 0 1px 0 rgba(255, 255, 255, .72),
-    inset 0 -1px 0 rgba(255, 255, 255, .28);
-}
-
-header.scrolled .nav-panel::before {
-  background:
-    radial-gradient(circle at 50% 0, rgba(255, 255, 255, .46), transparent 55%),
-    linear-gradient(90deg, rgba(4, 92, 57, .02), transparent 36%, rgba(199, 175, 130, .04));
-}
-
-header.scrolled .nav-panel a {
-  color: #46514d;
-  text-shadow: none;
-}
-
-header.scrolled .nav-panel a:hover {
-  color: var(--green);
-  background: rgba(199, 175, 130, .14);
-}
+/* Keep homepage dropdown rules in nav-dropdown.css. */
 
 /*
   The hero has a progress-line div before the slide divs, so the homepage
@@ -204,15 +41,102 @@ header.scrolled .nav-panel a:hover {
     url('../images/hero-3.svg');
 }
 
-@media (max-width: 1180px) {
-  .nav-link {
-    padding: 0 12px;
-    font-size: 14px;
-  }
+/* Partners */
+.partners {
+  background: #fff;
+  overflow: hidden;
+  position: relative;
 }
 
-@media (max-width: 1100px) {
-  .nav-dropdowns {
+.partners-side {
+  position: absolute;
+  left: 28px;
+  top: 50%;
+  transform: translateY(-50%);
+  writing-mode: vertical-rl;
+  letter-spacing: 12px;
+  color: rgba(199, 175, 130, .55);
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.partner-grid {
+  width: min(820px, 86vw);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  border-top: 1px solid #f0f0f0;
+  border-left: 1px solid #f0f0f0;
+  background: #fafafa;
+}
+
+.partner-card {
+  height: 150px;
+  display: grid;
+  place-items: center;
+  background: #f7f7f7;
+  border-right: 1px solid #fff;
+  border-bottom: 1px solid #fff;
+  transition: .35s ease;
+}
+
+.partner-card:hover {
+  background: #fff;
+  box-shadow: inset 0 0 0 1px rgba(199, 175, 130, .22);
+}
+
+.partner-card img {
+  max-width: 78%;
+  max-height: 86px;
+  filter: grayscale(1);
+  opacity: .72;
+  transition: .35s ease;
+}
+
+.partner-card:hover img {
+  filter: grayscale(.25);
+  opacity: .96;
+  transform: translateY(-2px);
+}
+
+.partner-line {
+  width: min(820px, 86vw);
+  margin: 32px auto 0;
+  height: 18px;
+  position: relative;
+}
+
+.partner-line::before,
+.partner-line::after {
+  content: '';
+  position: absolute;
+  top: 8px;
+  width: 38%;
+  height: 1px;
+  background: #ddd;
+}
+
+.partner-line::before {
+  left: 0;
+}
+
+.partner-line::after {
+  right: 0;
+}
+
+.partner-line span {
+  position: absolute;
+  left: 50%;
+  top: 4px;
+  width: 42px;
+  height: 4px;
+  background: var(--gold);
+  transform: translateX(-50%);
+}
+
+@media (max-width: 1180px) {
+  .partners-side {
     display: none;
   }
 }
@@ -220,5 +144,13 @@ header.scrolled .nav-panel a:hover {
 @media (max-width: 680px) {
   .pain-card .num {
     font-size: 30px;
+  }
+
+  .partner-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .partner-card {
+    height: 130px;
   }
 }
