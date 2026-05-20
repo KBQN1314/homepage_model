@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 320" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#b99048"/>
+      <stop offset="0.58" stop-color="#a07a37"/>
+      <stop offset="1" stop-color="#2d3b2e"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="78%" cy="26%" r="58%">
+      <stop offset="0" stop-color="#fff3d5" stop-opacity="0.26"/>
+      <stop offset="1" stop-color="#fff3d5" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="720" height="320" fill="url(#bg)"/>
+  <rect width="720" height="320" fill="url(#glow)"/>
+  <g fill="none" stroke="#ffffff" stroke-opacity="0.13" stroke-width="2">
+    <path d="M-40 220C150 145 270 255 430 175S610 82 760 145"/>
+    <circle cx="588" cy="74" r="58"/>
+  </g>
+  <g transform="translate(128 74)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="0" y="42" width="178" height="142" rx="14" stroke-width="8" opacity="0.9"/>
+    <path d="M0 84h178" stroke-width="8" opacity="0.82"/>
+    <path d="M46 22v42M132 22v42" stroke-width="8" opacity="0.8"/>
+    <path d="M58 122h16M88 122h16M118 122h16M58 152h16M88 152h16" stroke-width="7" opacity="0.72"/>
+    <path d="M278 72l17 36l39 5l-28 27l7 39l-35-19l-35 19l7-39l-28-27l39-5z" stroke-width="8" opacity="0.86"/>
+    <path d="M376 72h84M376 118h118M376 164h72" stroke-width="8" opacity="0.62"/>
+  </g>
+  <text x="112" y="282" fill="#ffffff" fill-opacity="0.18" font-family="Arial, Microsoft YaHei, sans-serif" font-size="34" letter-spacing="5">LIMITED ACTIVITY</text>
+</svg>
