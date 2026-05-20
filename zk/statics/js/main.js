@@ -42,6 +42,59 @@ function getActivePage() {
   return '';
 }
 
+function createNavDropdown(label, items, isActive) {
+  const itemLinks = items.map(item => `<a href="${item.href}">${item.text}</a>`).join('');
+  const activeClass = isActive ? ' nav-active' : '';
+
+  return `
+    <div class="nav-item has-dropdown${activeClass}">
+      <button class="nav-link" type="button" aria-expanded="false">${label}</button>
+      <div class="nav-panel">${itemLinks}</div>
+    </div>
+  `;
+}
+
+function setupDropdownEvents() {
+  const navItems = [...document.querySelectorAll('.nav-item.has-dropdown')];
+  if (!navItems.length) return;
+
+  const closeAll = exceptItem => {
+    navItems.forEach(item => {
+      if (item === exceptItem) return;
+      item.classList.remove('open');
+      const button = item.querySelector('.nav-link');
+      if (button) button.setAttribute('aria-expanded', 'false');
+    });
+  };
+
+  navItems.forEach(item => {
+    const button = item.querySelector('.nav-link');
+    if (!button) return;
+
+    button.addEventListener('click', event => {
+      event.preventDefault();
+      event.stopPropagation();
+      const willOpen = !item.classList.contains('open');
+      closeAll(item);
+      item.classList.toggle('open', willOpen);
+      button.setAttribute('aria-expanded', String(willOpen));
+    });
+
+    item.addEventListener('mouseenter', () => {
+      closeAll(item);
+      item.classList.add('open');
+      button.setAttribute('aria-expanded', 'true');
+    });
+
+    item.addEventListener('mouseleave', () => {
+      item.classList.remove('open');
+      button.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  document.addEventListener('click', () => closeAll());
+}
+
 function setupUnifiedLinks() {
   const prefix = getPathPrefix();
   const active = getActivePage();
@@ -65,7 +118,52 @@ function setupUnifiedLinks() {
   }
 
   const nav = document.querySelector('header nav');
-  if (nav) {
+  if (nav && active === 'home') {
+    nav.className = 'nav-dropdowns';
+    nav.innerHTML = `
+      ${createNavDropdown('关于我们', [
+        { text: '公司简介', href: link('about.html') },
+        { text: '服务方向', href: link('about.html') },
+        { text: '发展愿景', href: link('about.html') }
+      ], false)}
+      ${createNavDropdown('课程产品', [
+        { text: '课程总览', href: link('courses.html') },
+        { text: '学习力成长体系', href: link('course-detail.html') },
+        { text: '测评体验课', href: link('evaluation-detail.html') },
+        { text: '寒暑假强化营', href: link('camp-detail.html') }
+      ], false)}
+      ${createNavDropdown('专家团队', [
+        { text: '团队总览', href: link('team.html') },
+        { text: '专家顾问', href: link('expert/expert-01.html') },
+        { text: '课程研发', href: link('expert/expert-03.html') },
+        { text: '认证导师', href: link('expert/expert-05.html') }
+      ], false)}
+      ${createNavDropdown('成功案例', [
+        { text: '案例总览', href: link('cases.html') },
+        { text: '专注力提升', href: link('cases/case-01.html') },
+        { text: '阅读表达', href: link('cases/case-03.html') },
+        { text: '成长营案例', href: link('cases/case-07.html') }
+      ], false)}
+      ${createNavDropdown('新闻活动', [
+        { text: '新闻总览', href: link('news.html') },
+        { text: '公司动态', href: link('company-news.html') },
+        { text: '成长资讯', href: link('growth-news.html') },
+        { text: '限时活动', href: link('limited-activity.html') }
+      ], false)}
+      ${createNavDropdown('加盟合作', [
+        { text: '合作对象', href: link('join.html') },
+        { text: '总部支持', href: link('join.html') },
+        { text: '在线申请', href: `${link('join.html')}#join-form` }
+      ], false)}
+      ${createNavDropdown('联系我们', [
+        { text: '联系方式', href: link('contact.html') },
+        { text: '在线留言', href: `${link('contact.html')}#contact-form` },
+        { text: '公司地址', href: link('contact.html') }
+      ], false)}
+    `;
+    setupDropdownEvents();
+  } else if (nav) {
+    nav.className = '';
     nav.innerHTML = `
       <a${activeClass('about')} href="${link('about.html')}">关于我们</a>
       <a${activeClass('courses')} href="${link('courses.html')}">课程产品</a>
@@ -216,10 +314,7 @@ function go(n) {
 
 function startSlideTimer() {
   clearTimeout(slideTimer);
-
   if (!slides.length) return;
-
-  // Fallback timer: the real trigger is the progress bar transitionend event.
   slideTimer = setTimeout(() => go(current + 1), HERO_SLIDE_DURATION + 250);
 }
 
@@ -263,8 +358,8 @@ function setupMobileNav() {
     document.body.classList.toggle('nav-open');
   });
 
-  currentNav.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', () => {
+  currentNav.querySelectorAll('a').forEach(linkItem => {
+    linkItem.addEventListener('click', () => {
       hamburger.classList.remove('expanded');
       document.body.classList.remove('nav-open');
     });
