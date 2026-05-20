@@ -1,10 +1,13 @@
 /* Unified navigation dropdown styles */
 .nav-dropdowns {
   display: flex;
-  align-items: stretch;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: nowrap;
   gap: 0;
   height: 68px;
   overflow: visible;
+  min-width: 0;
 }
 
 .nav-item,
@@ -12,6 +15,7 @@
   position: relative;
   display: flex;
   align-items: center;
+  flex: 0 0 auto;
 }
 
 .nav-link,
@@ -28,9 +32,11 @@
   transition: color .28s ease;
 }
 
+.nav-link,
 .nav-direct {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
 }
 
 .nav-link::after,
@@ -180,7 +186,7 @@ header.scrolled .nav-panel a:hover {
 @media (max-width: 1250px) {
   .nav-link,
   .nav-direct {
-    padding: 0 11px;
+    padding: 0 10px;
     font-size: 14px;
   }
 }
