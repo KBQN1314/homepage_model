@@ -8,20 +8,24 @@ const dots = [...document.querySelectorAll('.hero-dots button')];
 const hamburger = document.querySelector('.hamb');
 const modal = document.getElementById('modal');
 const HERO_SLIDE_DURATION = 7000;
+
 let current = slides.findIndex(slide => slide.classList.contains('active'));
 if (current < 0) current = 0;
 let slideTimer = null;
 
 function getPathPrefix() {
   const path = window.location.pathname;
+
   if (path.includes('/zk/news/company/') || path.includes('/zk/news/growth/') || path.includes('/zk/news/limited/')) return '../../';
   if (path.includes('/zk/expert/') || path.includes('/zk/cases/')) return '../';
+
   return '';
 }
 
 function getActivePage() {
   const path = window.location.pathname;
   const file = path.split('/').pop() || 'index.html';
+
   if (file === 'index.html' || path.endsWith('/zk/')) return 'home';
   if (file === 'about.html') return 'about';
   if (['courses.html', 'course-detail.html', 'evaluation-detail.html', 'camp-detail.html'].includes(file)) return 'courses';
@@ -30,11 +34,13 @@ function getActivePage() {
   if (['news.html', 'company-news.html', 'growth-news.html', 'limited-activity.html'].includes(file) || path.includes('/zk/news/')) return 'news';
   if (file === 'join.html') return 'join';
   if (file === 'contact.html') return 'contact';
+
   return '';
 }
 
 function injectNavStylesheet(prefix) {
   if (document.querySelector('link[data-nav-dropdown]')) return;
+
   const linkTag = document.createElement('link');
   linkTag.rel = 'stylesheet';
   linkTag.href = `${prefix}statics/style/nav-dropdown.css`;
@@ -42,59 +48,72 @@ function injectNavStylesheet(prefix) {
   document.head.appendChild(linkTag);
 }
 
-function createNavDropdown(label, items, isActive) {
+function createNavLink(label, href, isActive) {
+  return `<a class="nav-direct${isActive ? ' nav-active' : ''}" href="${href}">${label}</a>`;
+}
+
+function createNavDropdown(label, href, items, isActive) {
   const itemLinks = items.map(item => `<a href="${item.href}">${item.text}</a>`).join('');
+
   return `
     <div class="nav-item has-dropdown${isActive ? ' nav-active' : ''}">
-      <button class="nav-link" type="button" aria-expanded="false">${label}</button>
+      <a class="nav-link" href="${href}" aria-expanded="false">${label}</a>
       <div class="nav-panel">${itemLinks}</div>
     </div>
   `;
 }
 
-function createNavLink(label, href, isActive) {
-  return `<a class="nav-direct${isActive ? ' nav-active' : ''}" href="${href}">${label}</a>`;
-}
-
 function setupDropdownEvents() {
   const navItems = [...document.querySelectorAll('.nav-item.has-dropdown')];
   if (!navItems.length) return;
+
   const closeAll = exceptItem => {
     navItems.forEach(item => {
       if (item === exceptItem) return;
       item.classList.remove('open');
-      const button = item.querySelector('.nav-link');
-      if (button) button.setAttribute('aria-expanded', 'false');
+      const link = item.querySelector('.nav-link');
+      if (link) link.setAttribute('aria-expanded', 'false');
     });
   };
+
   navItems.forEach(item => {
-    const button = item.querySelector('.nav-link');
-    if (!button) return;
-    button.addEventListener('click', event => {
-      event.preventDefault();
-      event.stopPropagation();
-      const willOpen = !item.classList.contains('open');
-      closeAll(item);
-      item.classList.toggle('open', willOpen);
-      button.setAttribute('aria-expanded', String(willOpen));
-    });
+    const link = item.querySelector('.nav-link');
+    if (!link) return;
+
     item.addEventListener('mouseenter', () => {
       closeAll(item);
       item.classList.add('open');
-      button.setAttribute('aria-expanded', 'true');
+      link.setAttribute('aria-expanded', 'true');
     });
+
     item.addEventListener('mouseleave', () => {
       item.classList.remove('open');
-      button.setAttribute('aria-expanded', 'false');
+      link.setAttribute('aria-expanded', 'false');
+    });
+
+    item.addEventListener('focusin', () => {
+      closeAll(item);
+      item.classList.add('open');
+      link.setAttribute('aria-expanded', 'true');
+    });
+
+    item.addEventListener('focusout', event => {
+      if (item.contains(event.relatedTarget)) return;
+      item.classList.remove('open');
+      link.setAttribute('aria-expanded', 'false');
     });
   });
-  document.addEventListener('click', () => closeAll());
+
+  document.addEventListener('click', event => {
+    if (!event.target.closest('.nav-item.has-dropdown')) closeAll();
+  });
 }
 
 function setupUnifiedLinks() {
   const prefix = getPathPrefix();
   const active = getActivePage();
   const link = file => `${prefix}${file}`;
+
   injectNavStylesheet(prefix);
 
   const brand = document.querySelector('.brand');
@@ -112,21 +131,18 @@ function setupUnifiedLinks() {
     nav.innerHTML = `
       ${createNavLink('首页', link('index.html'), active === 'home')}
       ${createNavLink('关于我们', link('about.html'), active === 'about')}
-      ${createNavDropdown('课程产品', [
-        { text: '课程总览', href: link('courses.html') },
+      ${createNavDropdown('课程产品', link('courses.html'), [
         { text: '学习力成长体系', href: link('course-detail.html') },
         { text: '测评体验课', href: link('evaluation-detail.html') },
         { text: '寒暑假强化营', href: link('camp-detail.html') }
       ], active === 'courses')}
-      ${createNavDropdown('专家团队', [
-        { text: '团队总览', href: link('team.html') },
+      ${createNavDropdown('专家团队', link('team.html'), [
         { text: '专家顾问', href: link('expert/expert-01.html') },
         { text: '课程研发', href: link('expert/expert-03.html') },
         { text: '认证导师', href: link('expert/expert-05.html') }
       ], active === 'team')}
       ${createNavLink('成功案例', link('cases.html'), active === 'cases')}
-      ${createNavDropdown('新闻活动', [
-        { text: '新闻总览', href: link('news.html') },
+      ${createNavDropdown('新闻活动', link('news.html'), [
         { text: '公司动态', href: link('company-news.html') },
         { text: '成长资讯', href: link('growth-news.html') },
         { text: '限时活动', href: link('limited-activity.html') }
@@ -169,17 +185,39 @@ function setupUnifiedLinks() {
     sticky.className = 'sticky';
     document.body.insertBefore(sticky, document.querySelector('script[src*="main.js"]') || null);
   }
+
   const sticky = document.querySelector('.sticky');
   if (sticky) {
     sticky.innerHTML = `<a href="${link('contact.html')}#contact-form">预约</a><a href="${link('join.html')}#join-form">合作</a>`;
   }
 
   const replacements = {
-    '#course': link('courses.html'), '#team': link('team.html'), '#news': link('news.html'), '#join': link('join.html'), '#contact': link('contact.html'), '#assessment': `${link('contact.html')}#contact-form`,
-    'index.html#course': link('courses.html'), 'index.html#team': link('team.html'), 'index.html#news': link('news.html'), 'index.html#join': link('join.html'), 'index.html#contact': link('contact.html'), 'index.html#assessment': `${link('contact.html')}#contact-form`,
-    '../index.html#course': link('courses.html'), '../index.html#team': link('team.html'), '../index.html#news': link('news.html'), '../index.html#join': link('join.html'), '../index.html#contact': link('contact.html'), '../index.html#assessment': `${link('contact.html')}#contact-form`,
-    '../../index.html#course': link('courses.html'), '../../index.html#team': link('team.html'), '../../index.html#news': link('news.html'), '../../index.html#join': link('join.html'), '../../index.html#contact': link('contact.html'), '../../index.html#assessment': `${link('contact.html')}#contact-form`
+    '#course': link('courses.html'),
+    '#team': link('team.html'),
+    '#news': link('news.html'),
+    '#join': link('join.html'),
+    '#contact': link('contact.html'),
+    '#assessment': `${link('contact.html')}#contact-form`,
+    'index.html#course': link('courses.html'),
+    'index.html#team': link('team.html'),
+    'index.html#news': link('news.html'),
+    'index.html#join': link('join.html'),
+    'index.html#contact': link('contact.html'),
+    'index.html#assessment': `${link('contact.html')}#contact-form`,
+    '../index.html#course': link('courses.html'),
+    '../index.html#team': link('team.html'),
+    '../index.html#news': link('news.html'),
+    '../index.html#join': link('join.html'),
+    '../index.html#contact': link('contact.html'),
+    '../index.html#assessment': `${link('contact.html')}#contact-form`,
+    '../../index.html#course': link('courses.html'),
+    '../../index.html#team': link('team.html'),
+    '../../index.html#news': link('news.html'),
+    '../../index.html#join': link('join.html'),
+    '../../index.html#contact': link('contact.html'),
+    '../../index.html#assessment': `${link('contact.html')}#contact-form`
   };
+
   document.querySelectorAll('a[href]').forEach(anchor => {
     const rawHref = anchor.getAttribute('href');
     if (replacements[rawHref]) anchor.setAttribute('href', replacements[rawHref]);
@@ -190,6 +228,7 @@ function setupCurtainLoading() {
   if (!loading) return;
   loading.classList.remove('hide');
   loading.classList.add('loading-curtain');
+
   if (!loading.querySelector('.curtain-panel')) {
     const top = document.createElement('span');
     const bottom = document.createElement('span');
@@ -252,10 +291,12 @@ function startSlideTimer() {
 function setupRevealAnimation() {
   const revealEls = [...document.querySelectorAll('.reveal')];
   revealEls.forEach(el => el.classList.remove('show'));
+
   if (!('IntersectionObserver' in window)) {
     revealEls.forEach(el => el.classList.add('show'));
     return;
   }
+
   const io = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -264,6 +305,7 @@ function setupRevealAnimation() {
       }
     });
   }, { threshold: .12, rootMargin: '0px 0px -40px 0px' });
+
   revealEls.forEach((el, index) => {
     el.style.transitionDelay = `${Math.min(index % 6 * 0.06, .3)}s`;
     io.observe(el);
@@ -280,10 +322,12 @@ function setupHeader() {
 function setupMobileNav() {
   const currentNav = document.querySelector('header nav');
   if (!hamburger || !currentNav) return;
+
   hamburger.addEventListener('click', () => {
     hamburger.classList.toggle('expanded');
     document.body.classList.toggle('nav-open');
   });
+
   currentNav.querySelectorAll('a').forEach(linkItem => {
     linkItem.addEventListener('click', () => {
       hamburger.classList.remove('expanded');
@@ -294,12 +338,15 @@ function setupMobileNav() {
 
 function setupModal() {
   if (!modal) return;
+
   document.querySelectorAll('.demo-form').forEach(form => form.addEventListener('submit', event => {
     event.preventDefault();
     modal.classList.add('show');
   }));
+
   const close = document.getElementById('closeModal');
   if (close) close.onclick = () => modal.classList.remove('show');
+
   modal.addEventListener('click', event => {
     if (event.target === modal) modal.classList.remove('show');
   });
@@ -308,6 +355,7 @@ function setupModal() {
 function setupSlideControls() {
   if (!slides.length) return;
   syncSlideClasses(current);
+
   if (progress) {
     progress.addEventListener('transitionend', event => {
       if (event.propertyName !== 'left' || !progress.classList.contains('cur')) return;
@@ -315,10 +363,12 @@ function setupSlideControls() {
       go(current + 1);
     });
   }
+
   dots.forEach((dot, index) => dot.addEventListener('click', () => {
     clearTimeout(slideTimer);
     go(index);
   }));
+
   restartHeroIntro();
   restartProgress();
   startSlideTimer();
