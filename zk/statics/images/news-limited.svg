@@ -1,28 +1,41 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 320" preserveAspectRatio="xMidYMid slice">
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#b99048"/>
-      <stop offset="0.58" stop-color="#a07a37"/>
-      <stop offset="1" stop-color="#2d3b2e"/>
+      <stop offset="0" stop-color="#b18a42"/>
+      <stop offset="0.55" stop-color="#9c7333"/>
+      <stop offset="1" stop-color="#264035"/>
     </linearGradient>
-    <radialGradient id="glow" cx="78%" cy="26%" r="58%">
-      <stop offset="0" stop-color="#fff3d5" stop-opacity="0.26"/>
+    <radialGradient id="light" cx="76%" cy="24%" r="62%">
+      <stop offset="0" stop-color="#fff3d5" stop-opacity="0.28"/>
       <stop offset="1" stop-color="#fff3d5" stop-opacity="0"/>
     </radialGradient>
+    <linearGradient id="glass" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.24"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0.07"/>
+    </linearGradient>
   </defs>
+
   <rect width="720" height="320" fill="url(#bg)"/>
-  <rect width="720" height="320" fill="url(#glow)"/>
-  <g fill="none" stroke="#ffffff" stroke-opacity="0.13" stroke-width="2">
-    <path d="M-40 220C150 145 270 255 430 175S610 82 760 145"/>
-    <circle cx="588" cy="74" r="58"/>
+  <rect width="720" height="320" fill="url(#light)"/>
+
+  <g opacity="0.15" fill="none" stroke="#ffffff" stroke-width="2">
+    <path d="M-70 224 C95 160 250 242 395 174 S605 86 790 136"/>
+    <path d="M-70 96 C92 44 225 116 388 74 S590 28 790 88"/>
+    <circle cx="590" cy="76" r="62"/>
   </g>
-  <g transform="translate(128 74)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round">
-    <rect x="0" y="42" width="178" height="142" rx="14" stroke-width="8" opacity="0.9"/>
-    <path d="M0 84h178" stroke-width="8" opacity="0.82"/>
-    <path d="M46 22v42M132 22v42" stroke-width="8" opacity="0.8"/>
-    <path d="M58 122h16M88 122h16M118 122h16M58 152h16M88 152h16" stroke-width="7" opacity="0.72"/>
-    <path d="M278 72l17 36l39 5l-28 27l7 39l-35-19l-35 19l7-39l-28-27l39-5z" stroke-width="8" opacity="0.86"/>
-    <path d="M376 72h84M376 118h118M376 164h72" stroke-width="8" opacity="0.62"/>
+
+  <g transform="translate(92 60)">
+    <rect x="0" y="22" width="246" height="166" rx="24" fill="url(#glass)" stroke="#ffffff" stroke-opacity="0.2"/>
+    <rect x="44" y="52" width="108" height="88" rx="16" fill="none" stroke="#ffffff" stroke-width="8" stroke-opacity="0.78"/>
+    <path d="M44 84h108" stroke="#ffffff" stroke-width="8" stroke-opacity="0.58"/>
+    <path d="M72 36v32M126 36v32" stroke="#ffffff" stroke-width="8" stroke-linecap="round" stroke-opacity="0.78"/>
+    <path d="M74 112h18M106 112h18M74 134h50" stroke="#ffffff" stroke-width="6" stroke-linecap="round" stroke-opacity="0.52"/>
+    <circle cx="182" cy="54" r="7" fill="#ffffff" fill-opacity="0.72"/>
+    <path d="M174 148l12-24l12 24l26 4l-19 18l5 26l-24-13l-24 13l5-26l-19-18z" fill="#ffffff" fill-opacity="0.18" stroke="#ffffff" stroke-width="4" stroke-opacity="0.56"/>
   </g>
-  <text x="112" y="282" fill="#ffffff" fill-opacity="0.18" font-family="Arial, Microsoft YaHei, sans-serif" font-size="34" letter-spacing="5">LIMITED ACTIVITY</text>
+
+  <g transform="translate(392 94)" opacity="0.88">
+    <path d="M0 22h160M0 68h210M0 114h126" stroke="#ffffff" stroke-width="8" stroke-linecap="round" stroke-opacity="0.45"/>
+    <path d="M188 32c14 0 26 12 26 26s-12 26-26 26" fill="none" stroke="#d8c08c" stroke-width="5" stroke-linecap="round" opacity="0.8"/>
+  </g>
 </svg>
