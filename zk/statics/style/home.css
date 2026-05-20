@@ -89,14 +89,12 @@
 .partner-card img {
   max-width: 78%;
   max-height: 86px;
-  filter: grayscale(1);
-  opacity: .72;
+  opacity: 1;
   transition: .35s ease;
 }
 
 .partner-card:hover img {
-  filter: grayscale(.25);
-  opacity: .96;
+  opacity: 1;
   transform: translateY(-2px);
 }
 
