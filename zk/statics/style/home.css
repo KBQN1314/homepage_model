@@ -12,6 +12,94 @@
   margin-top: 22px;
 }
 
+/* Homepage mega dropdown menu */
+.home-mega-menu {
+  position: fixed;
+  top: 68px;
+  left: 0;
+  width: 100%;
+  z-index: 90;
+  background: rgba(255, 255, 255, .96);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 26px 60px rgba(16, 27, 23, .12);
+  border-top: 1px solid rgba(199, 175, 130, .22);
+  border-bottom: 1px solid rgba(16, 27, 23, .08);
+  transform: translateY(-18px);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity .32s ease, transform .32s ease, visibility .32s ease;
+}
+
+header:hover + .home-mega-menu,
+.home-mega-menu:hover {
+  transform: translateY(0);
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.home-mega-inner {
+  width: min(1320px, 92vw);
+  margin: 0 auto;
+  padding: 32px 0 34px;
+}
+
+.home-mega-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding-bottom: 24px;
+  margin-bottom: 26px;
+  border-bottom: 1px solid rgba(16, 27, 23, .1);
+  color: var(--dark);
+}
+
+.home-mega-brand img {
+  width: 54px;
+  height: 54px;
+  object-fit: contain;
+}
+
+.home-mega-brand strong {
+  font-size: 22px;
+  letter-spacing: 2px;
+}
+
+.home-mega-brand span {
+  font-size: 12px;
+  letter-spacing: 5px;
+  color: #7a817d;
+  text-transform: uppercase;
+}
+
+.home-mega-columns {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 34px;
+}
+
+.home-mega-col h3 {
+  font-size: 18px;
+  color: var(--green);
+  margin-bottom: 18px;
+  font-weight: 700;
+}
+
+.home-mega-col a {
+  display: block;
+  color: #7c8580;
+  font-size: 15px;
+  line-height: 2.1;
+  transition: .25s ease;
+}
+
+.home-mega-col a:hover {
+  color: var(--gold);
+  transform: translateX(4px);
+}
+
 /*
   The hero has a progress-line div before the slide divs, so the homepage
   slide backgrounds must target the actual slide order here.
@@ -32,6 +120,12 @@
   background-image:
     linear-gradient(90deg, rgba(0, 0, 0, .62), rgba(0, 0, 0, .15)),
     url('../images/hero-3.svg');
+}
+
+@media (max-width: 1100px) {
+  .home-mega-menu {
+    display: none;
+  }
 }
 
 @media (max-width: 680px) {
