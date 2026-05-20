@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 320" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#064b34"/>
+      <stop offset="0.55" stop-color="#0b6042"/>
+      <stop offset="1" stop-color="#c7af82"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="78%" cy="18%" r="58%">
+      <stop offset="0" stop-color="#f1dfb5" stop-opacity="0.34"/>
+      <stop offset="1" stop-color="#f1dfb5" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="720" height="320" fill="url(#bg)"/>
+  <rect width="720" height="320" fill="url(#glow)"/>
+  <g fill="none" stroke="#ffffff" stroke-opacity="0.14" stroke-width="2">
+    <path d="M-40 230C120 150 260 260 410 185S610 70 760 140"/>
+    <circle cx="590" cy="72" r="58"/>
+  </g>
+  <g transform="translate(112 72)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="0" y="70" width="160" height="116" rx="8" stroke-width="8" opacity="0.92"/>
+    <path d="M32 70V36h96v34" stroke-width="8" opacity="0.92"/>
+    <path d="M34 110h20M70 110h20M106 110h20M34 146h20M70 146h20M106 146h20" stroke-width="7" opacity="0.78"/>
+    <path d="M224 70h150" stroke-width="8" opacity="0.84"/>
+    <path d="M224 112h206" stroke-width="8" opacity="0.68"/>
+    <path d="M224 154h138" stroke-width="8" opacity="0.52"/>
+  </g>
+  <text x="112" y="282" fill="#ffffff" fill-opacity="0.18" font-family="Arial, Microsoft YaHei, sans-serif" font-size="34" letter-spacing="5">COMPANY NEWS</text>
+</svg>
