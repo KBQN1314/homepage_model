@@ -74,16 +74,16 @@
   min-width: 164px;
   padding: 15px 0;
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, .48), rgba(247, 245, 239, .28)),
-    linear-gradient(135deg, rgba(4, 92, 57, .24), rgba(199, 175, 130, .16));
-  border: 1px solid rgba(255, 255, 255, .46);
-  border-top: 3px solid rgba(199, 175, 130, .82);
+    linear-gradient(180deg, rgba(255, 255, 255, .34), rgba(247, 245, 239, .16)),
+    linear-gradient(135deg, rgba(4, 92, 57, .14), rgba(199, 175, 130, .08));
+  border: 1px solid rgba(255, 255, 255, .36);
+  border-top: 3px solid rgba(199, 175, 130, .76);
   box-shadow:
-    0 24px 56px rgba(0, 0, 0, .22),
-    inset 0 1px 0 rgba(255, 255, 255, .62),
-    inset 0 -1px 0 rgba(255, 255, 255, .18);
-  backdrop-filter: blur(28px) saturate(155%);
-  -webkit-backdrop-filter: blur(28px) saturate(155%);
+    0 24px 56px rgba(0, 0, 0, .18),
+    inset 0 1px 0 rgba(255, 255, 255, .52),
+    inset 0 -1px 0 rgba(255, 255, 255, .12);
+  backdrop-filter: blur(32px) saturate(165%);
+  -webkit-backdrop-filter: blur(32px) saturate(165%);
   transform: translate(-50%, 12px);
   opacity: 0;
   visibility: hidden;
@@ -97,8 +97,8 @@
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(circle at 50% 0, rgba(255, 255, 255, .58), transparent 52%),
-    linear-gradient(90deg, rgba(255, 255, 255, .26), transparent 36%, rgba(199, 175, 130, .14));
+    radial-gradient(circle at 50% 0, rgba(255, 255, 255, .38), transparent 52%),
+    linear-gradient(90deg, rgba(255, 255, 255, .14), transparent 36%, rgba(199, 175, 130, .08));
   pointer-events: none;
 }
 
@@ -106,7 +106,7 @@
   content: '';
   position: absolute;
   inset: 8px;
-  border: 1px solid rgba(255, 255, 255, .18);
+  border: 1px solid rgba(255, 255, 255, .12);
   pointer-events: none;
 }
 
@@ -129,7 +129,7 @@
   text-align: center;
   white-space: nowrap;
   letter-spacing: .5px;
-  text-shadow: 0 1px 8px rgba(0, 0, 0, .22);
+  text-shadow: 0 1px 8px rgba(0, 0, 0, .28);
   transition: .25s ease;
 }
 
@@ -139,7 +139,7 @@
 
 .nav-panel a:hover {
   color: #fff;
-  background: rgba(199, 175, 130, .24);
+  background: rgba(199, 175, 130, .18);
 }
 
 .nav-panel a:hover::before {
@@ -156,20 +156,20 @@
 
 header.scrolled .nav-panel {
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, .78), rgba(247, 245, 239, .58)),
-    linear-gradient(135deg, rgba(4, 92, 57, .08), rgba(199, 175, 130, .08));
-  border-color: rgba(255, 255, 255, .68);
+    linear-gradient(180deg, rgba(255, 255, 255, .58), rgba(247, 245, 239, .34)),
+    linear-gradient(135deg, rgba(4, 92, 57, .05), rgba(199, 175, 130, .04));
+  border-color: rgba(255, 255, 255, .56);
   border-top-color: var(--gold);
   box-shadow:
-    0 22px 50px rgba(16, 27, 23, .14),
-    inset 0 1px 0 rgba(255, 255, 255, .82),
-    inset 0 -1px 0 rgba(255, 255, 255, .38);
+    0 22px 50px rgba(16, 27, 23, .12),
+    inset 0 1px 0 rgba(255, 255, 255, .72),
+    inset 0 -1px 0 rgba(255, 255, 255, .28);
 }
 
 header.scrolled .nav-panel::before {
   background:
-    radial-gradient(circle at 50% 0, rgba(255, 255, 255, .66), transparent 55%),
-    linear-gradient(90deg, rgba(4, 92, 57, .03), transparent 36%, rgba(199, 175, 130, .06));
+    radial-gradient(circle at 50% 0, rgba(255, 255, 255, .46), transparent 55%),
+    linear-gradient(90deg, rgba(4, 92, 57, .02), transparent 36%, rgba(199, 175, 130, .04));
 }
 
 header.scrolled .nav-panel a {
@@ -179,7 +179,7 @@ header.scrolled .nav-panel a {
 
 header.scrolled .nav-panel a:hover {
   color: var(--green);
-  background: rgba(199, 175, 130, .18);
+  background: rgba(199, 175, 130, .14);
 }
 
 /*
