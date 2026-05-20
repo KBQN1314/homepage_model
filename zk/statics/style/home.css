@@ -71,14 +71,19 @@
   position: absolute;
   top: 68px;
   left: 50%;
-  min-width: 158px;
-  padding: 14px 0;
+  min-width: 164px;
+  padding: 15px 0;
   background:
-    linear-gradient(180deg, rgba(9, 54, 38, .96), rgba(5, 34, 25, .94));
-  border: 1px solid rgba(199, 175, 130, .24);
-  border-top: 3px solid var(--gold);
-  box-shadow: 0 24px 54px rgba(0, 0, 0, .28);
-  backdrop-filter: blur(16px);
+    linear-gradient(180deg, rgba(244, 241, 232, .42), rgba(244, 241, 232, .2)),
+    linear-gradient(135deg, rgba(4, 92, 57, .42), rgba(16, 27, 23, .32));
+  border: 1px solid rgba(255, 255, 255, .34);
+  border-top: 3px solid rgba(199, 175, 130, .88);
+  box-shadow:
+    0 24px 56px rgba(0, 0, 0, .26),
+    inset 0 1px 0 rgba(255, 255, 255, .48),
+    inset 0 -1px 0 rgba(255, 255, 255, .12);
+  backdrop-filter: blur(26px) saturate(150%);
+  -webkit-backdrop-filter: blur(26px) saturate(150%);
   transform: translate(-50%, 12px);
   opacity: 0;
   visibility: hidden;
@@ -92,8 +97,16 @@
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(circle at 50% 0, rgba(199, 175, 130, .18), transparent 56%),
-    linear-gradient(90deg, rgba(255, 255, 255, .05), transparent 34%, rgba(255, 255, 255, .04));
+    radial-gradient(circle at 50% 0, rgba(255, 255, 255, .42), transparent 52%),
+    linear-gradient(90deg, rgba(255, 255, 255, .18), transparent 36%, rgba(199, 175, 130, .12));
+  pointer-events: none;
+}
+
+.nav-panel::after {
+  content: '';
+  position: absolute;
+  inset: 8px;
+  border: 1px solid rgba(255, 255, 255, .12);
   pointer-events: none;
 }
 
@@ -110,12 +123,13 @@
   z-index: 1;
   display: block;
   padding: 12px 30px;
-  color: rgba(255, 255, 255, .84);
+  color: rgba(255, 255, 255, .88);
   font-size: 15px;
   line-height: 1.35;
   text-align: center;
   white-space: nowrap;
   letter-spacing: .5px;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, .16);
   transition: .25s ease;
 }
 
@@ -125,7 +139,7 @@
 
 .nav-panel a:hover {
   color: #fff;
-  background: rgba(199, 175, 130, .18);
+  background: rgba(199, 175, 130, .22);
 }
 
 .nav-panel a:hover::before {
@@ -142,25 +156,30 @@
 
 header.scrolled .nav-panel {
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, .98), rgba(247, 245, 239, .96));
-  border-color: rgba(199, 175, 130, .35);
+    linear-gradient(180deg, rgba(255, 255, 255, .62), rgba(247, 245, 239, .42)),
+    linear-gradient(135deg, rgba(4, 92, 57, .13), rgba(199, 175, 130, .12));
+  border-color: rgba(255, 255, 255, .58);
   border-top-color: var(--gold);
-  box-shadow: 0 20px 48px rgba(16, 27, 23, .14);
+  box-shadow:
+    0 22px 50px rgba(16, 27, 23, .16),
+    inset 0 1px 0 rgba(255, 255, 255, .72),
+    inset 0 -1px 0 rgba(255, 255, 255, .3);
 }
 
 header.scrolled .nav-panel::before {
   background:
-    radial-gradient(circle at 50% 0, rgba(199, 175, 130, .14), transparent 55%),
-    linear-gradient(90deg, rgba(4, 92, 57, .03), transparent 36%, rgba(199, 175, 130, .05));
+    radial-gradient(circle at 50% 0, rgba(255, 255, 255, .52), transparent 55%),
+    linear-gradient(90deg, rgba(4, 92, 57, .04), transparent 36%, rgba(199, 175, 130, .08));
 }
 
 header.scrolled .nav-panel a {
-  color: #52605a;
+  color: #46514d;
+  text-shadow: none;
 }
 
 header.scrolled .nav-panel a:hover {
   color: var(--green);
-  background: rgba(199, 175, 130, .15);
+  background: rgba(199, 175, 130, .18);
 }
 
 /*
