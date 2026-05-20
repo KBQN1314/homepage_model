@@ -26,10 +26,5 @@
     <path d="M-80 760 C370 560 820 920 1190 690 S1690 520 2000 720"/>
   </g>
 
-  <g opacity="0.12" fill="#fff3d5">
-    <circle cx="1410" cy="780" r="68"/>
-    <rect x="128" y="190" width="230" height="118" rx="34"/>
-  </g>
-
-  <text x="140" y="880" font-family="Arial,Microsoft YaHei,sans-serif" font-size="72" fill="#fff3d5" opacity="0.16" letter-spacing="8">FAMILY SUPPORT</text>
+  <text x="140" y="880" font-family="Arial,Microsoft YaHei,sans-serif" font-size="72" fill="#fff3d5" opacity="0.13" letter-spacing="8">FAMILY SUPPORT</text>
 </svg>
