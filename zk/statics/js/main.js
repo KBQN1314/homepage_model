@@ -67,6 +67,8 @@ function setupDropdownEvents() {
   const navItems = [...document.querySelectorAll('.nav-item.has-dropdown')];
   if (!navItems.length) return;
 
+  const isMobileNav = () => window.matchMedia('(max-width: 1100px)').matches;
+
   const closeAll = exceptItem => {
     navItems.forEach(item => {
       if (item === exceptItem) return;
@@ -80,24 +82,38 @@ function setupDropdownEvents() {
     const link = item.querySelector('.nav-link');
     if (!link) return;
 
+    link.addEventListener('click', event => {
+      if (!isMobileNav()) return;
+
+      event.preventDefault();
+      const willOpen = !item.classList.contains('open');
+      closeAll(item);
+      item.classList.toggle('open', willOpen);
+      link.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+    });
+
     item.addEventListener('mouseenter', () => {
+      if (isMobileNav()) return;
       closeAll(item);
       item.classList.add('open');
       link.setAttribute('aria-expanded', 'true');
     });
 
     item.addEventListener('mouseleave', () => {
+      if (isMobileNav()) return;
       item.classList.remove('open');
       link.setAttribute('aria-expanded', 'false');
     });
 
     item.addEventListener('focusin', () => {
+      if (isMobileNav()) return;
       closeAll(item);
       item.classList.add('open');
       link.setAttribute('aria-expanded', 'true');
     });
 
     item.addEventListener('focusout', event => {
+      if (isMobileNav()) return;
       if (item.contains(event.relatedTarget)) return;
       item.classList.remove('open');
       link.setAttribute('aria-expanded', 'false');
@@ -107,6 +123,8 @@ function setupDropdownEvents() {
   document.addEventListener('click', event => {
     if (!event.target.closest('.nav-item.has-dropdown')) closeAll();
   });
+
+  window.addEventListener('resize', () => closeAll());
 }
 
 function setupUnifiedLinks() {
@@ -333,7 +351,7 @@ function setupMobileNav() {
     document.body.classList.toggle('nav-open');
   });
 
-  currentNav.querySelectorAll('a').forEach(linkItem => {
+  currentNav.querySelectorAll('.nav-direct, .nav-panel a').forEach(linkItem => {
     linkItem.addEventListener('click', () => {
       hamburger.classList.remove('expanded');
       document.body.classList.remove('nav-open');
