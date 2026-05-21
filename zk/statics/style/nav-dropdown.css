@@ -336,19 +336,33 @@ header.scrolled .nav-panel a:hover {
     right: auto !important;
     min-width: 0 !important;
     width: 100% !important;
-    margin: 0 0 10px !important;
-    padding: 10px 18px 12px !important;
-    overflow: visible !important;
-    opacity: 1 !important;
-    visibility: visible !important;
-    pointer-events: auto !important;
+    max-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 18px !important;
+    overflow: hidden !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
     transform: none !important;
-    border: 1px solid rgba(199, 175, 130, .22) !important;
+    border: 0 !important;
     border-left: 2px solid var(--gold) !important;
     background: #17241f !important;
     box-shadow: none !important;
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
+    transition: max-height .28s ease, opacity .22s ease, padding .22s ease, margin .22s ease !important;
+  }
+
+  .nav-item.open .nav-panel,
+  header.scrolled .nav-item.open .nav-panel {
+    max-height: 260px !important;
+    margin: 0 0 10px !important;
+    padding: 10px 18px 12px !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+    border: 1px solid rgba(199, 175, 130, .22) !important;
+    border-left: 2px solid var(--gold) !important;
   }
 
   .nav-panel::before,
