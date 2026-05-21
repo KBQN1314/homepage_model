@@ -330,6 +330,7 @@ header.scrolled .nav-panel a:hover {
 
   .nav-panel,
   header.scrolled .nav-panel {
+    display: none !important;
     position: static !important;
     top: auto !important;
     left: auto !important;
@@ -355,6 +356,7 @@ header.scrolled .nav-panel a:hover {
 
   .nav-item.open .nav-panel,
   header.scrolled .nav-item.open .nav-panel {
+    display: block !important;
     max-height: 260px !important;
     margin: 0 0 10px !important;
     padding: 10px 18px 12px !important;
