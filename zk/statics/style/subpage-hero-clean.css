@@ -1,0 +1,50 @@
+/* Unified clean hero background for all non-home navigation pages */
+.page-hero,
+.course-hero,
+.team-hero,
+.cases-hero,
+.news-hero,
+.join-hero,
+.contact-hero {
+  background:
+    linear-gradient(90deg, rgba(4, 42, 29, .82), rgba(16, 27, 23, .44)),
+    url('../images/page-hero-clean.svg') center/cover no-repeat !important;
+}
+
+.page-hero::before,
+.course-hero::before,
+.team-hero::before,
+.cases-hero::before,
+.news-hero::before,
+.join-hero::before,
+.contact-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(0, 0, 0, .08), transparent 48%),
+    radial-gradient(circle at 78% 36%, rgba(199, 175, 130, .16), transparent 34%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.page-hero::after,
+.course-hero::after,
+.team-hero::after,
+.cases-hero::after,
+.news-hero::after,
+.join-hero::after,
+.contact-hero::after {
+  background: none !important;
+}
+
+.page-hero .container,
+.course-hero .container,
+.team-hero .container,
+.cases-hero .container,
+.news-hero .container,
+.join-hero .container,
+.contact-hero .container {
+  position: relative;
+  z-index: 2;
+}
