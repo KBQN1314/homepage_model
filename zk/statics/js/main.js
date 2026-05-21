@@ -164,7 +164,7 @@ function setupUnifiedLinks() {
   if (!document.querySelector('.footer')) {
     const footer = document.createElement('footer');
     footer.className = 'footer';
-    footer.innerHTML = '<div class="container"><div class="footer-grid"></div><div class="copyright">© 2026 中科心智能教育科技服务平台 · 官网动态演示版</div></div>';
+    footer.innerHTML = '<div class="container"><div class="footer-grid"></div><div class="copyright"></div></div>';
     document.body.insertBefore(footer, document.querySelector('script[src*="main.js"]') || null);
   }
 
@@ -178,6 +178,11 @@ function setupUnifiedLinks() {
       <div><h4>新闻活动</h4><a href="${link('company-news.html')}">公司动态</a><a href="${link('growth-news.html')}">成长资讯</a><a href="${link('limited-activity.html')}">限时活动</a></div>
       <div><h4>加盟合作</h4><a href="${link('join.html')}">合作对象</a><a href="${link('join.html')}#join-form">在线申请</a><a href="${link('contact.html')}">联系我们</a></div>
     `;
+  }
+
+  const copyright = document.querySelector('.copyright');
+  if (copyright) {
+    copyright.textContent = '© 2026 中科心智能教育科技服务平台';
   }
 
   if (!document.querySelector('.sticky')) {
