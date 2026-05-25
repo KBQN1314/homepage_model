@@ -68,8 +68,71 @@
   color: #fff;
 }
 
-.team-list {
+.team-list,
+.team-overview-section {
   background: #fff;
+}
+
+.team-overview-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+}
+
+.team-overview-card {
+  position: relative;
+  min-height: 310px;
+  padding: 38px 34px 34px;
+  background: #fff;
+  border: 1px solid #eee;
+  border-left: 4px solid var(--gold);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, .04);
+  overflow: hidden;
+  transition: .35s ease;
+}
+
+.team-overview-card::before {
+  content: '';
+  position: absolute;
+  right: -58px;
+  top: -58px;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background: rgba(199, 175, 130, .08);
+}
+
+.team-overview-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow);
+}
+
+.team-overview-card .overview-num {
+  color: var(--gold);
+  font-family: Georgia, serif;
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 26px;
+}
+
+.team-overview-card h3 {
+  color: var(--green);
+  font-size: 24px;
+  margin-bottom: 14px;
+}
+
+.team-overview-card p {
+  color: #68736e;
+  font-size: 15px;
+  line-height: 1.9;
+  margin-bottom: 22px;
+}
+
+.team-overview-card span {
+  color: var(--gold);
+  font-size: 14px;
+  letter-spacing: 1px;
 }
 
 .team-grid {
@@ -329,6 +392,7 @@
 }
 
 @media(max-width: 1100px) {
+  .team-overview-grid,
   .team-grid,
   .expert-layout,
   .related-team-grid {
@@ -358,6 +422,7 @@
     min-height: 230px;
   }
 
+  .team-overview-card,
   .expert-content,
   .team-cta-wrap {
     padding: 28px;
