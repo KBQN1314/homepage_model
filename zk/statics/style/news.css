@@ -99,6 +99,7 @@
   font-family: Georgia, serif;
   font-size: 48px;
   position: relative;
+  overflow: hidden;
 }
 
 .news-page-thumb::after {
@@ -106,6 +107,33 @@
   position: absolute;
   inset: 18px;
   border: 1px solid rgba(255, 255, 255, .32);
+}
+
+.news-page-thumb.has-image {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: transparent;
+}
+
+.news-page-thumb.has-image::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(4, 92, 57, .16), rgba(199, 175, 130, .10));
+  z-index: 1;
+}
+
+.news-page-thumb.has-image::after {
+  z-index: 2;
+}
+
+.news-page-thumb.cas-cooperation {
+  background-image: url('../images/news-cas-cooperation.svg');
+}
+
+.news-page-thumb.guoxin-cooperation {
+  background-image: url('../images/news-guoxin-cooperation.svg');
 }
 
 .news-page-body {
