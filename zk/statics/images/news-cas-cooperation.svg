@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#045c39"/>
+      <stop offset="0.58" stop-color="#38664f"/>
+      <stop offset="1" stop-color="#c7af82"/>
+    </linearGradient>
+    <linearGradient id="soft" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.22"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0.02"/>
+    </linearGradient>
+  </defs>
+  <rect width="640" height="360" fill="url(#g)"/>
+  <path d="M0 250 C130 170 240 285 380 205 C500 135 555 130 640 170" fill="none" stroke="#fff" stroke-opacity="0.13" stroke-width="3"/>
+  <circle cx="535" cy="84" r="54" fill="none" stroke="#fff" stroke-opacity="0.14" stroke-width="2"/>
+  <rect x="36" y="36" width="568" height="288" fill="none" stroke="#fff" stroke-opacity="0.42"/>
+  <g transform="translate(88 78)">
+    <circle cx="72" cy="72" r="54" fill="url(#soft)" stroke="#fff" stroke-opacity="0.62" stroke-width="3"/>
+    <path d="M72 34 C86 52 104 61 126 62 C105 75 91 91 84 112 C73 93 58 77 35 65 C55 62 65 51 72 34Z" fill="#fff" fill-opacity="0.88"/>
+    <circle cx="72" cy="72" r="13" fill="#c7af82" fill-opacity="0.9"/>
+  </g>
+  <g transform="translate(235 112)" fill="#fff">
+    <rect x="0" y="30" width="150" height="18" rx="9" opacity="0.82"/>
+    <rect x="18" y="72" width="185" height="14" rx="7" opacity="0.56"/>
+    <rect x="18" y="104" width="142" height="14" rx="7" opacity="0.42"/>
+  </g>
+  <text x="88" y="278" fill="#fff" font-size="26" font-family="Arial, sans-serif" font-weight="700" letter-spacing="4">CAS COOPERATION</text>
+  <text x="88" y="310" fill="#fff" fill-opacity="0.76" font-size="16" font-family="Arial, sans-serif" letter-spacing="2">RESEARCH · EDUCATION · GROWTH</text>
+</svg>
