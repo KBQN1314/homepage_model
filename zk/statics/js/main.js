@@ -29,7 +29,7 @@ function getActivePage() {
   if (file === 'index.html' || path.endsWith('/zk/')) return 'home';
   if (file === 'about.html') return 'about';
   if (['courses.html', 'course-detail.html', 'evaluation-detail.html', 'camp-detail.html', 'public-class-detail.html'].includes(file)) return 'courses';
-  if (file === 'team.html' || file === 'team-page-2.html' || path.includes('/zk/expert/')) return 'team';
+  if (file === 'team.html' || file === 'assistants.html' || path.includes('/zk/expert/')) return 'team';
   if (file === 'cases.html' || path.includes('/zk/cases/')) return 'cases';
   if (['news.html', 'company-news.html', 'growth-news.html', 'limited-activity.html'].includes(file) || path.includes('/zk/news/')) return 'news';
   if (file === 'join.html') return 'join';
@@ -156,8 +156,8 @@ function setupUnifiedLinks() {
         { text: '心脑学习力公开课', href: link('public-class-detail.html') }
       ], active === 'courses')}
       ${createNavDropdown('专家团队', link('team.html'), [
-        { text: '核心专家', href: link('team.html#experts') },
-        { text: '助教成员', href: link('team-page-2.html#assistants') }
+        { text: '核心专家', href: link('team.html') },
+        { text: '助教成员', href: link('assistants.html') }
       ], active === 'team')}
       ${createNavLink('成功案例', link('cases.html'), active === 'cases')}
       ${createNavDropdown('新闻活动', link('news.html'), [
@@ -192,7 +192,7 @@ function setupUnifiedLinks() {
       <div><div class="brand-mini">中科心智能</div></div>
       <div><h4>关于我们</h4><a href="${link('about.html')}">公司简介</a><a href="${link('about.html')}">服务方向</a><a href="${link('about.html')}">发展愿景</a></div>
       <div><h4>课程产品</h4><a href="${link('course-detail.html')}">心脑学习力成长课</a><a href="${link('evaluation-detail.html')}">心脑学习力体验课</a><a href="${link('camp-detail.html')}">心脑学习力强化营</a><a href="${link('public-class-detail.html')}">心脑学习力公开课</a></div>
-      <div><h4>专家团队</h4><a href="${link('team.html#experts')}">核心专家</a><a href="${link('team-page-2.html#assistants')}">助教成员</a></div>
+      <div><h4>专家团队</h4><a href="${link('team.html')}">核心专家</a><a href="${link('assistants.html')}">助教成员</a></div>
       <div><h4>成功案例</h4><a href="${link('cases.html')}">案例总览</a></div>
       <div><h4>新闻活动</h4><a href="${link('company-news.html')}">公司动态</a><a href="${link('growth-news.html')}">成长资讯</a><a href="${link('limited-activity.html')}">限时活动</a></div>
       <div><h4>加盟合作</h4><a href="${link('join.html')}">合作对象</a><a href="${link('join.html')}#join-form">在线申请</a><a href="${link('contact.html')}">联系我们</a><a href="${link('privacy.html')}">隐私政策</a></div>
