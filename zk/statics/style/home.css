@@ -285,13 +285,7 @@
 }
 
 .assess-item::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 24px;
-  bottom: 24px;
-  width: 4px;
-  background: var(--gold);
+  display: none;
 }
 
 .assess-item::after {
@@ -301,7 +295,8 @@
   font-family: Georgia, serif;
   font-size: 30px;
   line-height: 1;
-  color: rgba(199, 175, 130, .28);
+  color: var(--gold);
+  opacity: .9;
 }
 
 .assess-item:nth-child(1)::after { content: '01'; }
