@@ -15,10 +15,8 @@ let slideTimer = null;
 
 function getPathPrefix() {
   const path = window.location.pathname;
-
   if (path.includes('/zk/news/company/') || path.includes('/zk/news/growth/') || path.includes('/zk/news/limited/')) return '../../';
   if (path.includes('/zk/expert/') || path.includes('/zk/cases/')) return '../';
-
   return '';
 }
 
@@ -29,18 +27,24 @@ function getActivePage() {
   if (file === 'index.html' || path.endsWith('/zk/')) return 'home';
   if (file === 'about.html') return 'about';
   if (['courses.html', 'course-detail.html', 'evaluation-detail.html', 'camp-detail.html', 'public-class-detail.html'].includes(file)) return 'courses';
-  if (['team.html', 'experts.html', 'assistants.html'].includes(file) || path.includes('/zk/expert/')) return 'team';
+  if (['team.html', 'team-page-2.html', 'experts.html', 'assistants.html'].includes(file) || path.includes('/zk/expert/')) return 'team';
   if (file === 'cases.html' || path.includes('/zk/cases/')) return 'cases';
   if (['news.html', 'company-news.html', 'growth-news.html', 'limited-activity.html'].includes(file) || path.includes('/zk/news/')) return 'news';
   if (file === 'join.html') return 'join';
   if (file === 'contact.html') return 'contact';
-
   return '';
+}
+
+function buildUrl(file, params = '') {
+  return `${getPathPrefix()}${file}${params}`;
+}
+
+function contactUrl(purpose) {
+  return buildUrl('contact.html', `?purpose=${purpose}#contact-form`);
 }
 
 function injectNavStylesheet(prefix) {
   if (document.querySelector('link[data-nav-dropdown]')) return;
-
   const linkTag = document.createElement('link');
   linkTag.rel = 'stylesheet';
   linkTag.href = `${prefix}statics/style/nav-dropdown.css`;
@@ -54,7 +58,6 @@ function createNavLink(label, href, isActive) {
 
 function createNavDropdown(label, href, items, isActive) {
   const itemLinks = items.map(item => `<a href="${item.href}">${item.text}</a>`).join('');
-
   return `
     <div class="nav-item has-dropdown${isActive ? ' nav-active' : ''}">
       <a class="nav-link" href="${href}" aria-expanded="false">${label}</a>
@@ -84,7 +87,6 @@ function setupDropdownEvents() {
 
     link.addEventListener('click', event => {
       if (!isMobileNav()) return;
-
       event.preventDefault();
       const willOpen = !item.classList.contains('open');
       closeAll(item);
@@ -101,20 +103,6 @@ function setupDropdownEvents() {
 
     item.addEventListener('mouseleave', () => {
       if (isMobileNav()) return;
-      item.classList.remove('open');
-      link.setAttribute('aria-expanded', 'false');
-    });
-
-    item.addEventListener('focusin', () => {
-      if (isMobileNav()) return;
-      closeAll(item);
-      item.classList.add('open');
-      link.setAttribute('aria-expanded', 'true');
-    });
-
-    item.addEventListener('focusout', event => {
-      if (isMobileNav()) return;
-      if (item.contains(event.relatedTarget)) return;
       item.classList.remove('open');
       link.setAttribute('aria-expanded', 'false');
     });
@@ -174,11 +162,16 @@ function setupUnifiedLinks() {
   const navCta = document.querySelector('.nav-cta');
   if (navCta) {
     navCta.innerHTML = `
-      <a class="btn btn-line" href="${link('contact.html')}#contact-form">预约体验</a>
-      <a class="btn btn-gold" href="${link('join.html')}#join-form">申请合作</a>
+      <a class="btn btn-line" href="${contactUrl('trial')}">预约体验</a>
+      <a class="btn btn-gold" href="${contactUrl('cooperation')}">申请合作</a>
     `;
   }
 
+  setupFooterAndSticky(link);
+  normalizeLegacyAnchors();
+}
+
+function setupFooterAndSticky(link) {
   if (!document.querySelector('.footer')) {
     const footer = document.createElement('footer');
     footer.className = 'footer';
@@ -195,14 +188,12 @@ function setupUnifiedLinks() {
       <div><h4>专家团队</h4><a href="${link('experts.html')}">核心专家</a><a href="${link('assistants.html')}">助教团队</a></div>
       <div><h4>成功案例</h4><a href="${link('cases.html')}">案例总览</a></div>
       <div><h4>新闻活动</h4><a href="${link('company-news.html')}">公司动态</a><a href="${link('growth-news.html')}">成长资讯</a><a href="${link('limited-activity.html')}">限时活动</a></div>
-      <div><h4>加盟合作</h4><a href="${link('join.html')}">合作对象</a><a href="${link('join.html')}#join-form">在线申请</a><a href="${link('contact.html')}">联系我们</a><a href="${link('privacy.html')}">隐私政策</a></div>
+      <div><h4>加盟合作</h4><a href="${link('join.html')}">合作对象</a><a href="${contactUrl('cooperation')}">在线申请</a><a href="${link('contact.html')}">联系我们</a><a href="${link('privacy.html')}">隐私政策</a></div>
     `;
   }
 
   const copyright = document.querySelector('.copyright');
-  if (copyright) {
-    copyright.textContent = '© 2026 中科心智能教育科技服务平台';
-  }
+  if (copyright) copyright.textContent = '© 2026 中科心智能教育科技服务平台';
 
   if (!document.querySelector('.sticky')) {
     const sticky = document.createElement('div');
@@ -212,40 +203,105 @@ function setupUnifiedLinks() {
 
   const sticky = document.querySelector('.sticky');
   if (sticky) {
-    sticky.innerHTML = `<a href="${link('contact.html')}#contact-form">预约</a><a href="${link('join.html')}#join-form">合作</a>`;
+    sticky.innerHTML = `<a href="${contactUrl('trial')}">预约</a><a href="${contactUrl('cooperation')}">合作</a>`;
   }
+}
 
-  const replacements = {
-    '#course': link('courses.html'),
-    '#team': link('team.html'),
-    '#news': link('news.html'),
-    '#join': link('join.html'),
-    '#contact': link('contact.html'),
-    '#assessment': `${link('contact.html')}#contact-form`,
-    'index.html#course': link('courses.html'),
-    'index.html#team': link('team.html'),
-    'index.html#news': link('news.html'),
-    'index.html#join': link('join.html'),
-    'index.html#contact': link('contact.html'),
-    'index.html#assessment': `${link('contact.html')}#contact-form`,
-    '../index.html#course': link('courses.html'),
-    '../index.html#team': link('team.html'),
-    '../index.html#news': link('news.html'),
-    '../index.html#join': link('join.html'),
-    '../index.html#contact': link('contact.html'),
-    '../index.html#assessment': `${link('contact.html')}#contact-form`,
-    '../../index.html#course': link('courses.html'),
-    '../../index.html#team': link('team.html'),
-    '../../index.html#news': link('news.html'),
-    '../../index.html#join': link('join.html'),
-    '../../index.html#contact': link('contact.html'),
-    '../../index.html#assessment': `${link('contact.html')}#contact-form`
+function normalizeLegacyAnchors() {
+  const contactLinks = {
+    '#assessment': contactUrl('trial'),
+    '#contact': buildUrl('contact.html'),
+    '#join-form': contactUrl('cooperation'),
+    'index.html#assessment': contactUrl('trial'),
+    'index.html#contact': buildUrl('contact.html'),
+    'join.html#join-form': contactUrl('cooperation'),
+    '../index.html#assessment': contactUrl('trial'),
+    '../index.html#contact': buildUrl('contact.html'),
+    '../../index.html#assessment': contactUrl('trial'),
+    '../../index.html#contact': buildUrl('contact.html')
   };
 
   document.querySelectorAll('a[href]').forEach(anchor => {
     const rawHref = anchor.getAttribute('href');
-    if (replacements[rawHref]) anchor.setAttribute('href', replacements[rawHref]);
+    if (contactLinks[rawHref]) anchor.setAttribute('href', contactLinks[rawHref]);
   });
+}
+
+function replaceOldFormsWithUnifiedEntrance() {
+  const trialForm = document.querySelector('.assess-form');
+  if (trialForm) {
+    trialForm.outerHTML = `
+      <div class="assess-form form-redirect-card">
+        <h3>统一信息登记</h3>
+        <p>预约体验、课程咨询、合作申请和留言已统一放在“联系我们”页面。请选择目的后填写对应信息。</p>
+        <a class="btn btn-gold" href="${contactUrl('trial')}">前往预约体验</a>
+      </div>
+    `;
+  }
+
+  const joinForm = document.querySelector('.join-form');
+  if (joinForm) {
+    joinForm.outerHTML = `
+      <div class="join-form form-redirect-card">
+        <h3>统一信息登记</h3>
+        <p>合作申请已统一放在“联系我们”页面。请选择“加盟合作”或“活动合作”，再填写城市、合作类型和资源说明。</p>
+        <a class="btn btn-gold" href="${contactUrl('cooperation')}">前往提交合作申请</a>
+      </div>
+    `;
+  }
+}
+
+function setupUnifiedInquiryForm() {
+  const form = document.getElementById('unifiedInquiryForm');
+  if (!form) return;
+
+  const select = document.getElementById('purposeSelect');
+  const fields = [...form.querySelectorAll('.dynamic-fields')];
+  const message = document.getElementById('messageField');
+  const submit = form.querySelector('button[type="submit"]');
+
+  const purposeLabels = {
+    consult: '课程咨询',
+    trial: '预约体验',
+    cooperation: '加盟合作',
+    activity: '活动合作',
+    feedback: '服务反馈',
+    other: '其他事项'
+  };
+
+  const placeholders = {
+    consult: '请说明孩子目前学习状态、想了解的课程或主要疑问',
+    trial: '请说明孩子目前主要情况，以及希望预约体验的大致时间',
+    cooperation: '请简要说明所在城市、现有资源和合作想法',
+    activity: '请说明活动地点、预计人数、时间安排和合作需求',
+    feedback: '请说明需要反馈或改进的问题',
+    other: '请简要说明你的需求'
+  };
+
+  function updatePurpose() {
+    const value = select.value || 'consult';
+
+    fields.forEach(group => {
+      const targets = (group.dataset.purposeField || '').split(/\s+/);
+      const visible = targets.includes(value);
+      group.style.display = visible ? 'block' : 'none';
+      group.querySelectorAll('input, select, textarea').forEach(item => {
+        item.disabled = !visible;
+      });
+    });
+
+    if (message) message.placeholder = placeholders[value] || placeholders.other;
+    if (submit) submit.textContent = `提交${purposeLabels[value] || '信息'}`;
+  }
+
+  const params = new URLSearchParams(window.location.search);
+  const purpose = params.get('purpose');
+  if (purpose && [...select.options].some(option => option.value === purpose)) {
+    select.value = purpose;
+  }
+
+  select.addEventListener('change', updatePurpose);
+  updatePurpose();
 }
 
 function setupCurtainLoading() {
@@ -402,6 +458,8 @@ function setupSlideControls() {
 }
 
 setupUnifiedLinks();
+replaceOldFormsWithUnifiedEntrance();
+setupUnifiedInquiryForm();
 setupCurtainLoading();
 setupHeader();
 setupMobileNav();
