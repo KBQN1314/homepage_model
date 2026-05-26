@@ -183,7 +183,7 @@ function setupUnifiedLinks() {
         { text: '核心专家', href: link('experts.html') },
         { text: '助教团队', href: link('assistants.html') }
       ], active === 'team')}
-      ${createNavLink('成功案例', link('cases.html'), active === 'cases')}
+      ${createNavLink('经典案例', link('cases.html'), active === 'cases')}
       ${createNavDropdown('新闻活动', link('news.html'), [
         { text: '公司动态', href: link('company-news.html') },
         { text: '成长资讯', href: link('growth-news.html') },
@@ -222,7 +222,7 @@ function setupFooterAndSticky(link) {
       <div><h4>关于我们</h4><a href="${link('about.html')}">公司简介</a><a href="${link('about.html')}">服务方向</a><a href="${link('about.html')}">发展愿景</a></div>
       <div><h4>课程产品</h4><a href="${link('course-detail.html')}">心脑学习力成长课</a><a href="${link('evaluation-detail.html')}">心脑学习力体验课</a><a href="${link('camp-detail.html')}">心脑学习力强化营</a><a href="${link('public-class-detail.html')}">心脑学习力公开课</a></div>
       <div><h4>专家团队</h4><a href="${link('experts.html')}">核心专家</a><a href="${link('assistants.html')}">助教团队</a></div>
-      <div><h4>成功案例</h4><a href="${link('cases.html')}">案例总览</a></div>
+      <div><h4>经典案例</h4><a href="${link('cases.html')}">案例总览</a></div>
       <div><h4>新闻活动</h4><a href="${link('company-news.html')}">公司动态</a><a href="${link('growth-news.html')}">成长资讯</a><a href="${link('limited-activity.html')}">限时活动</a></div>
       <div><h4>加盟合作</h4><a href="${link('join.html')}">合作对象</a><a href="${contactUrl('cooperation')}">在线申请</a><a href="${link('contact.html')}">联系我们</a><a href="${link('privacy.html')}">隐私政策</a></div>
     `;
