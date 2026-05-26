@@ -227,28 +227,8 @@ function normalizeLegacyAnchors() {
   });
 }
 
-function replaceOldFormsWithUnifiedEntrance() {
-  const trialForm = document.querySelector('.assess-form');
-  if (trialForm) {
-    trialForm.outerHTML = `
-      <div class="assess-form form-redirect-card">
-        <h3>统一信息登记</h3>
-        <p>预约体验、课程咨询、合作申请和留言已统一放在“联系我们”页面。请选择目的后填写对应信息。</p>
-        <a class="btn btn-gold" href="${contactUrl('trial')}">前往预约体验</a>
-      </div>
-    `;
-  }
-
-  const joinForm = document.querySelector('.join-form');
-  if (joinForm) {
-    joinForm.outerHTML = `
-      <div class="join-form form-redirect-card">
-        <h3>统一信息登记</h3>
-        <p>合作申请已统一放在“联系我们”页面。请选择“加盟合作”或“活动合作”，再填写城市、合作类型和资源说明。</p>
-        <a class="btn btn-gold" href="${contactUrl('cooperation')}">前往提交合作申请</a>
-      </div>
-    `;
-  }
+function removeLegacyStandaloneForms() {
+  document.querySelectorAll('.assess-form, .join-form').forEach(form => form.remove());
 }
 
 function setupUnifiedInquiryForm() {
@@ -458,7 +438,7 @@ function setupSlideControls() {
 }
 
 setupUnifiedLinks();
-replaceOldFormsWithUnifiedEntrance();
+removeLegacyStandaloneForms();
 setupUnifiedInquiryForm();
 setupCurtainLoading();
 setupHeader();
