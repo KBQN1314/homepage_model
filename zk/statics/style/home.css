@@ -435,3 +435,77 @@
     padding: 36px 26px;
   }
 }
+
+/* Same-row desktop refinements for homepage card modules */
+@media (min-width: 1201px) {
+  .pain .container,
+  .products .container {
+    width: min(1560px, 92vw);
+  }
+
+  .pain-grid {
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    gap: 18px;
+    align-items: stretch;
+  }
+
+  .pain-card {
+    min-height: 235px;
+    padding: 34px 20px 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+
+  .pain-card .num {
+    font-size: 34px;
+  }
+
+  .pain-card h3 {
+    margin-top: 24px;
+    font-size: 18px;
+    line-height: 1.45;
+  }
+
+  .pain-card p {
+    font-size: 14px;
+    line-height: 1.8;
+  }
+
+  .product-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 24px;
+    align-items: stretch;
+  }
+
+  .product-card,
+  .product-card.feature {
+    min-height: 410px;
+    padding: 40px 30px 72px;
+  }
+
+  .product-card h3 {
+    font-size: 24px;
+  }
+
+  .product-card p {
+    font-size: 15px;
+    line-height: 1.9;
+  }
+}
+
+@media (max-width: 1200px) and (min-width: 681px) {
+  .pain-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .product-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 680px) {
+  .product-grid {
+    grid-template-columns: 1fr;
+  }
+}
