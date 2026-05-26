@@ -249,46 +249,67 @@
     <section class="sec join-form-section" id="join-form">
       <div class="container">
         <div class="join-form-wrap reveal show">
-          <div class="join-form-info">
-            <div class="sec-kicker">Apply Now</div>
-            <h2>提交合作申请</h2>
-            <p>
-              如果你希望了解课程合作、活动合作或区域合作，可以先提交基础信息。我们会根据你的城市、资源和合作方向，进行进一步沟通。
-            </p>
-            <p>
-              正式合作前，双方会就合作范围、服务边界、课程交付、费用结算、宣传合规和客户信息保护等内容进行明确约定。
-            </p>
+          <div class="join-apply-head">
+            <div class="join-form-info">
+              <div class="sec-kicker">Apply Now</div>
+              <h2>提交合作申请</h2>
+              <p>
+                如果你希望了解课程合作、活动合作或区域合作，可以先提交基础信息。我们会根据你的城市、资源和合作方向，进行进一步沟通。
+              </p>
+              <p>
+                正式合作前，双方会就合作范围、服务边界、课程交付、费用结算、宣传合规和客户信息保护等内容进行明确约定。
+              </p>
+            </div>
 
-            <div class="join-form-list">
-              <div>适合教育机构、培训主理人、培训机构、社群资源方和区域合作伙伴。</div>
-              <div>建议先从体验课、公开课或小型活动开始试点。</div>
-              <div>合作内容以双方正式沟通和协议约定为准。</div>
+            <div class="join-form-list" aria-label="合作申请说明">
+              <div>
+                <span>01</span>
+                <strong>适合对象</strong>
+                <p>教育机构、培训主理人、社群资源方和区域合作伙伴。</p>
+              </div>
+              <div>
+                <span>02</span>
+                <strong>建议路径</strong>
+                <p>建议先从体验课、公开课或小型活动开始试点。</p>
+              </div>
+              <div>
+                <span>03</span>
+                <strong>合作依据</strong>
+                <p>合作内容以双方正式沟通和协议约定为准。</p>
+              </div>
             </div>
           </div>
 
           <form class="join-form demo-form">
-            <h3>合作信息登记</h3>
-            <div class="form-row">
-              <input required placeholder="姓名 / 联系人">
+            <div class="join-form-title">
+              <h3>合作信息登记</h3>
+              <p>填写后将用于初步沟通，正式合作以双方协议为准。</p>
             </div>
-            <div class="form-row">
-              <input required placeholder="联系电话 / 微信">
+
+            <div class="join-form-fields">
+              <div class="form-row">
+                <input required placeholder="姓名 / 联系人">
+              </div>
+              <div class="form-row">
+                <input required placeholder="联系电话 / 微信">
+              </div>
+              <div class="form-row">
+                <input placeholder="所在城市">
+              </div>
+              <div class="form-row">
+                <select>
+                  <option>合作类型</option>
+                  <option>课程合作</option>
+                  <option>活动合作</option>
+                  <option>区域合作</option>
+                  <option>其他合作</option>
+                </select>
+              </div>
+              <div class="form-row form-row-full">
+                <textarea placeholder="请简要说明现有资源或合作想法"></textarea>
+              </div>
             </div>
-            <div class="form-row">
-              <input placeholder="所在城市">
-            </div>
-            <div class="form-row">
-              <select>
-                <option>合作类型</option>
-                <option>课程合作</option>
-                <option>活动合作</option>
-                <option>区域合作</option>
-                <option>其他合作</option>
-              </select>
-            </div>
-            <div class="form-row">
-              <textarea placeholder="请简要说明现有资源或合作想法"></textarea>
-            </div>
+
             <button class="btn btn-gold" type="submit">提交合作申请</button>
           </form>
         </div>
