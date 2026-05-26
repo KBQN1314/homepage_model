@@ -120,8 +120,9 @@
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, rgba(4, 92, 57, .16), rgba(199, 175, 130, .10));
+  background: linear-gradient(135deg, rgba(4, 92, 57, .10), rgba(199, 175, 130, .06));
   z-index: 1;
+  pointer-events: none;
 }
 
 .news-page-thumb.has-image::after {
@@ -129,11 +130,19 @@
 }
 
 .news-page-thumb.cas-cooperation {
-  background-image: url('../images/news-cas-cooperation.svg');
+  background-image: url('../images/news/中科院心理所-2026.05.25.png');
 }
 
 .news-page-thumb.guoxin-cooperation {
-  background-image: url('../images/news-guoxin-cooperation.svg');
+  background-image: url('../images/news/国信中健-2026.05.24.png');
+}
+
+.news-page-thumb.memory-competition {
+  background-image: url('../images/news/世界记忆锦标赛-2026.05.20.png');
+}
+
+.news-page-thumb.library-open-class {
+  background-image: url('../images/news/六一图书馆-2026.05.30.png');
 }
 
 .news-page-body {
