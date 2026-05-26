@@ -13,6 +13,42 @@ let current = slides.findIndex(slide => slide.classList.contains('active'));
 if (current < 0) current = 0;
 let slideTimer = null;
 
+function setupViewportStability() {
+  let viewport = document.querySelector('meta[name="viewport"]');
+  if (!viewport) {
+    viewport = document.createElement('meta');
+    viewport.name = 'viewport';
+    document.head.prepend(viewport);
+  }
+  viewport.setAttribute('content', 'width=device-width, initial-scale=1.0');
+
+  if (document.getElementById('viewportStabilityStyle')) return;
+  const style = document.createElement('style');
+  style.id = 'viewportStabilityStyle';
+  style.textContent = `
+    html {
+      font-size: 100%;
+      -webkit-text-size-adjust: 100%;
+      text-size-adjust: 100%;
+    }
+    html, body {
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+    }
+    input, select, textarea, button {
+      font-size: 16px;
+    }
+    .reveal {
+      transform: translateY(52px) !important;
+    }
+    .reveal.show {
+      transform: translateY(0) !important;
+    }
+  `;
+  document.head.appendChild(style);
+}
+
 function getPathPrefix() {
   const path = window.location.pathname;
   if (path.includes('/zk/news/company/') || path.includes('/zk/news/growth/') || path.includes('/zk/news/limited/')) return '../../';
@@ -437,6 +473,7 @@ function setupSlideControls() {
   startSlideTimer();
 }
 
+setupViewportStability();
 setupUnifiedLinks();
 removeLegacyStandaloneForms();
 setupUnifiedInquiryForm();
