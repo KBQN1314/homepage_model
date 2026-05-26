@@ -126,7 +126,7 @@
 }
 
 .news-page-thumb.has-image::after {
-  z-index: 2;
+  display: none;
 }
 
 .news-page-thumb.cas-cooperation {
