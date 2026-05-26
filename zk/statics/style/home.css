@@ -509,3 +509,81 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* Medium-width evaluation layout: use the right side instead of leaving it empty. */
+@media (min-width: 681px) and (max-width: 1180px) {
+  .assessment .container {
+    width: min(1040px, 94vw);
+  }
+
+  .assess-left {
+    display: grid;
+    grid-template-columns: minmax(250px, .75fr) minmax(0, 1.25fr);
+    column-gap: 38px;
+    row-gap: 12px;
+    align-items: center;
+    padding: 54px 44px 50px;
+  }
+
+  .assess-left .sec-kicker,
+  .assess-left h2,
+  .assess-left > p {
+    grid-column: 1;
+  }
+
+  .assess-left .sec-kicker {
+    margin-bottom: 4px;
+  }
+
+  .assess-left h2 {
+    max-width: none;
+    font-size: clamp(36px, 5.4vw, 50px);
+    line-height: 1.08;
+  }
+
+  .assess-left > p {
+    margin-top: 10px;
+    font-size: 16px;
+  }
+
+  .assess-list {
+    grid-column: 2;
+    grid-row: 1 / span 3;
+    max-width: none;
+    margin-top: 0;
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .assess-item {
+    min-height: 112px;
+    padding: 22px 58px 20px 28px;
+  }
+
+  .assess-item b {
+    font-size: 18px;
+  }
+
+  .assess-item span {
+    font-size: 14px;
+    line-height: 1.75;
+  }
+
+  .assess-form {
+    padding: 44px;
+  }
+}
+
+@media (min-width: 981px) and (max-width: 1180px) {
+  .assess-left {
+    grid-template-columns: minmax(300px, .78fr) minmax(0, 1.22fr);
+  }
+
+  .assess-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .assess-item {
+    min-height: 132px;
+  }
+}
