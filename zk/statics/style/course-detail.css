@@ -312,6 +312,27 @@
   text-transform: uppercase;
 }
 
+/* Keep the course information sidebar static on all four course detail pages. */
+.detail-layout .side-card,
+.detail-layout .side-card.reveal,
+.detail-layout .side-card.reveal.show,
+.detail-layout .side-card:hover,
+.detail-layout .side-card:focus-within,
+.detail-layout .side-card:active {
+  opacity: 1 !important;
+  transform: none !important;
+  transition: none !important;
+  animation: none !important;
+  will-change: auto !important;
+  border-color: transparent !important;
+  box-shadow: var(--shadow) !important;
+  filter: none !important;
+}
+
+.detail-layout .side-card:hover :where(h3, h4) {
+  color: #fff !important;
+}
+
 /* Responsive styles */
 @media (max-width: 1100px) {
   .detail-layout {
