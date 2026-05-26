@@ -215,6 +215,7 @@
 
 .assess-wrap {
   position: relative;
+  display: grid;
   grid-template-columns: minmax(0, 1.15fr) 390px;
   gap: 0;
   align-items: stretch;
@@ -264,6 +265,7 @@
 }
 
 .assess-list {
+  display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 18px;
   max-width: 760px;
@@ -585,5 +587,106 @@
 
   .assess-item {
     min-height: 132px;
+  }
+}
+
+/* Desktop evaluation layout fix: make the visible content fill the right side. */
+@media (min-width: 981px) {
+  .assessment .container {
+    width: min(1420px, 92vw);
+  }
+
+  .assess-wrap {
+    grid-template-columns: 1fr;
+  }
+
+  .assess-left {
+    display: grid;
+    grid-template-columns: minmax(360px, .58fr) minmax(0, 1.42fr);
+    column-gap: 56px;
+    row-gap: 14px;
+    align-items: center;
+    padding: 68px 64px;
+  }
+
+  .assess-left .sec-kicker,
+  .assess-left h2,
+  .assess-left > p {
+    grid-column: 1;
+  }
+
+  .assess-left .sec-kicker {
+    margin-bottom: 0;
+  }
+
+  .assess-left h2 {
+    max-width: 560px;
+    font-size: clamp(40px, 4.5vw, 62px);
+  }
+
+  .assess-left > p {
+    margin-top: 8px;
+  }
+
+  .assess-list {
+    grid-column: 2;
+    grid-row: 1 / span 3;
+    max-width: none;
+    margin-top: 0;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+  }
+
+  .assess-item {
+    min-height: 150px;
+  }
+
+  .assess-form {
+    display: grid;
+    grid-template-columns: 220px repeat(4, minmax(0, 1fr)) 190px;
+    gap: 14px;
+    align-items: end;
+    padding: 28px 64px 32px;
+    border-top: 1px solid rgba(255, 255, 255, .14);
+  }
+
+  .assess-form::before {
+    display: none;
+  }
+
+  .assess-form h3,
+  .assess-form .form-row,
+  .assess-form .btn {
+    margin: 0;
+  }
+
+  .assess-form h3 {
+    align-self: center;
+    font-size: 24px;
+  }
+}
+
+@media (min-width: 981px) and (max-width: 1280px) {
+  .assess-left {
+    grid-template-columns: minmax(280px, .62fr) minmax(0, 1.38fr);
+    column-gap: 32px;
+    padding: 56px 44px;
+  }
+
+  .assess-left h2 {
+    font-size: clamp(38px, 4.8vw, 52px);
+  }
+
+  .assess-item {
+    min-height: 130px;
+    padding: 22px 58px 20px 28px;
+  }
+
+  .assess-form {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .assess-form h3 {
+    grid-column: 1 / -1;
   }
 }
