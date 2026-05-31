@@ -194,16 +194,12 @@
   gap: 24px;
 }
 
-.course-card {
+.course-card,
+.course-card.feature {
   background: rgba(255, 255, 255, .06);
   border: 1px solid rgba(255, 255, 255, .14);
   padding: 34px 30px;
   backdrop-filter: blur(10px);
-}
-
-.course-card.feature {
-  background: linear-gradient(135deg, rgba(4, 92, 57, .92), rgba(16, 27, 23, .88));
-  border-color: rgba(199, 175, 130, .35);
 }
 
 .course-card h3 {
