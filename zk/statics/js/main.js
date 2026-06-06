@@ -1,54 +1,43 @@
 const COMPANY_FULL_NAME = '中科明心(北海)智能科技有限公司';
 const COMPANY_SHORT_NAME = '中科明心';
-const OLD_COMPANY_NAMES = ['中科心智能教育科技服务平台', '中科心智能'];
 const FOCUS_COURSE_NAME = '身心脑一体化专注力课程';
+const READING_COURSE_NAME = '潜意识阅读';
+const OLD_COMPANY_NAMES = ['中科心智能教育科技服务平台', '中科心智能'];
 const OLD_FOCUS_COURSE_NAMES = ['心脑学习力成长课', '学习力成长体系'];
+const OLD_READING_COURSE_NAMES = ['心脑学习力强化营'];
 const HERO_SLIDE_DURATION = 7000;
 
-function replaceCompanyNameInText() {
-  document.title = document.title.replaceAll('中科心智能教育科技服务平台', COMPANY_FULL_NAME).replaceAll('中科心智能', COMPANY_SHORT_NAME);
-  document.querySelectorAll('meta[content]').forEach(meta => {
-    meta.content = meta.content.replaceAll('中科心智能教育科技服务平台', COMPANY_FULL_NAME).replaceAll('中科心智能', COMPANY_SHORT_NAME);
-  });
-
-  const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
+function replaceTextInNode(root, replacements) {
+  if (!root) return;
+  const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
     acceptNode(node) {
-      if (!node.nodeValue || !OLD_COMPANY_NAMES.some(name => node.nodeValue.includes(name))) return NodeFilter.FILTER_REJECT;
+      if (!node.nodeValue) return NodeFilter.FILTER_REJECT;
       if (node.parentElement && ['SCRIPT', 'STYLE', 'NOSCRIPT'].includes(node.parentElement.tagName)) return NodeFilter.FILTER_REJECT;
-      return NodeFilter.FILTER_ACCEPT;
+      return replacements.some(([from]) => node.nodeValue.includes(from)) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
     }
   });
-
   const nodes = [];
   while (walker.nextNode()) nodes.push(walker.currentNode);
   nodes.forEach(node => {
-    node.nodeValue = node.nodeValue
-      .replaceAll('中科心智能教育科技服务平台', COMPANY_FULL_NAME)
-      .replaceAll('中科心智能', COMPANY_SHORT_NAME);
+    let value = node.nodeValue;
+    replacements.forEach(([from, to]) => { value = value.replaceAll(from, to); });
+    node.nodeValue = value;
   });
 }
 
-function replaceFocusCourseNameInText() {
-  document.title = document.title.replaceAll('心脑学习力成长课', FOCUS_COURSE_NAME).replaceAll('学习力成长体系', FOCUS_COURSE_NAME);
+function replaceGlobalTexts() {
+  const replacements = [
+    ['中科心智能教育科技服务平台', COMPANY_FULL_NAME],
+    ['中科心智能', COMPANY_SHORT_NAME],
+    ['心脑学习力成长课', FOCUS_COURSE_NAME],
+    ['学习力成长体系', FOCUS_COURSE_NAME],
+    ['心脑学习力强化营', READING_COURSE_NAME]
+  ];
+  replacements.forEach(([from, to]) => { document.title = document.title.replaceAll(from, to); });
   document.querySelectorAll('meta[content]').forEach(meta => {
-    meta.content = meta.content.replaceAll('心脑学习力成长课', FOCUS_COURSE_NAME).replaceAll('学习力成长体系', FOCUS_COURSE_NAME);
+    replacements.forEach(([from, to]) => { meta.content = meta.content.replaceAll(from, to); });
   });
-
-  const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
-    acceptNode(node) {
-      if (!node.nodeValue || !OLD_FOCUS_COURSE_NAMES.some(name => node.nodeValue.includes(name))) return NodeFilter.FILTER_REJECT;
-      if (node.parentElement && ['SCRIPT', 'STYLE', 'NOSCRIPT'].includes(node.parentElement.tagName)) return NodeFilter.FILTER_REJECT;
-      return NodeFilter.FILTER_ACCEPT;
-    }
-  });
-
-  const nodes = [];
-  while (walker.nextNode()) nodes.push(walker.currentNode);
-  nodes.forEach(node => {
-    node.nodeValue = node.nodeValue
-      .replaceAll('心脑学习力成长课', FOCUS_COURSE_NAME)
-      .replaceAll('学习力成长体系', FOCUS_COURSE_NAME);
-  });
+  replaceTextInNode(document.body, replacements);
 }
 
 function setupViewportStability() {
@@ -138,7 +127,6 @@ function setupDropdownEvents() {
       if (link) link.setAttribute('aria-expanded', 'false');
     });
   };
-
   navItems.forEach(item => {
     const link = item.querySelector('.nav-link');
     if (!link) return;
@@ -162,10 +150,7 @@ function setupDropdownEvents() {
       link.setAttribute('aria-expanded', 'false');
     });
   });
-
-  document.addEventListener('click', event => {
-    if (!event.target.closest('.nav-item.has-dropdown')) closeAll();
-  });
+  document.addEventListener('click', event => { if (!event.target.closest('.nav-item.has-dropdown')) closeAll(); });
   window.addEventListener('resize', () => closeAll());
 }
 
@@ -190,7 +175,7 @@ function setupUnifiedLinks() {
       ${createNavDropdown('课程产品', link('courses.html'), [
         { text: FOCUS_COURSE_NAME, href: link('course-detail.html') },
         { text: '心脑学习力体验课', href: link('evaluation-detail.html') },
-        { text: '心脑学习力强化营', href: link('camp-detail.html') },
+        { text: READING_COURSE_NAME, href: link('camp-detail.html') },
         { text: '心脑学习力公开课', href: link('public-class-detail.html') }
       ], active === 'courses')}
       ${createNavDropdown('专家团队', link('team.html'), [
@@ -210,9 +195,7 @@ function setupUnifiedLinks() {
   }
 
   const navCta = document.querySelector('.nav-cta');
-  if (navCta) {
-    navCta.innerHTML = `<a class="btn btn-line" href="${contactUrl('trial')}">预约体验</a><a class="btn btn-gold" href="${contactUrl('cooperation')}">申请合作</a>`;
-  }
+  if (navCta) navCta.innerHTML = `<a class="btn btn-line" href="${contactUrl('trial')}">预约体验</a><a class="btn btn-gold" href="${contactUrl('cooperation')}">申请合作</a>`;
 
   setupFooterAndSticky(link);
   normalizeLegacyAnchors();
@@ -231,7 +214,7 @@ function setupFooterAndSticky(link) {
     footerGrid.innerHTML = `
       <div><div class="brand-mini">${COMPANY_SHORT_NAME}</div></div>
       <div><h4>关于我们</h4><a href="${link('about.html')}">公司简介</a><a href="${link('about.html')}">服务方向</a><a href="${link('about.html')}">发展愿景</a></div>
-      <div><h4>课程产品</h4><a href="${link('course-detail.html')}">${FOCUS_COURSE_NAME}</a><a href="${link('evaluation-detail.html')}">心脑学习力体验课</a><a href="${link('camp-detail.html')}">心脑学习力强化营</a><a href="${link('public-class-detail.html')}">心脑学习力公开课</a></div>
+      <div><h4>课程产品</h4><a href="${link('course-detail.html')}">${FOCUS_COURSE_NAME}</a><a href="${link('evaluation-detail.html')}">心脑学习力体验课</a><a href="${link('camp-detail.html')}">${READING_COURSE_NAME}</a><a href="${link('public-class-detail.html')}">心脑学习力公开课</a></div>
       <div><h4>专家团队</h4><a href="${link('experts.html')}">核心专家</a><a href="${link('assistants.html')}">助教团队</a></div>
       <div><h4>经典案例</h4><a href="${link('cases.html')}">案例总览</a></div>
       <div><h4>新闻活动</h4><a href="${link('company-news.html')}">公司动态</a><a href="${link('growth-news.html')}">成长资讯</a><a href="${link('limited-activity.html')}">限时活动</a></div>
@@ -252,12 +235,7 @@ function setupFooterAndSticky(link) {
 }
 
 function normalizeLegacyAnchors() {
-  const contactLinks = {
-    '#assessment': contactUrl('trial'), '#contact': buildUrl('contact.html'), '#join-form': contactUrl('cooperation'),
-    'index.html#assessment': contactUrl('trial'), 'index.html#contact': buildUrl('contact.html'), 'join.html#join-form': contactUrl('cooperation'),
-    '../index.html#assessment': contactUrl('trial'), '../index.html#contact': buildUrl('contact.html'),
-    '../../index.html#assessment': contactUrl('trial'), '../../index.html#contact': buildUrl('contact.html')
-  };
+  const contactLinks = { '#assessment': contactUrl('trial'), 'index.html#assessment': contactUrl('trial'), '#join': contactUrl('cooperation'), 'index.html#join': contactUrl('cooperation'), '#contact': buildUrl('contact.html') };
   document.querySelectorAll('a[href]').forEach(anchor => {
     const rawHref = anchor.getAttribute('href');
     if (contactLinks[rawHref]) anchor.setAttribute('href', contactLinks[rawHref]);
@@ -265,9 +243,7 @@ function normalizeLegacyAnchors() {
 }
 
 function removeLegacyStandaloneForms() {
-  document.querySelectorAll('.assess-form, .join-form').forEach(form => {
-    if (form.id !== 'unifiedInquiryForm') form.remove();
-  });
+  document.querySelectorAll('.assess-form, .join-form').forEach(form => { if (form.id !== 'unifiedInquiryForm') form.remove(); });
 }
 
 function setupUnifiedInquiryForm() {
@@ -279,26 +255,25 @@ function setupUnifiedInquiryForm() {
   const submit = form.querySelector('button[type="submit"]');
   const purposeLabels = { consult: '课程咨询', trial: '预约体验', cooperation: '加盟合作', activity: '活动合作', feedback: '服务反馈', other: '其他事项' };
   const placeholders = {
-    consult: '请说明孩子目前学习状态、想了解的课程或主要疑问', trial: '请说明孩子目前主要情况，以及希望预约体验的大致时间',
-    cooperation: '请简要说明所在城市、现有资源和合作想法', activity: '请说明活动地点、预计人数、时间安排和合作需求',
-    feedback: '请说明需要反馈或改进的具体事项', other: '请简要说明你的需求'
+    consult: '请说明孩子目前学习状态、想了解的课程或主要疑问',
+    trial: '请说明孩子目前主要情况，以及希望预约体验的大致时间',
+    cooperation: '请简要说明所在城市、现有资源和合作想法',
+    activity: '请说明活动地点、预计人数、时间安排和合作需求',
+    feedback: '请说明需要反馈或改进的具体事项',
+    other: '请简要说明你的需求'
   };
-
   function updateFields() {
     const value = select ? select.value : 'consult';
     fields.forEach(group => group.hidden = group.dataset.for !== value);
     if (message) message.placeholder = placeholders[value] || placeholders.other;
     if (submit) submit.textContent = value === 'cooperation' ? '提交合作申请' : value === 'trial' ? '提交预约信息' : '提交信息';
   }
-  function applyQueryPurpose() {
-    if (!select) return;
+  if (select) {
     const purpose = new URLSearchParams(window.location.search).get('purpose');
     if (purpose && [...select.options].some(option => option.value === purpose)) select.value = purpose;
+    select.addEventListener('change', updateFields);
   }
-
-  applyQueryPurpose(); updateFields();
-  if (select) select.addEventListener('change', updateFields);
-
+  updateFields();
   form.addEventListener('submit', event => {
     event.preventDefault();
     const data = new FormData(form);
@@ -353,9 +328,7 @@ function setupRevealAnimation() {
   if (!reveals.length) return;
   if (!('IntersectionObserver' in window)) { reveals.forEach(el => el.classList.add('show')); return; }
   const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) { entry.target.classList.add('show'); observer.unobserve(entry.target); }
-    });
+    entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('show'); observer.unobserve(entry.target); } });
   }, { threshold: 0.12 });
   reveals.forEach(el => observer.observe(el));
 }
@@ -380,7 +353,7 @@ function setList(items) {
   return `<ul>${items.map(item => `<li>${item}</li>`).join('')}</ul>`;
 }
 
-function updateCourseCard(card, mode = 'home') {
+function updateFocusCard(card, mode = 'home') {
   if (!card) return;
   const title = card.querySelector('h3');
   const text = card.querySelector('p');
@@ -393,24 +366,33 @@ function updateCourseCard(card, mode = 'home') {
   if (list) list.innerHTML = ['身体锚定与呼吸训练', '感官专注与图像记忆', '情绪觉察与21天陪跑'].map(item => `<li>${item}</li>`).join('');
 }
 
+function updateReadingCard(card, mode = 'home') {
+  if (!card) return;
+  const title = card.querySelector('h3');
+  const text = card.querySelector('p');
+  const list = card.querySelector('ul');
+  const tag = card.querySelector('.tag, .label');
+  if (title) title.textContent = READING_COURSE_NAME;
+  if (tag && mode === 'home') tag.textContent = '高效阅读';
+  if (tag && mode === 'system') tag.textContent = '阅读突破';
+  if (text) text.textContent = '面向12-18岁青少年，训练整页摄入、脑内成像和结构化理解能力，帮助孩子提升阅读效率、理解表达和考试阅读速度。';
+  if (list) list.innerHTML = ['破除逐字默读习惯', '整页摄入与脑内成像', '速读理解与复述输出'].map(item => `<li>${item}</li>`).join('');
+}
+
 function applyFocusCourseContent() {
-  replaceFocusCourseNameInText();
+  updateFocusCard(document.querySelector('#course .product-card'), 'home');
+  updateFocusCard(document.querySelector('.system-grid .system-card'), 'system');
+  updateFocusCard(document.querySelector('.course-list .course-card'), 'detail-list');
 
-  updateCourseCard(document.querySelector('#course .product-card'), 'home');
-  updateCourseCard(document.querySelector('.system-grid .system-card'), 'system');
-  updateCourseCard(document.querySelector('.course-list .course-card'), 'detail-list');
-
+  if (!window.location.pathname.endsWith('course-detail.html')) return;
   const heroTitle = document.querySelector('.detail-hero h1');
   if (heroTitle) heroTitle.textContent = FOCUS_COURSE_NAME;
   const heroDesc = document.querySelector('.detail-hero p');
   if (heroDesc) heroDesc.textContent = '面向8-16岁青少年，以专注力训练为入口，融合身体稳定、感官聚焦、图像化记忆、情绪觉察和家庭陪跑，帮助孩子把学习状态真正稳定下来。';
   const detailTags = document.querySelector('.detail-tags');
   if (detailTags) detailTags.innerHTML = '<span>主打课程</span><span>8-16岁青少年</span><span>专注力训练</span><span>图像化记忆</span><span>21天家庭陪跑</span>';
-  const breadcrumb = document.querySelector('.breadcrumb');
-  if (breadcrumb) breadcrumb.innerHTML = breadcrumb.innerHTML.replace(/心脑学习力成长课|学习力成长体系/g, FOCUS_COURSE_NAME);
-
   const detailMain = document.querySelector('.detail-main');
-  if (detailMain && window.location.pathname.endsWith('course-detail.html')) {
+  if (detailMain) {
     detailMain.innerHTML = `
       <div class="detail-block reveal show"><h2>课程定位</h2><p>${FOCUS_COURSE_NAME}不是单纯的知识补习课，而是一门面向青少年学习底层能力的训练课程。课程通过可体验、可练习、可反馈的任务，帮助孩子先稳定身体和注意状态，再逐步提升记忆、情绪管理和学习内驱力。</p><p>官网页面不展示完整课表，只保留家长最需要判断的部分：孩子适不适合、课程怎么训练、能看到什么变化，以及如何开始体验。</p></div>
       <div class="detail-block reveal show"><h2>适合对象</h2>${setList(['8-16岁，处于专注力、记忆力和自我管理能力发展的关键阶段','上课分心、作业拖拉、手机依赖、学习启动困难的孩子','背诵吃力、记忆效率低、学习方法不清晰的孩子','情绪波动较大、遇到难题容易烦躁或退缩的孩子','希望进一步提升专注、记忆、自我管理和内在动力的优秀青少年'])}</div>
@@ -420,24 +402,48 @@ function applyFocusCourseContent() {
       <div class="detail-block reveal show"><h2>21天家庭陪跑</h2><p>课程结束不是训练结束。我们建议配合21天家庭陪跑：每天10-15分钟短时练习，家长进行简单记录，老师阶段性反馈，帮助孩子把课堂中的状态训练迁移到日常学习中。</p>${setList(['每日短时练习：降低执行难度，便于坚持','家长打卡记录：看见孩子状态变化，而不是只盯成绩','阶段反馈建议：帮助家庭形成更稳定的支持系统'])}</div>
     `;
   }
-
   const sideCard = document.querySelector('.side-card');
-  if (sideCard && window.location.pathname.endsWith('course-detail.html')) {
-    sideCard.innerHTML = `<h3>课程信息</h3><p>适合希望改善专注、记忆、情绪稳定和学习内驱力的家庭。</p><div class="side-list"><div><b>对象</b><span>8-16岁青少年</span></div><div><b>形式</b><span>日常课 / 集训营</span></div><div><b>重点</b><span>专注、记忆、情绪、自驱</span></div><div><b>安排</b><span>阶段训练，不公开完整课表</span></div><div><b>巩固</b><span>21天家庭陪跑</span></div></div><a class="btn btn-gold" href="${contactUrl('trial')}">预约体验</a><a class="btn btn-line" href="courses.html">返回课程产品</a>`;
-  }
-
+  if (sideCard) sideCard.innerHTML = `<h3>课程信息</h3><p>适合希望改善专注、记忆、情绪稳定和学习内驱力的家庭。</p><div class="side-list"><div><b>对象</b><span>8-16岁青少年</span></div><div><b>形式</b><span>日常课 / 集训营</span></div><div><b>重点</b><span>专注、记忆、情绪、自驱</span></div><div><b>安排</b><span>阶段训练，不公开完整课表</span></div><div><b>巩固</b><span>21天家庭陪跑</span></div></div><a class="btn btn-gold" href="${contactUrl('trial')}">预约体验</a><a class="btn btn-line" href="courses.html">返回课程产品</a>`;
   const cta = document.querySelector('.detail-cta-wrap');
-  if (cta && window.location.pathname.endsWith('course-detail.html')) {
-    cta.innerHTML = `<div><h2>先从一次体验测评开始</h2><p>通过体验任务初步了解孩子的专注、记忆和情绪状态，再判断是否适合进入系统训练。</p></div><div class="detail-cta-actions"><a class="btn btn-primary" href="${contactUrl('trial')}">预约体验</a><a class="btn btn-gold" href="courses.html">查看全部课程</a></div>`;
+  if (cta) cta.innerHTML = `<div><h2>先从一次体验测评开始</h2><p>通过体验任务初步了解孩子的专注、记忆和情绪状态，再判断是否适合进入系统训练。</p></div><div class="detail-cta-actions"><a class="btn btn-primary" href="${contactUrl('trial')}">预约体验</a><a class="btn btn-gold" href="courses.html">查看全部课程</a></div>`;
+}
+
+function applyReadingCourseContent() {
+  updateReadingCard(document.querySelector('#course .product-grid .product-card:nth-child(3)'), 'home');
+  updateReadingCard(document.querySelector('.system-grid .system-card:nth-child(3)'), 'system');
+  updateReadingCard(document.querySelector('.course-list .course-card:nth-child(3)'), 'detail-list');
+
+  if (!window.location.pathname.endsWith('camp-detail.html')) return;
+  const heroTitle = document.querySelector('.detail-hero h1');
+  if (heroTitle) heroTitle.textContent = READING_COURSE_NAME;
+  const heroDesc = document.querySelector('.detail-hero p');
+  if (heroDesc) heroDesc.textContent = '面向12-18岁青少年，帮助孩子打破逐字默读习惯，训练整页摄入、脑内成像、结构化理解和复述表达能力，让阅读更快、更准、更能讲出来。';
+  const detailTags = document.querySelector('.detail-tags');
+  if (detailTags) detailTags.innerHTML = '<span>阅读突破</span><span>12-18岁青少年</span><span>整页摄入</span><span>脑内成像</span><span>理解复述</span>';
+  const detailMain = document.querySelector('.detail-main');
+  if (detailMain) {
+    detailMain.innerHTML = `
+      <div class="detail-block reveal show"><h2>课程定位</h2><p>${READING_COURSE_NAME}不是单纯追求“读得快”的速读课，而是训练孩子从逐字默读转向整页摄入、图像化理解和结构化输出。课程目标是让孩子读完以后能够讲出来、说清楚、抓住重点。</p><p>官网页面不展示完整课表，只保留家长判断课程价值所需的关键内容：适合谁、怎么训练、能解决什么问题、训练后能看到哪些变化。</p></div>
+      <div class="detail-block reveal show"><h2>适合对象</h2>${setList(['12-18岁，已经具备基本阅读能力，希望提升阅读效率的青少年','阅读速度慢、考试阅读量大时容易读不完的学生','习惯逐字默读，读完后抓不住重点、讲不清结构的孩子','希望提升语文阅读、信息处理、复述表达和应试效率的学生','建议具备一定专注基础，或先参加专注力/记忆类课程后再进入训练'])}</div>
+      <div class="detail-block reveal show"><h2>核心训练模块</h2><div class="feature-grid"><div class="feature-item"><b>01</b><h3>破除默读</h3><p>通过节奏、手指引读和软眼训练，减少逐字默念对阅读速度的限制。</p></div><div class="feature-item"><b>02</b><h3>整页摄入</h3><p>训练视野扩展、页面感知和快速扫描，让孩子建立整页信息摄入意识。</p></div><div class="feature-item"><b>03</b><h3>脑内成像</h3><p>把叙事内容转化为脑内电影，把说理内容转化为结构图。</p></div><div class="feature-item"><b>04</b><h3>直接理解</h3><p>训练快速把握作者意图、情绪基调和文章结构。</p></div><div class="feature-item"><b>05</b><h3>输出验证</h3><p>通过复述、笔试、口试、演讲等方式检验读懂程度。</p></div><div class="feature-item"><b>06</b><h3>阅读习惯</h3><p>制定后续阅读计划，让速读能力真正迁移到日常学习。</p></div></div></div>
+      <div class="detail-block reveal show"><h2>典型训练路径</h2><p>课程可根据日常课或集训形式调整。官网展示阶段路径，不直接展示完整课表。</p><div class="course-flow"><div class="flow-item"><b>1</b><span>破限启动</span><p>破除逐字默读，建立快速摄入的基础感知。</p></div><div class="flow-item"><b>2</b><span>页面成像</span><p>训练整页扫描、闪页成像和脑内页面快照。</p></div><div class="flow-item"><b>3</b><span>理解转化</span><p>把文字变成脑内电影或结构图，提升理解效率。</p></div><div class="flow-item"><b>4</b><span>实战检验</span><p>通过限时阅读、笔试、口试和复盘验证真实效果。</p></div><div class="flow-item"><b>5</b><span>阅读计划</span><p>形成后续阅读习惯，把能力迁移到学习和考试。</p></div></div></div>
+      <div class="detail-block reveal show"><h2>家长能感受到的变化</h2>${setList(['阅读速度明显提升，面对长文章不再慌乱','读完后能复述核心结构和关键细节','从“逐字念”转向“整体看”，信息处理更主动','做阅读题时更容易抓住重点和作者意图','孩子更愿意读书，阅读从负担变成更有画面感的体验'])}</div>
+      <div class="detail-block reveal show"><h2>训练效果参考</h2><p>课程训练目标包括：打破逐字默读习惯、提升整页摄入能力、形成脑内影像或结构图，并通过笔试、口试、复述和实战阅读检验理解效果。</p>${setList(['阅读速度目标：从常规速度向更高效阅读过渡','理解输出目标：读完能讲出来，能抓住结构和重点','考试应用目标：面对大阅读量时更从容，留出更多答题和检查时间'])}</div>
+    `;
   }
+  const sideCard = document.querySelector('.side-card');
+  if (sideCard) sideCard.innerHTML = `<h3>课程信息</h3><p>适合希望突破阅读速度、理解效率和表达输出的学生。</p><div class="side-list"><div><b>对象</b><span>12-18岁青少年</span></div><div><b>重点</b><span>整页摄入、脑内成像</span></div><div><b>目标</b><span>读得快、懂得准、讲得出</span></div><div><b>形式</b><span>阶段训练 / 集训营</span></div><div><b>建议</b><span>具备一定专注基础后学习</span></div></div><a class="btn btn-gold" href="${contactUrl('trial')}">预约体验</a><a class="btn btn-line" href="courses.html">返回课程产品</a>`;
+  const cta = document.querySelector('.detail-cta-wrap');
+  if (cta) cta.innerHTML = `<div><h2>想知道孩子是否适合学习潜意识阅读？</h2><p>可以先通过一次体验测评，了解孩子当前阅读速度、理解方式和表达输出状态。</p></div><div class="detail-cta-actions"><a class="btn btn-primary" href="${contactUrl('trial')}">预约体验</a><a class="btn btn-gold" href="courses.html">查看全部课程</a></div>`;
 }
 
 function init() {
   setupViewportStability();
   setupUnifiedLinks();
   removeLegacyStandaloneForms();
-  replaceCompanyNameInText();
+  replaceGlobalTexts();
   applyFocusCourseContent();
+  applyReadingCourseContent();
   setupUnifiedInquiryForm();
   setupDemoForms();
   setupHeroSlider();
