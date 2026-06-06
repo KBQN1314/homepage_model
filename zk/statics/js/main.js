@@ -298,6 +298,7 @@ function setupUnifiedInquiryForm() {
 
   applyQueryPurpose(); updateFields();
   if (select) select.addEventListener('change', updateFields);
+
   form.addEventListener('submit', event => {
     event.preventDefault();
     const data = new FormData(form);
@@ -388,8 +389,8 @@ function updateCourseCard(card, mode = 'home') {
   if (title) title.textContent = FOCUS_COURSE_NAME;
   if (tag && mode === 'home') tag.textContent = '主打课程';
   if (tag && mode === 'system') tag.textContent = '专注力提升';
-  if (text) text.textContent = '面向8-16岁青少年，以身体稳定、感官专注、心像记忆和情绪觉察为核心，帮助孩子建立更稳定的学习状态。';
-  if (list) list.innerHTML = ['身体锚定与呼吸训练', '感官收摄与专注练习', '心像记忆与情绪觉察'].map(item => `<li>${item}</li>`).join('');
+  if (text) text.textContent = '面向8-16岁青少年，以身体稳定、感官专注、图像化记忆、情绪觉察和目标行动为主线，帮助孩子建立更稳定的学习状态。';
+  if (list) list.innerHTML = ['身体锚定与呼吸训练', '感官专注与图像记忆', '情绪觉察与21天陪跑'].map(item => `<li>${item}</li>`).join('');
 }
 
 function applyFocusCourseContent() {
@@ -402,31 +403,32 @@ function applyFocusCourseContent() {
   const heroTitle = document.querySelector('.detail-hero h1');
   if (heroTitle) heroTitle.textContent = FOCUS_COURSE_NAME;
   const heroDesc = document.querySelector('.detail-hero p');
-  if (heroDesc) heroDesc.textContent = '以身心脑一体化训练为主线，帮助青少年提升专注力、图像化记忆、自我觉察和学习内驱力。';
+  if (heroDesc) heroDesc.textContent = '面向8-16岁青少年，以专注力训练为入口，融合身体稳定、感官聚焦、图像化记忆、情绪觉察和家庭陪跑，帮助孩子把学习状态真正稳定下来。';
   const detailTags = document.querySelector('.detail-tags');
-  if (detailTags) detailTags.innerHTML = '<span>主打课程</span><span>8-16岁青少年</span><span>专注力训练</span><span>21天陪跑</span>';
+  if (detailTags) detailTags.innerHTML = '<span>主打课程</span><span>8-16岁青少年</span><span>专注力训练</span><span>图像化记忆</span><span>21天家庭陪跑</span>';
   const breadcrumb = document.querySelector('.breadcrumb');
   if (breadcrumb) breadcrumb.innerHTML = breadcrumb.innerHTML.replace(/心脑学习力成长课|学习力成长体系/g, FOCUS_COURSE_NAME);
 
   const detailMain = document.querySelector('.detail-main');
   if (detailMain && window.location.pathname.endsWith('course-detail.html')) {
     detailMain.innerHTML = `
-      <div class="detail-block reveal show"><h2>课程介绍</h2><p>${FOCUS_COURSE_NAME}面向8-16岁青少年，课程从身体稳定、注意聚焦、图像记忆、情绪觉察和目标行动五个层面切入，帮助孩子把“坐得住、看得进、记得牢、情绪稳、愿意做”逐步变成可训练、可反馈的能力。</p><p>课程不做单纯知识补习，而是围绕学习底层能力进行训练，并通过家庭练习和阶段反馈，让家长能够看见孩子学习状态的变化。</p></div>
-      <div class="detail-block reveal show"><h2>适合对象</h2>${setList(['8-16岁，正处于专注力、记忆力和价值观形成关键阶段的青少年','上课容易分心、作业拖拉、手机依赖或学习启动困难的孩子','记忆效率低、背诵吃力、学习方法不清晰的孩子','情绪波动较大、遇到难题容易烦躁或退缩的孩子','希望提升专注、记忆、自我管理和内在动力的家庭'])}</div>
-      <div class="detail-block reveal show"><h2>核心训练模块</h2><div class="feature-grid"><div class="feature-item"><b>01</b><h3>身体锚定</h3><p>通过呼吸、坐姿和身体觉察，让孩子先稳定下来。</p></div><div class="feature-item"><b>02</b><h3>感官收摄</h3><p>通过微观观察、听觉追踪等任务训练注意聚焦。</p></div><div class="feature-item"><b>03</b><h3>心像记忆</h3><p>用图像化、多感官想象帮助孩子提升记忆效率。</p></div><div class="feature-item"><b>04</b><h3>情绪觉察</h3><p>学习识别念头与情绪，减少冲动和学习抵触。</p></div><div class="feature-item"><b>05</b><h3>目标行动</h3><p>把目标可视化，形成“意图—专注—行动—反馈”的闭环。</p></div></div></div>
-      <div class="detail-block reveal show"><h2>课程价值</h2>${setList(['孩子：提升专注稳定性、图像化记忆和任务投入感','家长：更清楚孩子的真实学习状态，减少盲目焦虑','家庭：通过每日练习和反馈形成更稳定的支持系统','学校/机构：可作为学习力训练和心理成长服务的补充课程'])}</div>
-      <div class="detail-block reveal show"><h2>服务方式</h2><div class="course-flow"><div class="flow-item"><b>1</b><span>初步咨询</span><p>了解年龄、学习状态和家长关注点。</p></div><div class="flow-item"><b>2</b><span>体验测评</span><p>通过简单任务观察专注、记忆与表达状态。</p></div><div class="flow-item"><b>3</b><span>正式训练</span><p>围绕身体、感官、心像、情绪和目标开展训练。</p></div><div class="flow-item"><b>4</b><span>家庭陪跑</span><p>安排每日短时练习，建立家校协同反馈。</p></div><div class="flow-item"><b>5</b><span>阶段反馈</span><p>反馈变化，并给出后续训练建议。</p></div></div></div>
+      <div class="detail-block reveal show"><h2>课程定位</h2><p>${FOCUS_COURSE_NAME}不是单纯的知识补习课，而是一门面向青少年学习底层能力的训练课程。课程通过可体验、可练习、可反馈的任务，帮助孩子先稳定身体和注意状态，再逐步提升记忆、情绪管理和学习内驱力。</p><p>官网页面不展示完整课表，只保留家长最需要判断的部分：孩子适不适合、课程怎么训练、能看到什么变化，以及如何开始体验。</p></div>
+      <div class="detail-block reveal show"><h2>适合对象</h2>${setList(['8-16岁，处于专注力、记忆力和自我管理能力发展的关键阶段','上课分心、作业拖拉、手机依赖、学习启动困难的孩子','背诵吃力、记忆效率低、学习方法不清晰的孩子','情绪波动较大、遇到难题容易烦躁或退缩的孩子','希望进一步提升专注、记忆、自我管理和内在动力的优秀青少年'])}</div>
+      <div class="detail-block reveal show"><h2>核心训练模块</h2><div class="feature-grid"><div class="feature-item"><b>01</b><h3>身体锚定</h3><p>通过呼吸、坐姿和身体觉察，让孩子先安静下来、稳定下来。</p></div><div class="feature-item"><b>02</b><h3>感官专注</h3><p>通过微观观察、听觉追踪等任务，训练注意力的聚焦和抗干扰。</p></div><div class="feature-item"><b>03</b><h3>心像记忆</h3><p>用图像化、多感官想象和空间记忆，改善机械背诵效率低的问题。</p></div><div class="feature-item"><b>04</b><h3>情绪觉察</h3><p>帮助孩子识别念头与情绪，减少冲动和学习抵触。</p></div><div class="feature-item"><b>05</b><h3>目标行动</h3><p>通过目标可视化和行动承诺，建立“想做—能做—持续做”的动力闭环。</p></div><div class="feature-item"><b>06</b><h3>家庭陪跑</h3><p>用每日短时练习和阶段反馈，让训练从课堂延伸到家庭。</p></div></div></div>
+      <div class="detail-block reveal show"><h2>典型训练路径</h2><p>课程可根据日常课或集训营形式灵活安排。官网只展示阶段路径，完整日程建议在咨询后根据孩子情况单独沟通。</p><div class="course-flow"><div class="flow-item"><b>1</b><span>状态观察</span><p>了解孩子专注、记忆、表达和情绪状态。</p></div><div class="flow-item"><b>2</b><span>身心安定</span><p>用呼吸、坐姿和身体觉察建立稳定基础。</p></div><div class="flow-item"><b>3</b><span>专注记忆</span><p>训练感官聚焦、图像化记忆和任务投入。</p></div><div class="flow-item"><b>4</b><span>情绪目标</span><p>引导孩子识别情绪，建立目标感和行动意愿。</p></div><div class="flow-item"><b>5</b><span>反馈陪跑</span><p>通过家庭练习和阶段反馈巩固变化。</p></div></div></div>
+      <div class="detail-block reveal show"><h2>家长能感受到的变化</h2>${setList(['孩子更容易坐得住，进入学习状态的时间缩短','注意力更集中，完成任务时更少被外界打断','记忆方式从死记硬背转向图像化、结构化记忆','能更清楚表达情绪，遇到困难时不再只会烦躁或逃避','家长更清楚孩子问题背后的原因，陪伴方式更有方向'])}</div>
+      <div class="detail-block reveal show"><h2>21天家庭陪跑</h2><p>课程结束不是训练结束。我们建议配合21天家庭陪跑：每天10-15分钟短时练习，家长进行简单记录，老师阶段性反馈，帮助孩子把课堂中的状态训练迁移到日常学习中。</p>${setList(['每日短时练习：降低执行难度，便于坚持','家长打卡记录：看见孩子状态变化，而不是只盯成绩','阶段反馈建议：帮助家庭形成更稳定的支持系统'])}</div>
     `;
   }
 
   const sideCard = document.querySelector('.side-card');
   if (sideCard && window.location.pathname.endsWith('course-detail.html')) {
-    sideCard.innerHTML = `<h3>课程信息</h3><p>适合希望提升孩子专注力、记忆力、情绪稳定和学习内驱力的家庭。</p><div class="side-list"><div><b>对象</b><span>8-16岁青少年</span></div><div><b>形式</b><span>日常课 / 集训营</span></div><div><b>重点</b><span>专注、记忆、情绪、自驱</span></div><div><b>机制</b><span>21天家庭陪跑</span></div><div><b>反馈</b><span>阶段记录与家长沟通</span></div></div><a class="btn btn-gold" href="${contactUrl('trial')}">预约体验</a><a class="btn btn-line" href="courses.html">返回课程产品</a>`;
+    sideCard.innerHTML = `<h3>课程信息</h3><p>适合希望改善专注、记忆、情绪稳定和学习内驱力的家庭。</p><div class="side-list"><div><b>对象</b><span>8-16岁青少年</span></div><div><b>形式</b><span>日常课 / 集训营</span></div><div><b>重点</b><span>专注、记忆、情绪、自驱</span></div><div><b>安排</b><span>阶段训练，不公开完整课表</span></div><div><b>巩固</b><span>21天家庭陪跑</span></div></div><a class="btn btn-gold" href="${contactUrl('trial')}">预约体验</a><a class="btn btn-line" href="courses.html">返回课程产品</a>`;
   }
 
   const cta = document.querySelector('.detail-cta-wrap');
   if (cta && window.location.pathname.endsWith('course-detail.html')) {
-    cta.innerHTML = `<div><h2>先从一次体验测评开始</h2><p>通过体验任务初步了解孩子的专注、记忆和情绪状态，再决定后续训练方向。</p></div><div class="detail-cta-actions"><a class="btn btn-primary" href="${contactUrl('trial')}">预约体验</a><a class="btn btn-gold" href="courses.html">查看全部课程</a></div>`;
+    cta.innerHTML = `<div><h2>先从一次体验测评开始</h2><p>通过体验任务初步了解孩子的专注、记忆和情绪状态，再判断是否适合进入系统训练。</p></div><div class="detail-cta-actions"><a class="btn btn-primary" href="${contactUrl('trial')}">预约体验</a><a class="btn btn-gold" href="courses.html">查看全部课程</a></div>`;
   }
 }
 
