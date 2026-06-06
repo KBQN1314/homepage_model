@@ -58,7 +58,42 @@ const COURSE_COPY = {
 
 function cleanCourseName(text) {
   if (!text) return text;
-  return text.replaceAll('心脑学习力自主营（数学）（数学）', SELF_STUDY_COURSE_NAME);
+  return text
+    .replaceAll('心脑学习力自主营（数学）（数学）', SELF_STUDY_COURSE_NAME)
+    .replaceAll('心脑学习力自主营（数学） （数学）', SELF_STUDY_COURSE_NAME);
+}
+
+function getPathPrefix() {
+  const path = window.location.pathname;
+  if (path.includes('/zk/news/company/') || path.includes('/zk/news/growth/') || path.includes('/zk/news/limited/')) return '../../';
+  if (path.includes('/zk/expert/') || path.includes('/zk/cases/')) return '../';
+  return '';
+}
+
+function buildUrl(file, params = '') {
+  return `${getPathPrefix()}${file}${params}`;
+}
+
+function contactUrl(purpose) {
+  return buildUrl('contact.html', `?purpose=${purpose}#contact-form`);
+}
+
+function setList(items) {
+  return `<ul>${items.map(item => `<li>${item}</li>`).join('')}</ul>`;
+}
+
+function getActivePage() {
+  const path = window.location.pathname;
+  const file = path.split('/').pop() || 'index.html';
+  if (file === 'index.html' || path.endsWith('/zk/')) return 'home';
+  if (file === 'about.html') return 'about';
+  if (['courses.html', 'course-detail.html', 'evaluation-detail.html', 'camp-detail.html', 'public-class-detail.html'].includes(file)) return 'courses';
+  if (['team.html', 'team-page-2.html', 'experts.html', 'assistants.html'].includes(file) || path.includes('/zk/expert/')) return 'team';
+  if (file === 'cases.html' || path.includes('/zk/cases/')) return 'cases';
+  if (['news.html', 'company-news.html', 'growth-news.html', 'limited-activity.html'].includes(file) || path.includes('/zk/news/')) return 'news';
+  if (file === 'join.html') return 'join';
+  if (file === 'contact.html') return 'contact';
+  return '';
 }
 
 function replaceTextInNode(root, replacements) {
@@ -89,9 +124,10 @@ function replaceGlobalTexts() {
     ['潜意识阅读', READING_COURSE_NAME],
     ['心脑学习力强化营', READING_COURSE_NAME],
     ['五四学习法数学实训营', SELF_STUDY_COURSE_NAME],
+    ['心脑学习力公开课', SELF_STUDY_COURSE_NAME],
+    ['心脑学习力自主营（数学）（数学）', SELF_STUDY_COURSE_NAME],
     ['心脑学习力自主营（数学）', SELF_STUDY_COURSE_NAME],
-    ['心脑学习力自主营', SELF_STUDY_COURSE_NAME],
-    ['心脑学习力公开课', SELF_STUDY_COURSE_NAME]
+    ['心脑学习力自主营', SELF_STUDY_COURSE_NAME]
   ];
   replacements.forEach(([from, to]) => { document.title = cleanCourseName(document.title.replaceAll(from, to)); });
   document.querySelectorAll('meta[content]').forEach(meta => {
@@ -130,31 +166,6 @@ function setupViewportStability() {
   `;
   document.head.appendChild(style);
 }
-
-function getPathPrefix() {
-  const path = window.location.pathname;
-  if (path.includes('/zk/news/company/') || path.includes('/zk/news/growth/') || path.includes('/zk/news/limited/')) return '../../';
-  if (path.includes('/zk/expert/') || path.includes('/zk/cases/')) return '../';
-  return '';
-}
-
-function getActivePage() {
-  const path = window.location.pathname;
-  const file = path.split('/').pop() || 'index.html';
-  if (file === 'index.html' || path.endsWith('/zk/')) return 'home';
-  if (file === 'about.html') return 'about';
-  if (['courses.html', 'course-detail.html', 'evaluation-detail.html', 'camp-detail.html', 'public-class-detail.html'].includes(file)) return 'courses';
-  if (['team.html', 'team-page-2.html', 'experts.html', 'assistants.html'].includes(file) || path.includes('/zk/expert/')) return 'team';
-  if (file === 'cases.html' || path.includes('/zk/cases/')) return 'cases';
-  if (['news.html', 'company-news.html', 'growth-news.html', 'limited-activity.html'].includes(file) || path.includes('/zk/news/')) return 'news';
-  if (file === 'join.html') return 'join';
-  if (file === 'contact.html') return 'contact';
-  return '';
-}
-
-function buildUrl(file, params = '') { return `${getPathPrefix()}${file}${params}`; }
-function contactUrl(purpose) { return buildUrl('contact.html', `?purpose=${purpose}#contact-form`); }
-function setList(items) { return `<ul>${items.map(item => `<li>${item}</li>`).join('')}</ul>`; }
 
 function injectNavStylesheet(prefix) {
   if (document.querySelector('link[data-nav-dropdown]')) return;
@@ -280,9 +291,9 @@ function setupFooterAndSticky(link) {
   const copyright = document.querySelector('.copyright');
   if (copyright) copyright.textContent = `© 2026 ${COMPANY_FULL_NAME}`;
   if (!document.querySelector('.sticky')) {
-    const sticky = document.createElement('div');
-    sticky.className = 'sticky';
-    document.body.insertBefore(sticky, document.querySelector('script[src*="main.js"]') || null);
+    const stickyEl = document.createElement('div');
+    stickyEl.className = 'sticky';
+    document.body.insertBefore(stickyEl, document.querySelector('script[src*="main.js"]') || null);
   }
   const sticky = document.querySelector('.sticky');
   if (sticky) sticky.innerHTML = `<a href="${contactUrl('trial')}">预约</a><a href="${contactUrl('cooperation')}">合作</a>`;
@@ -439,6 +450,8 @@ function setupHeroSlider() {
   const slides = [...document.querySelectorAll('.slide')];
   const dots = [...document.querySelectorAll('.hero-dots button')];
   if (!slides.length) return;
+  const heroInner = document.querySelector('.hero-inner');
+  if (heroInner) heroInner.classList.add('anim');
   let current = slides.findIndex(slide => slide.classList.contains('active'));
   if (current < 0) current = 0;
   let timer = null;
@@ -447,8 +460,10 @@ function setupHeroSlider() {
     slides.forEach((slide, i) => slide.classList.toggle('active', i === current));
     dots.forEach((dot, i) => dot.classList.toggle('active', i === current));
     if (progress) {
+      progress.classList.remove('cur');
       progress.style.animation = 'none';
       void progress.offsetWidth;
+      progress.classList.add('cur');
       progress.style.animation = `heroLine ${HERO_SLIDE_DURATION / 1000}s linear infinite`;
     }
   };
@@ -486,7 +501,11 @@ function setupRevealAnimation() {
 function setupMenuAndModal() {
   const hamburger = document.querySelector('.hamb');
   const nav = document.querySelector('header nav');
-  if (hamburger && nav) hamburger.addEventListener('click', () => nav.classList.toggle('open'));
+  if (hamburger && nav) hamburger.addEventListener('click', () => {
+    nav.classList.toggle('open');
+    hamburger.classList.toggle('expanded');
+    document.body.classList.toggle('nav-open');
+  });
   const modal = document.getElementById('modal');
   if (modal) modal.addEventListener('click', event => {
     if (event.target === modal || event.target.id === 'closeModal') modal.classList.remove('show');
@@ -501,8 +520,124 @@ function setupHeaderScroll() {
   window.addEventListener('scroll', sync, { passive: true });
 }
 
+function setupLoadingCurtain() {
+  const loading = document.querySelector('.loading');
+  if (!loading) return;
+  loading.classList.add('loading-curtain');
+  if (!loading.querySelector('.curtain-panel')) {
+    const top = document.createElement('div');
+    const bottom = document.createElement('div');
+    top.className = 'curtain-panel curtain-top';
+    bottom.className = 'curtain-panel curtain-bottom';
+    loading.prepend(top);
+    loading.appendChild(bottom);
+  }
+  loading.classList.remove('done');
+  loading.classList.remove('hide');
+  requestAnimationFrame(() => {
+    setTimeout(() => loading.classList.add('hide'), 260);
+    setTimeout(() => loading.classList.add('done'), 1600);
+  });
+}
+
+function setupPageTransitions() {
+  if (document.getElementById('pageTransitionStyle')) return;
+  const style = document.createElement('style');
+  style.id = 'pageTransitionStyle';
+  style.textContent = `
+    .page-transition-mask {
+      position: fixed;
+      inset: 0;
+      z-index: 99999;
+      display: grid;
+      place-items: center;
+      pointer-events: none;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity .42s cubic-bezier(.77,0,.175,1), visibility .42s;
+      background:
+        radial-gradient(circle at 70% 25%, rgba(199,175,130,.22), transparent 32%),
+        linear-gradient(135deg, rgba(4,92,57,.98), rgba(16,27,23,.98));
+    }
+    .page-transition-mask.active {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
+    .page-transition-mask::before,
+    .page-transition-mask::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      transform: translateX(-105%) skewX(-9deg);
+      background: rgba(255,255,255,.10);
+      transition: transform .62s cubic-bezier(.77,0,.175,1);
+    }
+    .page-transition-mask::after {
+      background: rgba(199,175,130,.20);
+      transition-delay: .08s;
+    }
+    .page-transition-mask.active::before,
+    .page-transition-mask.active::after {
+      transform: translateX(105%) skewX(-9deg);
+    }
+    .page-transition-mark {
+      position: relative;
+      z-index: 2;
+      color: #fff;
+      letter-spacing: 5px;
+      font-size: 12px;
+      text-transform: uppercase;
+      opacity: .86;
+    }
+    body.page-enter {
+      animation: pageEnter .5s ease both;
+    }
+    @keyframes pageEnter {
+      from { opacity: .01; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .page-transition-mask, .page-transition-mask::before, .page-transition-mask::after { transition: none !important; }
+      body.page-enter { animation: none !important; }
+    }
+  `;
+  document.head.appendChild(style);
+  const mask = document.createElement('div');
+  mask.className = 'page-transition-mask';
+  mask.innerHTML = '<span class="page-transition-mark">Loading</span>';
+  document.body.appendChild(mask);
+  document.body.classList.add('page-enter');
+
+  window.addEventListener('pageshow', () => mask.classList.remove('active'));
+
+  document.addEventListener('click', event => {
+    const anchor = event.target.closest('a[href]');
+    if (!anchor) return;
+    const href = anchor.getAttribute('href');
+    if (!href || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:') || href.startsWith('javascript:')) return;
+    if (anchor.target && anchor.target !== '_self') return;
+    if (anchor.hasAttribute('download')) return;
+
+    let url;
+    try {
+      url = new URL(href, window.location.href);
+    } catch (error) {
+      return;
+    }
+    if (url.origin !== window.location.origin) return;
+    if (url.pathname === window.location.pathname && url.hash) return;
+
+    event.preventDefault();
+    mask.classList.add('active');
+    setTimeout(() => { window.location.href = url.href; }, 430);
+  });
+}
+
 function init() {
   setupViewportStability();
+  setupPageTransitions();
+  setupLoadingCurtain();
   setupUnifiedLinks();
   removeLegacyStandaloneForms();
   replaceGlobalTexts();
@@ -514,8 +649,6 @@ function init() {
   setupRevealAnimation();
   setupMenuAndModal();
   setupHeaderScroll();
-  const loading = document.querySelector('.loading');
-  if (loading) setTimeout(() => loading.classList.add('hide'), 350);
 }
 
 if (document.readyState === 'loading') {
