@@ -1,17 +1,30 @@
-const header = document.getElementById('header');
-const loading = document.querySelector('.loading');
-const hero = document.querySelector('.hero');
-const heroInner = document.querySelector('.hero-inner');
-const progress = document.querySelector('.progress-line');
-const slides = [...document.querySelectorAll('.slide')];
-const dots = [...document.querySelectorAll('.hero-dots button')];
-const hamburger = document.querySelector('.hamb');
-const modal = document.getElementById('modal');
+const COMPANY_FULL_NAME = '中科明心(北海)智能科技有限公司';
+const COMPANY_SHORT_NAME = '中科明心';
+const OLD_COMPANY_NAMES = ['中科心智能教育科技服务平台', '中科心智能'];
 const HERO_SLIDE_DURATION = 7000;
 
-let current = slides.findIndex(slide => slide.classList.contains('active'));
-if (current < 0) current = 0;
-let slideTimer = null;
+function replaceCompanyNameInText() {
+  document.title = document.title.replaceAll('中科心智能教育科技服务平台', COMPANY_FULL_NAME).replaceAll('中科心智能', COMPANY_SHORT_NAME);
+  document.querySelectorAll('meta[content]').forEach(meta => {
+    meta.content = meta.content.replaceAll('中科心智能教育科技服务平台', COMPANY_FULL_NAME).replaceAll('中科心智能', COMPANY_SHORT_NAME);
+  });
+
+  const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
+    acceptNode(node) {
+      if (!node.nodeValue || !OLD_COMPANY_NAMES.some(name => node.nodeValue.includes(name))) return NodeFilter.FILTER_REJECT;
+      if (node.parentElement && ['SCRIPT', 'STYLE', 'NOSCRIPT'].includes(node.parentElement.tagName)) return NodeFilter.FILTER_REJECT;
+      return NodeFilter.FILTER_ACCEPT;
+    }
+  });
+
+  const nodes = [];
+  while (walker.nextNode()) nodes.push(walker.currentNode);
+  nodes.forEach(node => {
+    node.nodeValue = node.nodeValue
+      .replaceAll('中科心智能教育科技服务平台', COMPANY_FULL_NAME)
+      .replaceAll('中科心智能', COMPANY_SHORT_NAME);
+  });
+}
 
 function setupViewportStability() {
   let viewport = document.querySelector('meta[name="viewport"]');
@@ -26,25 +39,11 @@ function setupViewportStability() {
   const style = document.createElement('style');
   style.id = 'viewportStabilityStyle';
   style.textContent = `
-    html {
-      font-size: 100%;
-      -webkit-text-size-adjust: 100%;
-      text-size-adjust: 100%;
-    }
-    html, body {
-      width: 100%;
-      max-width: 100%;
-      min-width: 0;
-    }
-    input, select, textarea, button {
-      font-size: 16px;
-    }
-    .reveal {
-      transform: translateY(52px) !important;
-    }
-    .reveal.show {
-      transform: translateY(0) !important;
-    }
+    html { font-size: 100%; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+    html, body { width: 100%; max-width: 100%; min-width: 0; }
+    input, select, textarea, button { font-size: 16px; }
+    .reveal { transform: translateY(52px) !important; }
+    .reveal.show { transform: translateY(0) !important; }
   `;
   document.head.appendChild(style);
 }
@@ -59,7 +58,6 @@ function getPathPrefix() {
 function getActivePage() {
   const path = window.location.pathname;
   const file = path.split('/').pop() || 'index.html';
-
   if (file === 'index.html' || path.endsWith('/zk/')) return 'home';
   if (file === 'about.html') return 'about';
   if (['courses.html', 'course-detail.html', 'evaluation-detail.html', 'camp-detail.html', 'public-class-detail.html'].includes(file)) return 'courses';
@@ -94,20 +92,13 @@ function createNavLink(label, href, isActive) {
 
 function createNavDropdown(label, href, items, isActive) {
   const itemLinks = items.map(item => `<a href="${item.href}">${item.text}</a>`).join('');
-  return `
-    <div class="nav-item has-dropdown${isActive ? ' nav-active' : ''}">
-      <a class="nav-link" href="${href}" aria-expanded="false">${label}</a>
-      <div class="nav-panel">${itemLinks}</div>
-    </div>
-  `;
+  return `<div class="nav-item has-dropdown${isActive ? ' nav-active' : ''}"><a class="nav-link" href="${href}" aria-expanded="false">${label}</a><div class="nav-panel">${itemLinks}</div></div>`;
 }
 
 function setupDropdownEvents() {
   const navItems = [...document.querySelectorAll('.nav-item.has-dropdown')];
   if (!navItems.length) return;
-
   const isMobileNav = () => window.matchMedia('(max-width: 1100px)').matches;
-
   const closeAll = exceptItem => {
     navItems.forEach(item => {
       if (item === exceptItem) return;
@@ -120,7 +111,6 @@ function setupDropdownEvents() {
   navItems.forEach(item => {
     const link = item.querySelector('.nav-link');
     if (!link) return;
-
     link.addEventListener('click', event => {
       if (!isMobileNav()) return;
       event.preventDefault();
@@ -129,14 +119,12 @@ function setupDropdownEvents() {
       item.classList.toggle('open', willOpen);
       link.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
     });
-
     item.addEventListener('mouseenter', () => {
       if (isMobileNav()) return;
       closeAll(item);
       item.classList.add('open');
       link.setAttribute('aria-expanded', 'true');
     });
-
     item.addEventListener('mouseleave', () => {
       if (isMobileNav()) return;
       item.classList.remove('open');
@@ -147,7 +135,6 @@ function setupDropdownEvents() {
   document.addEventListener('click', event => {
     if (!event.target.closest('.nav-item.has-dropdown')) closeAll();
   });
-
   window.addEventListener('resize', () => closeAll());
 }
 
@@ -155,16 +142,12 @@ function setupUnifiedLinks() {
   const prefix = getPathPrefix();
   const active = getActivePage();
   const link = file => `${prefix}${file}`;
-
   injectNavStylesheet(prefix);
 
   const brand = document.querySelector('.brand');
   if (brand) {
     brand.setAttribute('href', link('index.html'));
-    brand.innerHTML = `
-      <img src="${link('statics/images/logo.svg')}" alt="中科心智能 Logo" style="width:50px;height:50px;display:block;flex:none;object-fit:contain;filter:drop-shadow(0 8px 18px rgba(16,27,23,.18));">
-      <span><strong>中科心智能</strong><span>Education Platform</span></span>
-    `;
+    brand.innerHTML = `<img src="${link('statics/images/logo.svg')}" alt="${COMPANY_SHORT_NAME} Logo" style="width:50px;height:50px;display:block;flex:none;object-fit:contain;filter:drop-shadow(0 8px 18px rgba(16,27,23,.18));"><span><strong>${COMPANY_SHORT_NAME}</strong><span>Education Platform</span></span>`;
   }
 
   const nav = document.querySelector('header nav');
@@ -197,10 +180,7 @@ function setupUnifiedLinks() {
 
   const navCta = document.querySelector('.nav-cta');
   if (navCta) {
-    navCta.innerHTML = `
-      <a class="btn btn-line" href="${contactUrl('trial')}">预约体验</a>
-      <a class="btn btn-gold" href="${contactUrl('cooperation')}">申请合作</a>
-    `;
+    navCta.innerHTML = `<a class="btn btn-line" href="${contactUrl('trial')}">预约体验</a><a class="btn btn-gold" href="${contactUrl('cooperation')}">申请合作</a>`;
   }
 
   setupFooterAndSticky(link);
@@ -218,7 +198,7 @@ function setupFooterAndSticky(link) {
   const footerGrid = document.querySelector('.footer-grid');
   if (footerGrid) {
     footerGrid.innerHTML = `
-      <div><div class="brand-mini">中科心智能</div></div>
+      <div><div class="brand-mini">${COMPANY_SHORT_NAME}</div></div>
       <div><h4>关于我们</h4><a href="${link('about.html')}">公司简介</a><a href="${link('about.html')}">服务方向</a><a href="${link('about.html')}">发展愿景</a></div>
       <div><h4>课程产品</h4><a href="${link('course-detail.html')}">心脑学习力成长课</a><a href="${link('evaluation-detail.html')}">心脑学习力体验课</a><a href="${link('camp-detail.html')}">心脑学习力强化营</a><a href="${link('public-class-detail.html')}">心脑学习力公开课</a></div>
       <div><h4>专家团队</h4><a href="${link('experts.html')}">核心专家</a><a href="${link('assistants.html')}">助教团队</a></div>
@@ -229,18 +209,15 @@ function setupFooterAndSticky(link) {
   }
 
   const copyright = document.querySelector('.copyright');
-  if (copyright) copyright.textContent = '© 2026 中科心智能教育科技服务平台';
+  if (copyright) copyright.textContent = `© 2026 ${COMPANY_FULL_NAME}`;
 
   if (!document.querySelector('.sticky')) {
     const sticky = document.createElement('div');
     sticky.className = 'sticky';
     document.body.insertBefore(sticky, document.querySelector('script[src*="main.js"]') || null);
   }
-
   const sticky = document.querySelector('.sticky');
-  if (sticky) {
-    sticky.innerHTML = `<a href="${contactUrl('trial')}">预约</a><a href="${contactUrl('cooperation')}">合作</a>`;
-  }
+  if (sticky) sticky.innerHTML = `<a href="${contactUrl('trial')}">预约</a><a href="${contactUrl('cooperation')}">合作</a>`;
 }
 
 function normalizeLegacyAnchors() {
@@ -256,7 +233,6 @@ function normalizeLegacyAnchors() {
     '../../index.html#assessment': contactUrl('trial'),
     '../../index.html#contact': buildUrl('contact.html')
   };
-
   document.querySelectorAll('a[href]').forEach(anchor => {
     const rawHref = anchor.getAttribute('href');
     if (contactLinks[rawHref]) anchor.setAttribute('href', contactLinks[rawHref]);
@@ -264,223 +240,164 @@ function normalizeLegacyAnchors() {
 }
 
 function removeLegacyStandaloneForms() {
-  document.querySelectorAll('.assess-form, .join-form').forEach(form => form.remove());
+  document.querySelectorAll('.assess-form, .join-form').forEach(form => {
+    if (form.id !== 'unifiedInquiryForm') form.remove();
+  });
 }
 
 function setupUnifiedInquiryForm() {
   const form = document.getElementById('unifiedInquiryForm');
   if (!form) return;
-
   const select = document.getElementById('purposeSelect');
   const fields = [...form.querySelectorAll('.dynamic-fields')];
   const message = document.getElementById('messageField');
   const submit = form.querySelector('button[type="submit"]');
-
-  const purposeLabels = {
-    consult: '课程咨询',
-    trial: '预约体验',
-    cooperation: '加盟合作',
-    activity: '活动合作',
-    feedback: '服务反馈',
-    other: '其他事项'
-  };
-
+  const purposeLabels = { consult: '课程咨询', trial: '预约体验', cooperation: '加盟合作', activity: '活动合作', feedback: '服务反馈', other: '其他事项' };
   const placeholders = {
     consult: '请说明孩子目前学习状态、想了解的课程或主要疑问',
     trial: '请说明孩子目前主要情况，以及希望预约体验的大致时间',
     cooperation: '请简要说明所在城市、现有资源和合作想法',
     activity: '请说明活动地点、预计人数、时间安排和合作需求',
-    feedback: '请说明需要反馈或改进的问题',
+    feedback: '请说明需要反馈或改进的具体事项',
     other: '请简要说明你的需求'
   };
 
-  function updatePurpose() {
-    const value = select.value || 'consult';
-
-    fields.forEach(group => {
-      const targets = (group.dataset.purposeField || '').split(/\s+/);
-      const visible = targets.includes(value);
-      group.style.display = visible ? 'block' : 'none';
-      group.querySelectorAll('input, select, textarea').forEach(item => {
-        item.disabled = !visible;
-      });
-    });
-
+  function updateFields() {
+    const value = select ? select.value : 'consult';
+    fields.forEach(group => group.hidden = group.dataset.for !== value);
     if (message) message.placeholder = placeholders[value] || placeholders.other;
-    if (submit) submit.textContent = `提交${purposeLabels[value] || '信息'}`;
+    if (submit) submit.textContent = value === 'cooperation' ? '提交合作申请' : value === 'trial' ? '提交预约信息' : '提交信息';
   }
 
-  const params = new URLSearchParams(window.location.search);
-  const purpose = params.get('purpose');
-  if (purpose && [...select.options].some(option => option.value === purpose)) {
-    select.value = purpose;
+  function applyQueryPurpose() {
+    if (!select) return;
+    const purpose = new URLSearchParams(window.location.search).get('purpose');
+    if (purpose && [...select.options].some(option => option.value === purpose)) select.value = purpose;
   }
 
-  select.addEventListener('change', updatePurpose);
-  updatePurpose();
-}
+  applyQueryPurpose();
+  updateFields();
+  if (select) select.addEventListener('change', updateFields);
 
-function setupCurtainLoading() {
-  if (!loading) return;
-  loading.classList.remove('hide');
-  loading.classList.add('loading-curtain');
-
-  if (!loading.querySelector('.curtain-panel')) {
-    const top = document.createElement('span');
-    const bottom = document.createElement('span');
-    top.className = 'curtain-panel curtain-top';
-    bottom.className = 'curtain-panel curtain-bottom';
-    loading.prepend(bottom);
-    loading.prepend(top);
-  }
-}
-
-function finishCurtainLoading() {
-  if (!loading) return;
-  setTimeout(() => loading.classList.add('hide'), 250);
-  setTimeout(() => loading.classList.add('done'), 1650);
-}
-
-function restartHeroIntro() {
-  if (!heroInner) return;
-  heroInner.classList.remove('anim');
-  void heroInner.offsetWidth;
-  heroInner.classList.add('anim');
-}
-
-function restartProgress() {
-  if (!progress) return;
-  progress.classList.remove('cur');
-  progress.style.transition = 'none';
-  progress.style.left = '-100%';
-  void progress.offsetWidth;
-  progress.style.transition = '';
-  progress.style.left = '';
-  requestAnimationFrame(() => progress.classList.add('cur'));
-}
-
-function syncSlideClasses(nextIndex) {
-  slides.forEach((slide, index) => {
-    slide.classList.remove('active', 'prev', 'next');
-    if (index === nextIndex) slide.classList.add('active');
-    else if (index < nextIndex) slide.classList.add('prev');
-    else slide.classList.add('next');
+  form.addEventListener('submit', event => {
+    event.preventDefault();
+    const data = new FormData(form);
+    const purpose = data.get('purpose') || (select ? select.value : 'other');
+    const modal = document.getElementById('modal');
+    if (modal) {
+      const title = modal.querySelector('h3');
+      const text = modal.querySelector('p');
+      if (title) title.textContent = `${purposeLabels[purpose] || '信息'}已提交`;
+      if (text) text.textContent = '我们已收到你的信息，将根据具体需求尽快与你联系。';
+      modal.classList.add('show');
+    } else {
+      alert('信息已提交，我们会尽快与你联系。');
+    }
+    form.reset();
+    if (select) select.value = purpose;
+    updateFields();
   });
-  dots.forEach((dot, index) => dot.classList.toggle('active', index === nextIndex));
 }
 
-function go(n) {
-  if (!slides.length) return;
-  current = (n + slides.length) % slides.length;
-  syncSlideClasses(current);
-  restartHeroIntro();
-  restartProgress();
-  startSlideTimer();
+function setupDemoForms() {
+  document.querySelectorAll('.demo-form').forEach(form => {
+    form.addEventListener('submit', event => {
+      event.preventDefault();
+      const modal = document.getElementById('modal');
+      if (modal) modal.classList.add('show');
+    });
+  });
 }
 
-function startSlideTimer() {
-  clearTimeout(slideTimer);
+function setupHeroSlider() {
+  const hero = document.querySelector('.hero');
+  const progress = document.querySelector('.progress-line');
+  const slides = [...document.querySelectorAll('.slide')];
+  const dots = [...document.querySelectorAll('.hero-dots button')];
   if (!slides.length) return;
-  slideTimer = setTimeout(() => go(current + 1), HERO_SLIDE_DURATION + 250);
+  let current = slides.findIndex(slide => slide.classList.contains('active'));
+  if (current < 0) current = 0;
+  let timer = null;
+
+  const activate = index => {
+    current = (index + slides.length) % slides.length;
+    slides.forEach((slide, i) => slide.classList.toggle('active', i === current));
+    dots.forEach((dot, i) => dot.classList.toggle('active', i === current));
+    if (progress) {
+      progress.style.animation = 'none';
+      void progress.offsetWidth;
+      progress.style.animation = `heroLine ${HERO_SLIDE_DURATION / 1000}s linear infinite`;
+    }
+  };
+  const start = () => {
+    if (timer) clearInterval(timer);
+    timer = setInterval(() => activate(current + 1), HERO_SLIDE_DURATION);
+  };
+  dots.forEach((dot, index) => dot.addEventListener('click', () => { activate(index); start(); }));
+  if (hero) {
+    hero.addEventListener('mouseenter', () => timer && clearInterval(timer));
+    hero.addEventListener('mouseleave', start);
+  }
+  activate(current);
+  start();
 }
 
 function setupRevealAnimation() {
-  const revealEls = [...document.querySelectorAll('.reveal')];
-  revealEls.forEach(el => el.classList.remove('show'));
-
+  const reveals = [...document.querySelectorAll('.reveal')];
+  if (!reveals.length) return;
   if (!('IntersectionObserver' in window)) {
-    revealEls.forEach(el => el.classList.add('show'));
+    reveals.forEach(el => el.classList.add('show'));
     return;
   }
-
-  const io = new IntersectionObserver(entries => {
+  const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.classList.add('show');
-        io.unobserve(entry.target);
+        observer.unobserve(entry.target);
       }
     });
-  }, { threshold: .12, rootMargin: '0px 0px -40px 0px' });
-
-  revealEls.forEach((el, index) => {
-    el.style.transitionDelay = `${Math.min(index % 6 * 0.06, .3)}s`;
-    io.observe(el);
-  });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => observer.observe(el));
 }
 
-function setupHeader() {
-  if (!header) return;
-  const update = () => header.classList.toggle('scrolled', window.scrollY > 40);
-  update();
-  window.addEventListener('scroll', update, { passive: true });
-}
+function setupMenuAndModal() {
+  const hamburger = document.querySelector('.hamb');
+  const nav = document.querySelector('header nav');
+  if (hamburger && nav) hamburger.addEventListener('click', () => nav.classList.toggle('open'));
 
-function setupMobileNav() {
-  const currentNav = document.querySelector('header nav');
-  if (!hamburger || !currentNav) return;
-
-  hamburger.addEventListener('click', () => {
-    hamburger.classList.toggle('expanded');
-    document.body.classList.toggle('nav-open');
-  });
-
-  currentNav.querySelectorAll('.nav-direct, .nav-panel a').forEach(linkItem => {
-    linkItem.addEventListener('click', () => {
-      hamburger.classList.remove('expanded');
-      document.body.classList.remove('nav-open');
-    });
-  });
-}
-
-function setupModal() {
-  const forms = [...document.querySelectorAll('.demo-form')];
-  if (!forms.length) return;
-
-  forms.forEach(form => form.addEventListener('submit', event => {
-    event.preventDefault();
-    window.location.href = `${getPathPrefix()}success.html`;
-  }));
-
-  if (!modal) return;
-
-  const close = document.getElementById('closeModal');
-  if (close) close.onclick = () => modal.classList.remove('show');
-
-  modal.addEventListener('click', event => {
-    if (event.target === modal) modal.classList.remove('show');
-  });
-}
-
-function setupSlideControls() {
-  if (!slides.length) return;
-  syncSlideClasses(current);
-
-  if (progress) {
-    progress.addEventListener('transitionend', event => {
-      if (event.propertyName !== 'left' || !progress.classList.contains('cur')) return;
-      clearTimeout(slideTimer);
-      go(current + 1);
+  const modal = document.getElementById('modal');
+  if (modal) {
+    modal.addEventListener('click', event => {
+      if (event.target === modal || event.target.id === 'closeModal') modal.classList.remove('show');
     });
   }
-
-  dots.forEach((dot, index) => dot.addEventListener('click', () => {
-    clearTimeout(slideTimer);
-    go(index);
-  }));
-
-  restartHeroIntro();
-  restartProgress();
-  startSlideTimer();
 }
 
-setupViewportStability();
-setupUnifiedLinks();
-removeLegacyStandaloneForms();
-setupUnifiedInquiryForm();
-setupCurtainLoading();
-setupHeader();
-setupMobileNav();
-setupSlideControls();
-setupRevealAnimation();
-setupModal();
-window.addEventListener('load', finishCurtainLoading);
+function setupHeaderScroll() {
+  const header = document.getElementById('header');
+  if (!header) return;
+  const sync = () => header.classList.toggle('scrolled', window.scrollY > 20 || !document.querySelector('.hero'));
+  sync();
+  window.addEventListener('scroll', sync, { passive: true });
+}
+
+function init() {
+  setupViewportStability();
+  setupUnifiedLinks();
+  removeLegacyStandaloneForms();
+  replaceCompanyNameInText();
+  setupUnifiedInquiryForm();
+  setupDemoForms();
+  setupHeroSlider();
+  setupRevealAnimation();
+  setupMenuAndModal();
+  setupHeaderScroll();
+  const loading = document.querySelector('.loading');
+  if (loading) setTimeout(() => loading.classList.add('hide'), 350);
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', init);
+} else {
+  init();
+}
