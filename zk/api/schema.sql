@@ -1,0 +1,21 @@
+CREATE TABLE IF NOT EXISTS form_submissions (
+  id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  form_type VARCHAR(100) DEFAULT NULL,
+  name VARCHAR(100) NOT NULL,
+  contact VARCHAR(150) NOT NULL,
+  child_age VARCHAR(50) DEFAULT NULL,
+  focus_area VARCHAR(255) DEFAULT NULL,
+  course_interest VARCHAR(255) DEFAULT NULL,
+  city VARCHAR(100) DEFAULT NULL,
+  cooperation_type VARCHAR(255) DEFAULT NULL,
+  message TEXT DEFAULT NULL,
+  source_page VARCHAR(500) DEFAULT NULL,
+  user_agent TEXT DEFAULT NULL,
+  ip_address VARCHAR(100) DEFAULT NULL,
+  status VARCHAR(50) NOT NULL DEFAULT 'new',
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (id),
+  KEY idx_form_type (form_type),
+  KEY idx_status (status),
+  KEY idx_created_at (created_at)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
