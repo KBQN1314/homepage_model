@@ -15,8 +15,7 @@ const COURSE_ITEMS = [
 
 const COURSE_COPY = {
   experience: {
-    tag: '体验变化',
-    systemTag: '低门槛体验',
+    tag: '体验变化', systemTag: '低门槛体验',
     text: '通过短时间任务观察、训练体验和结果反馈，帮助家长初步了解孩子的学习状态和后续训练方向。',
     list: ['初步状态测评', '过程变化体验', '明确改进方向'],
     detailIntro: '适合作为家长了解孩子学习状态的第一步，通过简单任务、训练体验和结果反馈，让家长初步看到孩子的专注、记忆、表达和学习状态变化。',
@@ -25,8 +24,7 @@ const COURSE_COPY = {
     effects: ['更清楚孩子当前学习状态', '获得初步训练体验', '明确后续课程匹配方向']
   },
   focus: {
-    tag: '专注力提升',
-    systemTag: '专注力提升',
+    tag: '专注力提升', systemTag: '专注力提升',
     text: '面向8-16岁青少年，以身体稳定、感官专注、图像化记忆、情绪觉察和目标行动为主线，帮助孩子建立更稳定的学习状态。',
     list: ['身体锚定与呼吸训练', '感官专注与图像记忆', '情绪觉察与家庭陪跑'],
     detailIntro: '围绕身体稳定、感官收摄、心像显化、情绪觉察和家庭陪跑，帮助孩子从底层学习状态入手，逐步提升专注力、记忆力、自我觉察和学习内驱力。',
@@ -35,8 +33,7 @@ const COURSE_COPY = {
     effects: ['更容易安静下来', '专注和记忆方式更清晰', '情绪表达与自我觉察能力提升']
   },
   reading: {
-    tag: '高效阅读',
-    systemTag: '阅读突破',
+    tag: '高效阅读', systemTag: '阅读突破',
     text: '面向12-18岁青少年，训练整页摄入、脑内成像和结构化理解能力，帮助孩子提升阅读效率、理解表达和考试阅读速度。',
     list: ['破除逐字默读习惯', '整页摄入与脑内成像', '速读理解与复述输出'],
     detailIntro: '通过破除逐字默读、整页摄入、脑内成像和结构化理解训练，让孩子把文字转化为画面和结构，提升阅读速度、理解率和复述表达能力。',
@@ -45,8 +42,7 @@ const COURSE_COPY = {
     effects: ['阅读速度提升', '读完能复述核心结构', '面对大篇幅材料更从容']
   },
   self: {
-    tag: '数学自学',
-    systemTag: '数学自主营',
+    tag: '数学自学', systemTag: '数学自主营',
     text: '面向小学三年级至初中三年级，围绕数学教材自学训练，使用格定义五步法、格定理四步法和AI辅助提问验证，帮助孩子建立不依赖补课的自主学习能力。',
     list: ['格定义五步法', '格定理四步法', 'AI辅助提问与答案验证'],
     detailIntro: '这是一门面向数学学习的自主学习能力训练营。孩子携带对应年级数学教材、学参和试卷，在导学引导下使用课本、AI工具、问天录和错题本，训练“自己读懂、自己提问、自己验证、自己讲清楚”的学习能力。',
@@ -70,17 +66,9 @@ function getPathPrefix() {
   return '';
 }
 
-function buildUrl(file, params = '') {
-  return `${getPathPrefix()}${file}${params}`;
-}
-
-function contactUrl(purpose) {
-  return buildUrl('contact.html', `?purpose=${purpose}#contact-form`);
-}
-
-function setList(items) {
-  return `<ul>${items.map(item => `<li>${item}</li>`).join('')}</ul>`;
-}
+function buildUrl(file, params = '') { return `${getPathPrefix()}${file}${params}`; }
+function contactUrl(purpose) { return buildUrl('contact.html', `?purpose=${purpose}#contact-form`); }
+function setList(items) { return `<ul>${items.map(item => `<li>${item}</li>`).join('')}</ul>`; }
 
 function getActivePage() {
   const path = window.location.pathname;
@@ -94,6 +82,37 @@ function getActivePage() {
   if (file === 'join.html') return 'join';
   if (file === 'contact.html') return 'contact';
   return '';
+}
+
+function setupViewportStability() {
+  let viewport = document.querySelector('meta[name="viewport"]');
+  if (!viewport) {
+    viewport = document.createElement('meta');
+    viewport.name = 'viewport';
+    document.head.prepend(viewport);
+  }
+  viewport.setAttribute('content', 'width=device-width, initial-scale=1.0');
+  if (document.getElementById('viewportStabilityStyle')) return;
+  const style = document.createElement('style');
+  style.id = 'viewportStabilityStyle';
+  style.textContent = `
+    html { font-size: 100%; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+    html, body { width: 100%; max-width: 100%; min-width: 0; }
+    input, select, textarea, button { font-size: 16px; }
+    .reveal { transform: translateY(52px) !important; }
+    .reveal.show { transform: translateY(0) !important; }
+    .hero .hero-inner,
+    .hero .hero-inner .eyebrow,
+    .hero .hero-inner h1,
+    .hero .hero-inner h2,
+    .hero .hero-inner p,
+    .hero .hero-actions {
+      opacity: 1 !important;
+      visibility: visible !important;
+      transform: translate3d(0,0,0) !important;
+    }
+  `;
+  document.head.appendChild(style);
 }
 
 function replaceTextInNode(root, replacements) {
@@ -134,37 +153,6 @@ function replaceGlobalTexts() {
     replacements.forEach(([from, to]) => { meta.content = cleanCourseName(meta.content.replaceAll(from, to)); });
   });
   replaceTextInNode(document.body, replacements);
-}
-
-function setupViewportStability() {
-  let viewport = document.querySelector('meta[name="viewport"]');
-  if (!viewport) {
-    viewport = document.createElement('meta');
-    viewport.name = 'viewport';
-    document.head.prepend(viewport);
-  }
-  viewport.setAttribute('content', 'width=device-width, initial-scale=1.0');
-  if (document.getElementById('viewportStabilityStyle')) return;
-  const style = document.createElement('style');
-  style.id = 'viewportStabilityStyle';
-  style.textContent = `
-    html { font-size: 100%; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
-    html, body { width: 100%; max-width: 100%; min-width: 0; }
-    input, select, textarea, button { font-size: 16px; }
-    .reveal { transform: translateY(52px) !important; }
-    .reveal.show { transform: translateY(0) !important; }
-    .hero .hero-inner,
-    .hero .hero-inner .eyebrow,
-    .hero .hero-inner h1,
-    .hero .hero-inner h2,
-    .hero .hero-inner p,
-    .hero .hero-actions {
-      opacity: 1 !important;
-      visibility: visible !important;
-      transform: translate3d(0,0,0) !important;
-    }
-  `;
-  document.head.appendChild(style);
 }
 
 function injectNavStylesheet(prefix) {
@@ -520,94 +508,37 @@ function setupHeaderScroll() {
   window.addEventListener('scroll', sync, { passive: true });
 }
 
-function setupLoadingCurtain() {
-  const loading = document.querySelector('.loading');
-  if (!loading) return;
-  loading.classList.add('loading-curtain');
-  if (!loading.querySelector('.curtain-panel')) {
-    const top = document.createElement('div');
-    const bottom = document.createElement('div');
-    top.className = 'curtain-panel curtain-top';
-    bottom.className = 'curtain-panel curtain-bottom';
-    loading.prepend(top);
-    loading.appendChild(bottom);
-  }
-  loading.classList.remove('done');
-  loading.classList.remove('hide');
-  requestAnimationFrame(() => {
-    setTimeout(() => loading.classList.add('hide'), 260);
-    setTimeout(() => loading.classList.add('done'), 1600);
-  });
-}
-
-function setupPageTransitions() {
-  if (document.getElementById('pageTransitionStyle')) return;
+function setupSimplePageTransitions() {
+  if (document.getElementById('simplePageTransitionStyle')) return;
   const style = document.createElement('style');
-  style.id = 'pageTransitionStyle';
+  style.id = 'simplePageTransitionStyle';
   style.textContent = `
     .page-transition-mask {
       position: fixed;
       inset: 0;
       z-index: 99999;
-      display: grid;
-      place-items: center;
       pointer-events: none;
       opacity: 0;
       visibility: hidden;
-      transition: opacity .42s cubic-bezier(.77,0,.175,1), visibility .42s;
-      background:
-        radial-gradient(circle at 70% 25%, rgba(199,175,130,.22), transparent 32%),
-        linear-gradient(135deg, rgba(4,92,57,.98), rgba(16,27,23,.98));
+      transition: opacity .24s ease, visibility .24s ease;
+      background: rgba(16, 27, 23, .88);
     }
     .page-transition-mask.active {
       opacity: 1;
       visibility: visible;
       pointer-events: auto;
     }
-    .page-transition-mask::before,
-    .page-transition-mask::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      transform: translateX(-105%) skewX(-9deg);
-      background: rgba(255,255,255,.10);
-      transition: transform .62s cubic-bezier(.77,0,.175,1);
-    }
-    .page-transition-mask::after {
-      background: rgba(199,175,130,.20);
-      transition-delay: .08s;
-    }
-    .page-transition-mask.active::before,
-    .page-transition-mask.active::after {
-      transform: translateX(105%) skewX(-9deg);
-    }
-    .page-transition-mark {
-      position: relative;
-      z-index: 2;
-      color: #fff;
-      letter-spacing: 5px;
-      font-size: 12px;
-      text-transform: uppercase;
-      opacity: .86;
-    }
-    body.page-enter {
-      animation: pageEnter .5s ease both;
-    }
-    @keyframes pageEnter {
-      from { opacity: .01; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
     @media (prefers-reduced-motion: reduce) {
-      .page-transition-mask, .page-transition-mask::before, .page-transition-mask::after { transition: none !important; }
-      body.page-enter { animation: none !important; }
+      .page-transition-mask { transition: none !important; }
     }
   `;
   document.head.appendChild(style);
+
+  const oldMask = document.querySelector('.page-transition-mask');
+  if (oldMask) oldMask.remove();
   const mask = document.createElement('div');
   mask.className = 'page-transition-mask';
-  mask.innerHTML = '<span class="page-transition-mark">Loading</span>';
   document.body.appendChild(mask);
-  document.body.classList.add('page-enter');
 
   window.addEventListener('pageshow', () => mask.classList.remove('active'));
 
@@ -626,18 +557,18 @@ function setupPageTransitions() {
       return;
     }
     if (url.origin !== window.location.origin) return;
-    if (url.pathname === window.location.pathname && url.hash) return;
+    if (url.pathname === window.location.pathname) return;
+    if (!/\.html$|\/$/.test(url.pathname)) return;
 
     event.preventDefault();
     mask.classList.add('active');
-    setTimeout(() => { window.location.href = url.href; }, 430);
+    setTimeout(() => { window.location.href = url.href; }, 220);
   });
 }
 
 function init() {
   setupViewportStability();
-  setupPageTransitions();
-  setupLoadingCurtain();
+  setupSimplePageTransitions();
   setupUnifiedLinks();
   removeLegacyStandaloneForms();
   replaceGlobalTexts();
