@@ -15,7 +15,8 @@ const COURSE_ITEMS = [
 
 const COURSE_COPY = {
   experience: {
-    tag: '体验变化', systemTag: '低门槛体验',
+    tag: '体验变化',
+    systemTag: '低门槛体验',
     text: '通过短时间任务观察、训练体验和结果反馈，帮助家长初步了解孩子的学习状态和后续训练方向。',
     list: ['初步状态测评', '过程变化体验', '明确改进方向'],
     detailIntro: '适合作为家长了解孩子学习状态的第一步，通过简单任务、训练体验和结果反馈，让家长初步看到孩子的专注、记忆、表达和学习状态变化。',
@@ -24,7 +25,8 @@ const COURSE_COPY = {
     effects: ['更清楚孩子当前学习状态', '获得初步训练体验', '明确后续课程匹配方向']
   },
   focus: {
-    tag: '专注力提升', systemTag: '专注力提升',
+    tag: '专注力提升',
+    systemTag: '专注力提升',
     text: '面向8-16岁青少年，以身体稳定、感官专注、图像化记忆、情绪觉察和目标行动为主线，帮助孩子建立更稳定的学习状态。',
     list: ['身体锚定与呼吸训练', '感官专注与图像记忆', '情绪觉察与家庭陪跑'],
     detailIntro: '围绕身体稳定、感官收摄、心像显化、情绪觉察和家庭陪跑，帮助孩子从底层学习状态入手，逐步提升专注力、记忆力、自我觉察和学习内驱力。',
@@ -33,7 +35,8 @@ const COURSE_COPY = {
     effects: ['更容易安静下来', '专注和记忆方式更清晰', '情绪表达与自我觉察能力提升']
   },
   reading: {
-    tag: '高效阅读', systemTag: '阅读突破',
+    tag: '高效阅读',
+    systemTag: '阅读突破',
     text: '面向12-18岁青少年，训练整页摄入、脑内成像和结构化理解能力，帮助孩子提升阅读效率、理解表达和考试阅读速度。',
     list: ['破除逐字默读习惯', '整页摄入与脑内成像', '速读理解与复述输出'],
     detailIntro: '通过破除逐字默读、整页摄入、脑内成像和结构化理解训练，让孩子把文字转化为画面和结构，提升阅读速度、理解率和复述表达能力。',
@@ -42,7 +45,8 @@ const COURSE_COPY = {
     effects: ['阅读速度提升', '读完能复述核心结构', '面对大篇幅材料更从容']
   },
   self: {
-    tag: '数学自学', systemTag: '数学自主营',
+    tag: '数学自学',
+    systemTag: '数学自主营',
     text: '面向小学三年级至初中三年级，围绕数学教材自学训练，使用格定义五步法、格定理四步法和AI辅助提问验证，帮助孩子建立不依赖补课的自主学习能力。',
     list: ['格定义五步法', '格定理四步法', 'AI辅助提问与答案验证'],
     detailIntro: '这是一门面向数学学习的自主学习能力训练营。孩子携带对应年级数学教材、学参和试卷，在导学引导下使用课本、AI工具、问天录和错题本，训练“自己读懂、自己提问、自己验证、自己讲清楚”的学习能力。',
@@ -520,7 +524,10 @@ function setupSimplePageTransitions() {
       pointer-events: none;
       opacity: 0;
       visibility: hidden;
+      overflow: hidden;
+      background: transparent;
       transition: opacity .18s ease, visibility .18s ease;
+      contain: layout paint style;
     }
     .page-transition-mask.active {
       opacity: 1;
@@ -531,42 +538,59 @@ function setupSimplePageTransitions() {
       position: absolute;
       left: 0;
       width: 100%;
-      height: 50%;
-      background: linear-gradient(135deg, #071e17 0%, #0b4a32 100%);
-      transition: transform .56s cubic-bezier(.77,0,.18,1);
+      height: 50.2%;
       will-change: transform;
+      backface-visibility: hidden;
+      transform: translate3d(0,0,0);
+      transition: transform .68s cubic-bezier(.22,.78,.18,1);
     }
-    .page-transition-panel.top { top: 0; }
-    .page-transition-panel.bottom { bottom: 0; }
+    .page-transition-panel.top {
+      top: 0;
+      transform: translate3d(0,-102%,0);
+      background:
+        radial-gradient(circle at 18% 18%, rgba(199,175,130,.14), transparent 34%),
+        linear-gradient(135deg, #061f18 0%, #08442f 58%, #0a6a45 100%);
+    }
+    .page-transition-panel.bottom {
+      bottom: 0;
+      transform: translate3d(0,102%,0);
+      background:
+        radial-gradient(circle at 82% 78%, rgba(255,255,255,.08), transparent 32%),
+        linear-gradient(135deg, #1a231f 0%, #344236 52%, #8b7243 100%);
+    }
+    .page-transition-mask.closing .page-transition-panel.top,
+    .page-transition-mask.closing .page-transition-panel.bottom {
+      transform: translate3d(0,0,0);
+    }
+    .page-transition-mask.opening .page-transition-panel.top { transform: translate3d(0,-102%,0); }
+    .page-transition-mask.opening .page-transition-panel.bottom { transform: translate3d(0,102%,0); }
     .page-transition-mark {
       position: absolute;
       left: 50%;
       top: 50%;
-      width: 86px;
-      height: 86px;
-      transform: translate(-50%, -50%) scale(.86);
+      width: 88px;
+      height: 88px;
+      transform: translate3d(-50%,-50%,0) scale(.82);
       border-radius: 50%;
       display: grid;
       place-items: center;
-      border: 1px solid rgba(199,175,130,.58);
+      border: 1px solid rgba(199,175,130,.68);
       background: rgba(255,255,255,.96);
       color: #045c39;
       font-weight: 800;
       letter-spacing: 3px;
-      box-shadow: 0 24px 60px rgba(0,0,0,.22);
+      box-shadow: 0 26px 70px rgba(0,0,0,.26);
       opacity: 0;
-      transition: opacity .26s ease .08s, transform .36s cubic-bezier(.2,.8,.2,1) .08s;
+      will-change: opacity, transform;
+      transition: opacity .24s ease, transform .52s cubic-bezier(.22,.78,.18,1);
     }
-    .page-transition-mask.active .page-transition-mark {
+    .page-transition-mask.closing .page-transition-mark {
       opacity: 1;
-      transform: translate(-50%, -50%) scale(1);
+      transform: translate3d(-50%,-50%,0) scale(1);
     }
-    .page-transition-mask.opening .page-transition-panel.top { transform: translateY(-100%); }
-    .page-transition-mask.opening .page-transition-panel.bottom { transform: translateY(100%); }
     .page-transition-mask.opening .page-transition-mark {
       opacity: 0;
-      transform: translate(-50%, -50%) scale(.72);
-      transition-delay: 0s;
+      transform: translate3d(-50%,-50%,0) scale(.78);
     }
     @media (prefers-reduced-motion: reduce) {
       .page-transition-mask,
@@ -583,19 +607,26 @@ function setupSimplePageTransitions() {
   mask.innerHTML = '<div class="page-transition-panel top"></div><div class="page-transition-panel bottom"></div><div class="page-transition-mark">ZK</div>';
   document.body.appendChild(mask);
 
-  if (sessionStorage.getItem('zkPageTransition') === '1') {
-    sessionStorage.removeItem('zkPageTransition');
-    mask.classList.add('active');
+  const runOpening = () => {
+    mask.className = 'page-transition-mask active closing';
     requestAnimationFrame(() => {
-      requestAnimationFrame(() => mask.classList.add('opening'));
+      requestAnimationFrame(() => {
+        mask.classList.remove('closing');
+        mask.classList.add('opening');
+      });
     });
     setTimeout(() => {
-      mask.classList.remove('active', 'opening');
-    }, 720);
+      mask.className = 'page-transition-mask';
+    }, 760);
+  };
+
+  if (sessionStorage.getItem('zkPageTransition') === '1') {
+    sessionStorage.removeItem('zkPageTransition');
+    runOpening();
   }
 
   window.addEventListener('pageshow', event => {
-    if (event.persisted) mask.classList.remove('active', 'opening');
+    if (event.persisted) mask.className = 'page-transition-mask';
   });
 
   document.addEventListener('click', event => {
@@ -618,9 +649,11 @@ function setupSimplePageTransitions() {
 
     event.preventDefault();
     sessionStorage.setItem('zkPageTransition', '1');
-    mask.classList.remove('opening');
-    mask.classList.add('active');
-    setTimeout(() => { window.location.href = url.href; }, 430);
+    mask.className = 'page-transition-mask active';
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => mask.classList.add('closing'));
+    });
+    setTimeout(() => { window.location.href = url.href; }, 540);
   });
 }
 
