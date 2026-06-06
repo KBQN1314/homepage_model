@@ -3,7 +3,7 @@ const COMPANY_SHORT_NAME = '中科明心';
 const EXPERIENCE_COURSE_NAME = '心脑学习力体验课';
 const FOCUS_COURSE_NAME = '心脑学习力专注营';
 const READING_COURSE_NAME = '心脑学习力阅读营';
-const SELF_STUDY_COURSE_NAME = '心脑学习力自主营';
+const SELF_STUDY_COURSE_NAME = '心脑学习力自主营（数学）';
 const HERO_SLIDE_DURATION = 7000;
 
 const COURSE_ITEMS = [
@@ -18,25 +18,41 @@ const COURSE_COPY = {
     tag: '体验变化',
     systemTag: '低门槛体验',
     text: '通过短时间任务观察、训练体验和结果反馈，帮助家长初步了解孩子的学习状态和后续训练方向。',
-    list: ['初步状态测评', '过程变化体验', '明确改进方向']
+    list: ['初步状态测评', '过程变化体验', '明确改进方向'],
+    detailIntro: '适合作为家长了解孩子学习状态的第一步，通过简单任务、训练体验和结果反馈，让家长初步看到孩子的专注、记忆、表达和学习状态变化。',
+    paths: ['状态观察', '任务体验', '结果反馈', '后续建议'],
+    audience: ['希望先了解孩子学习状态的家庭', '暂不确定适合哪类课程的学生', '希望通过短时体验看到过程变化的家长'],
+    effects: ['更清楚孩子当前学习状态', '获得初步训练体验', '明确后续课程匹配方向']
   },
   focus: {
     tag: '专注力提升',
     systemTag: '专注力提升',
     text: '面向8-16岁青少年，以身体稳定、感官专注、图像化记忆、情绪觉察和目标行动为主线，帮助孩子建立更稳定的学习状态。',
-    list: ['身体锚定与呼吸训练', '感官专注与图像记忆', '情绪觉察与家庭陪跑']
+    list: ['身体锚定与呼吸训练', '感官专注与图像记忆', '情绪觉察与家庭陪跑'],
+    detailIntro: '围绕身体稳定、感官收摄、心像显化、情绪觉察和家庭陪跑，帮助孩子从底层学习状态入手，逐步提升专注力、记忆力、自我觉察和学习内驱力。',
+    paths: ['身心安定', '感官专注', '图像记忆', '情绪觉察', '家庭陪跑'],
+    audience: ['8-16岁青少年', '专注力不足、情绪波动或学习动力不足的孩子', '希望系统提升学习状态和自我管理能力的家庭'],
+    effects: ['更容易安静下来', '专注和记忆方式更清晰', '情绪表达与自我觉察能力提升']
   },
   reading: {
     tag: '高效阅读',
     systemTag: '阅读突破',
     text: '面向12-18岁青少年，训练整页摄入、脑内成像和结构化理解能力，帮助孩子提升阅读效率、理解表达和考试阅读速度。',
-    list: ['破除逐字默读习惯', '整页摄入与脑内成像', '速读理解与复述输出']
+    list: ['破除逐字默读习惯', '整页摄入与脑内成像', '速读理解与复述输出'],
+    detailIntro: '通过破除逐字默读、整页摄入、脑内成像和结构化理解训练，让孩子把文字转化为画面和结构，提升阅读速度、理解率和复述表达能力。',
+    paths: ['破除默读', '整页摄入', '脑内成像', '实战检验', '阅读计划'],
+    audience: ['12-18岁青少年', '阅读慢、读完说不清重点的学生', '面对应试阅读量增加，希望提升阅读效率的孩子'],
+    effects: ['阅读速度提升', '读完能复述核心结构', '面对大篇幅材料更从容']
   },
   self: {
-    tag: 'AI自学',
-    systemTag: '自主学习',
-    text: '面向小学三年级至初中三年级，训练格定义五步法、格定理四步法和AI辅助自学，帮助孩子建立可迁移的自主学习能力。',
-    list: ['格定义五步法', 'AI辅助提问与验证', '知识全景图与闭卷验收']
+    tag: '数学自学',
+    systemTag: '数学自主营',
+    text: '面向小学三年级至初中三年级，围绕数学教材自学训练，使用格定义五步法、格定理四步法和AI辅助提问验证，帮助孩子建立不依赖补课的自主学习能力。',
+    list: ['格定义五步法', '格定理四步法', 'AI辅助提问与答案验证'],
+    detailIntro: '这是一门面向数学学习的自主学习能力训练营。孩子携带对应年级数学教材、学参和试卷，在导学引导下使用课本、AI工具、问天录和错题本，训练“自己读懂、自己提问、自己验证、自己讲清楚”的学习能力。',
+    paths: ['格物入门', '攻坚深化', '知识联网', '自证结营'],
+    audience: ['小学三年级至初中三年级学生', '希望减少补习依赖、提升数学自学能力的孩子', '具备基本学习意愿，愿意尝试用AI作为学习助教的学生'],
+    effects: ['拿到新数学教材知道怎么学', '能用大白话讲清定义和定理', '能绘制跨章节知识全景图', '形成可迁移到其他学科的自学方法']
   }
 };
 
@@ -68,6 +84,8 @@ function replaceGlobalTexts() {
     ['潜意识阅读', READING_COURSE_NAME],
     ['心脑学习力强化营', READING_COURSE_NAME],
     ['五四学习法数学实训营', SELF_STUDY_COURSE_NAME],
+    ['心脑学习力自主营（数学）', SELF_STUDY_COURSE_NAME],
+    ['心脑学习力自主营', SELF_STUDY_COURSE_NAME],
     ['心脑学习力公开课', SELF_STUDY_COURSE_NAME]
   ];
   replacements.forEach(([from, to]) => { document.title = document.title.replaceAll(from, to); });
@@ -368,54 +386,46 @@ function updateCourseCards() {
 }
 
 function setupDetailPage() {
-  const path = window.location.pathname;
+  const file = window.location.pathname.split('/').pop();
   const detailMap = {
     'evaluation-detail.html': COURSE_ITEMS[0],
     'course-detail.html': COURSE_ITEMS[1],
     'camp-detail.html': COURSE_ITEMS[2],
     'public-class-detail.html': COURSE_ITEMS[3]
   };
-  const file = path.split('/').pop();
   const item = detailMap[file];
   if (!item) return;
   const copy = COURSE_COPY[item.key];
   const heroTitle = document.querySelector('.detail-hero h1');
   if (heroTitle) heroTitle.textContent = item.name;
   const heroDesc = document.querySelector('.detail-hero p');
-  if (heroDesc) heroDesc.textContent = copy.text;
+  if (heroDesc) heroDesc.textContent = copy.detailIntro || copy.text;
   const detailTags = document.querySelector('.detail-tags');
   if (detailTags) detailTags.innerHTML = `<span>${copy.tag}</span><span>青少年学习力</span><span>阶段训练</span><span>过程反馈</span>`;
   const detailMain = document.querySelector('.detail-main');
   if (detailMain) {
-    const paths = {
-      experience: ['状态观察', '任务体验', '结果反馈', '后续建议'],
-      focus: ['身心安定', '感官专注', '图像记忆', '情绪觉察', '家庭陪跑'],
-      reading: ['破除默读', '整页摄入', '脑内成像', '实战检验', '阅读计划'],
-      self: ['格物入门', '攻坚深化', '知识联网', '自证结营']
+    const pathText = {
+      experience: ['观察孩子当前学习状态', '通过短时任务体验训练过程', '对比反馈孩子过程变化', '给出后续课程建议'],
+      focus: ['稳定身体和呼吸状态', '训练感官专注和图像记忆', '引导情绪觉察与表达', '形成家庭陪跑任务'],
+      reading: ['破除逐字默读习惯', '训练整页摄入和脑内快照', '形成脑内电影或结构图', '通过复述和测试检验理解'],
+      self: ['第1天：格物入门，掌握格定义五步法并完成第一章通关', '第2天：攻坚深化，训练格定理四步法并完成二三章学习', '第3天：知识联网，绘制数学知识全景图并进行模拟考', '第4天：自证结营，错题围剿、闭卷大考和自学计划制定']
     };
+    const extraBlock = item.key === 'self'
+      ? `<div class="detail-block reveal show"><h2>数学训练重点</h2>${setList(['用“逐字读—问自己—问AI—做例题—一句话总结”理解数学定义', '用“条件结论—逆定理—多种证明—生活实例”吃透数学定理', '训练孩子向AI提出精准问题，并验证AI答案是否可靠', '用费曼互讲、错题本和知识全景图检验是否真正学懂'])}</div>`
+      : '';
     detailMain.innerHTML = `
-      <div class="detail-block reveal show"><h2>课程定位</h2><p>${copy.text}</p><p>官网页面只展示家长判断课程是否适合所需的核心信息，完整课表和细化方案建议在咨询后根据孩子情况单独沟通。</p></div>
+      <div class="detail-block reveal show"><h2>课程定位</h2><p>${copy.detailIntro || copy.text}</p><p>官网页面只展示家长判断课程是否适合所需的核心信息，完整课表和细化方案建议在咨询后根据孩子情况单独沟通。</p></div>
       <div class="detail-block reveal show"><h2>核心训练内容</h2>${setList(copy.list)}</div>
-      <div class="detail-block reveal show"><h2>典型训练路径</h2><div class="course-flow">${paths[item.key].map((step, index) => `<div class="flow-item"><b>${index + 1}</b><span>${step}</span><p>围绕${step}进行训练、反馈和巩固。</p></div>`).join('')}</div></div>
-      <div class="detail-block reveal show"><h2>适合对象</h2>${setList(['希望改善学习状态、学习方法和学习效率的青少年', '家长希望先看见过程变化，再判断是否进入系统训练', '适合结合体验测评结果进一步匹配课程方案'])}</div>
+      ${extraBlock}
+      <div class="detail-block reveal show"><h2>典型训练路径</h2><div class="course-flow">${(pathText[item.key] || copy.paths).map((step, index) => `<div class="flow-item"><b>${index + 1}</b><span>${copy.paths[index] || step}</span><p>${step}</p></div>`).join('')}</div></div>
+      <div class="detail-block reveal show"><h2>适合对象</h2>${setList(copy.audience)}</div>
+      <div class="detail-block reveal show"><h2>学后变化</h2>${setList(copy.effects)}</div>
     `;
   }
   const sideCard = document.querySelector('.side-card');
   if (sideCard) sideCard.innerHTML = `<h3>课程信息</h3><p>${copy.text}</p><div class="side-list"><div><b>课程</b><span>${item.name}</span></div><div><b>重点</b><span>${copy.list[0]}</span></div><div><b>方式</b><span>体验 / 训练 / 反馈</span></div></div><a class="btn btn-gold" href="${contactUrl('trial')}">预约体验</a><a class="btn btn-line" href="courses.html">返回课程产品</a>`;
   const cta = document.querySelector('.detail-cta-wrap');
   if (cta) cta.innerHTML = `<div><h2>先从一次体验沟通开始</h2><p>通过体验测评了解孩子当前状态，再判断适合哪一类课程。</p></div><div class="detail-cta-actions"><a class="btn btn-primary" href="${contactUrl('trial')}">预约体验</a><a class="btn btn-gold" href="courses.html">查看全部课程</a></div>`;
-}
-
-function reorderHomeCourses() {
-  const grids = [document.querySelector('#course .product-grid'), document.querySelector('.system-grid'), document.querySelector('.course-list')].filter(Boolean);
-  grids.forEach(grid => {
-    const cards = [...grid.children];
-    if (cards.length < 4) return;
-    const order = [1, 0, 2, 3];
-    order.forEach((oldIndex, newIndex) => {
-      if (cards[oldIndex]) grid.appendChild(cards[oldIndex]);
-    });
-  });
 }
 
 function setupHeroSlider() {
