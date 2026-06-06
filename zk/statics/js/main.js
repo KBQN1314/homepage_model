@@ -56,6 +56,11 @@ const COURSE_COPY = {
   }
 };
 
+function cleanCourseName(text) {
+  if (!text) return text;
+  return text.replaceAll('心脑学习力自主营（数学）（数学）', SELF_STUDY_COURSE_NAME);
+}
+
 function replaceTextInNode(root, replacements) {
   if (!root) return;
   const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
@@ -70,7 +75,7 @@ function replaceTextInNode(root, replacements) {
   nodes.forEach(node => {
     let value = node.nodeValue;
     replacements.forEach(([from, to]) => { value = value.replaceAll(from, to); });
-    node.nodeValue = value;
+    node.nodeValue = cleanCourseName(value);
   });
 }
 
@@ -88,9 +93,9 @@ function replaceGlobalTexts() {
     ['心脑学习力自主营', SELF_STUDY_COURSE_NAME],
     ['心脑学习力公开课', SELF_STUDY_COURSE_NAME]
   ];
-  replacements.forEach(([from, to]) => { document.title = document.title.replaceAll(from, to); });
+  replacements.forEach(([from, to]) => { document.title = cleanCourseName(document.title.replaceAll(from, to)); });
   document.querySelectorAll('meta[content]').forEach(meta => {
-    replacements.forEach(([from, to]) => { meta.content = meta.content.replaceAll(from, to); });
+    replacements.forEach(([from, to]) => { meta.content = cleanCourseName(meta.content.replaceAll(from, to)); });
   });
   replaceTextInNode(document.body, replacements);
 }
@@ -165,7 +170,7 @@ function createNavLink(label, href, isActive) {
 }
 
 function createNavDropdown(label, href, items, isActive) {
-  const itemLinks = items.map(item => `<a href="${item.href}">${item.text}</a>`).join('');
+  const itemLinks = items.map(item => `<a href="${item.href}">${cleanCourseName(item.text)}</a>`).join('');
   return `<div class="nav-item has-dropdown${isActive ? ' nav-active' : ''}"><a class="nav-link" href="${href}" aria-expanded="false">${label}</a><div class="nav-panel">${itemLinks}</div></div>`;
 }
 
