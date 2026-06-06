@@ -84,6 +84,17 @@ body.nav-open{overflow:hidden}.hamb{transition:.35s ease}.hamb i{transition:.35s
   }
 }
 
+/* Fallback: keep homepage hero text visible even if the JS animation class is not applied. */
+.hero .hero-inner,
+.hero .hero-inner .eyebrow,
+.hero .hero-inner h1,
+.hero .hero-inner h2,
+.hero .hero-inner p,
+.hero .hero-actions {
+  opacity: 1 !important;
+  transform: translate3d(0,0,0) !important;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: .001ms !important;
