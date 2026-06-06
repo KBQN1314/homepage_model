@@ -509,9 +509,9 @@ function setupHeaderScroll() {
 }
 
 function setupSimplePageTransitions() {
-  if (document.getElementById('simplePageTransitionStyle')) return;
+  if (document.getElementById('zkSplitPageTransitionStyle')) return;
   const style = document.createElement('style');
-  style.id = 'simplePageTransitionStyle';
+  style.id = 'zkSplitPageTransitionStyle';
   style.textContent = `
     .page-transition-mask {
       position: fixed;
@@ -520,16 +520,58 @@ function setupSimplePageTransitions() {
       pointer-events: none;
       opacity: 0;
       visibility: hidden;
-      transition: opacity .24s ease, visibility .24s ease;
-      background: rgba(16, 27, 23, .88);
+      transition: opacity .18s ease, visibility .18s ease;
     }
     .page-transition-mask.active {
       opacity: 1;
       visibility: visible;
       pointer-events: auto;
     }
+    .page-transition-panel {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      height: 50%;
+      background: linear-gradient(135deg, #071e17 0%, #0b4a32 100%);
+      transition: transform .56s cubic-bezier(.77,0,.18,1);
+      will-change: transform;
+    }
+    .page-transition-panel.top { top: 0; }
+    .page-transition-panel.bottom { bottom: 0; }
+    .page-transition-mark {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 86px;
+      height: 86px;
+      transform: translate(-50%, -50%) scale(.86);
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(199,175,130,.58);
+      background: rgba(255,255,255,.96);
+      color: #045c39;
+      font-weight: 800;
+      letter-spacing: 3px;
+      box-shadow: 0 24px 60px rgba(0,0,0,.22);
+      opacity: 0;
+      transition: opacity .26s ease .08s, transform .36s cubic-bezier(.2,.8,.2,1) .08s;
+    }
+    .page-transition-mask.active .page-transition-mark {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+    .page-transition-mask.opening .page-transition-panel.top { transform: translateY(-100%); }
+    .page-transition-mask.opening .page-transition-panel.bottom { transform: translateY(100%); }
+    .page-transition-mask.opening .page-transition-mark {
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(.72);
+      transition-delay: 0s;
+    }
     @media (prefers-reduced-motion: reduce) {
-      .page-transition-mask { transition: none !important; }
+      .page-transition-mask,
+      .page-transition-panel,
+      .page-transition-mark { transition: none !important; }
     }
   `;
   document.head.appendChild(style);
@@ -538,9 +580,23 @@ function setupSimplePageTransitions() {
   if (oldMask) oldMask.remove();
   const mask = document.createElement('div');
   mask.className = 'page-transition-mask';
+  mask.innerHTML = '<div class="page-transition-panel top"></div><div class="page-transition-panel bottom"></div><div class="page-transition-mark">ZK</div>';
   document.body.appendChild(mask);
 
-  window.addEventListener('pageshow', () => mask.classList.remove('active'));
+  if (sessionStorage.getItem('zkPageTransition') === '1') {
+    sessionStorage.removeItem('zkPageTransition');
+    mask.classList.add('active');
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => mask.classList.add('opening'));
+    });
+    setTimeout(() => {
+      mask.classList.remove('active', 'opening');
+    }, 720);
+  }
+
+  window.addEventListener('pageshow', event => {
+    if (event.persisted) mask.classList.remove('active', 'opening');
+  });
 
   document.addEventListener('click', event => {
     const anchor = event.target.closest('a[href]');
@@ -561,8 +617,10 @@ function setupSimplePageTransitions() {
     if (!/\.html$|\/$/.test(url.pathname)) return;
 
     event.preventDefault();
+    sessionStorage.setItem('zkPageTransition', '1');
+    mask.classList.remove('opening');
     mask.classList.add('active');
-    setTimeout(() => { window.location.href = url.href; }, 220);
+    setTimeout(() => { window.location.href = url.href; }, 430);
   });
 }
 
