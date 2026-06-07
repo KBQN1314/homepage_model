@@ -134,6 +134,43 @@
   line-height: 1.75;
 }
 
+.contact-qr-card {
+  margin-top: 26px;
+  padding: 24px;
+  display: grid;
+  grid-template-columns: 132px 1fr;
+  gap: 22px;
+  align-items: center;
+  background:
+    radial-gradient(circle at 90% 10%, rgba(199, 175, 130, .18), transparent 35%),
+    linear-gradient(135deg, #0b5f3e, #10231e);
+  box-shadow: 0 18px 42px rgba(16, 27, 23, .14);
+}
+
+.contact-qr-image {
+  width: 132px;
+  height: 132px;
+  padding: 10px;
+  border-radius: 16px;
+  background: #fff url('../images/QR.svg') center/82% no-repeat;
+  box-shadow:
+    0 16px 34px rgba(0, 0, 0, .18),
+    inset 0 0 0 1px rgba(199, 175, 130, .18);
+}
+
+.contact-qr-text b {
+  display: block;
+  margin-bottom: 8px;
+  color: #fff;
+  font-size: 20px;
+}
+
+.contact-qr-text span {
+  display: block;
+  color: rgba(255, 255, 255, .78);
+  line-height: 1.8;
+}
+
 .contact-form {
   background: var(--green);
   padding: 42px;
@@ -291,5 +328,11 @@
 
   .contact-detail-item {
     grid-template-columns: 1fr;
+  }
+
+  .contact-qr-card {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    text-align: center;
   }
 }
