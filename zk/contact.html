@@ -9,6 +9,11 @@
   <link rel="stylesheet" href="statics/style/style.css">
   <link rel="stylesheet" href="statics/style/effects.css">
   <link rel="stylesheet" href="statics/style/contact.css">
+  <style>
+    .contact-qr-panel { display: grid; place-items: center; }
+    .contact-qr-card.qr-only-card { grid-template-columns: 1fr; place-items: center; width: fit-content; margin: 0 auto; }
+    .contact-qr-card.qr-only-card .contact-qr-image { width: 220px; height: 220px; }
+  </style>
 </head>
 <body>
   <div class="loading hide"><div class="mark">ZK</div></div>
@@ -58,13 +63,9 @@
             </div>
           </div>
 
-          <div class="contact-info-panel contact-qr-panel">
-            <div class="sec-kicker">Wechat</div>
-            <h2>微信咨询</h2>
-            <p>扫描二维码添加微信，咨询课程信息、体验安排和合作事宜。</p>
-            <div class="contact-qr-card contact-qr-card-large">
-              <div class="contact-qr-image" aria-label="微信咨询二维码"></div>
-              <div class="contact-qr-text"><b>扫描二维码</b><span>微信号：puzd1898。请备注“课程咨询”或“合作咨询”，便于后续沟通。</span></div>
+          <div class="contact-info-panel contact-qr-panel" aria-label="微信咨询二维码">
+            <div class="contact-qr-card contact-qr-card-large qr-only-card">
+              <div class="contact-qr-image"></div>
             </div>
           </div>
         </div>
