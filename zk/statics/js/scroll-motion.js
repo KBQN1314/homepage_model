@@ -37,9 +37,9 @@
     style.textContent = `
       .scroll-motion {
         opacity: 0;
-        transform: translate3d(0, 26px, 0);
+        transform: translate3d(0, 28px, 0);
         transition-property: opacity, transform;
-        transition-duration: .86s, .96s;
+        transition-duration: .94s, 1.08s;
         transition-timing-function: cubic-bezier(.19, 1, .22, 1), cubic-bezier(.19, 1, .22, 1);
         transition-delay: var(--motion-delay, 0ms), var(--motion-delay, 0ms);
         will-change: opacity, transform;
@@ -47,11 +47,11 @@
 
       .scroll-motion.motion-soft {
         transform: translate3d(0, 18px, 0);
-        transition-duration: .9s, 1.02s;
+        transition-duration: .98s, 1.12s;
       }
 
       .scroll-motion.motion-card {
-        transform: translate3d(0, 30px, 0);
+        transform: translate3d(0, 32px, 0);
       }
 
       .scroll-motion.motion-in {
@@ -142,10 +142,10 @@
     const index = getGroupIndex(el);
     const isCard = el.matches(CARD_LIKE_SELECTOR);
 
-    if (group && isCard) return Math.min(300, index * 62);
-    if (group) return Math.min(220, index * 48);
-    if (isCard) return Math.min(180, (index % 4) * 46);
-    return Math.min(90, (index % 3) * 30);
+    if (group && isCard) return Math.min(420, index * 96);
+    if (group) return Math.min(340, index * 78);
+    if (isCard) return Math.min(260, (index % 4) * 72);
+    return Math.min(150, (index % 3) * 50);
   }
 
   function shouldAnimateParentInstead(el, selected) {
