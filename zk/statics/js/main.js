@@ -31,30 +31,30 @@ const COURSE_COPY = {
   },
   memory: {
     tag: '图像记忆', systemTag: '记忆强化',
-    text: '面向10-18岁青少年，训练静定专注、脑屏成像、整页摄入和学科迁移能力，帮助孩子把文字、图表和公式转化为脑内图像进行高效记忆。',
+    text: '面向10-18岁青少年，训练静定专注、脑屏成像、整页摄入和学科迁移，帮助孩子摆脱“反复背、反复忘”的低效记忆方式。',
     list: ['静定训练与脑屏激活', '整页摄入与信息提取', '古诗英语公式学科迁移'],
-    detailIntro: '这是一门围绕脑内成像能力设计的记忆训练课程。课程通过静定训练、残像训练、烛光观想、整页摄入和学科内容迁移，帮助孩子在深度专注状态下把文字、图表、古诗文、英语单词和理科公式转化为可提取的脑内图像。',
+    detailIntro: '很多孩子不是记性差，而是一直在用低效的“死记硬背”。心脑学习力记忆营通过静定训练、脑屏激活、整页摄入和学科迁移，让孩子尝试把文字、图表、古诗、英语单词和理科公式转化为可提取的脑内图像。',
     paths: ['静定打底', '脑屏激活', '整页摄入', '学科迁移', '实战验证'],
-    audience: ['10-18岁青少年', '具备基本静坐能力，能够安静坐下15分钟以上的学生', '背诵慢、记不牢、希望提升记忆效率的孩子', '已完成专注力阶段训练，希望继续强化图像记忆能力的学生'],
-    effects: ['背诵不再只靠反复读，能用图像方式辅助记忆', '古诗文、英语单词、理科公式记忆效率提升', '专注学习时长提升，更容易坐得住', '通过阶段考核建立“我能记住”的学习信心']
+    audience: ['10-18岁青少年', '背诵慢、记不牢、考前反复背但考试提取困难的孩子', '古诗文、英语单词、理科公式记忆压力较大的学生', '具备基本静坐能力，能够安静坐下15分钟以上的孩子', '已完成专注力阶段训练，希望继续提升记忆效率的学生'],
+    effects: ['背诵不再只靠反复读，开始学会用图像方式辅助记忆', '古诗文、英语单词、理科公式等学科内容记忆效率提升', '专注学习时长和稳定性提升，更容易坐得住', '通过阶段考核建立“我能记住”的学习信心']
   },
   reading: {
     tag: '高效阅读', systemTag: '阅读突破',
-    text: '面向12-18岁青少年，训练整页摄入、脑内成像和结构化理解能力，帮助孩子提升阅读效率、理解表达和考试阅读速度。',
+    text: '面向12-18岁青少年，训练整页摄入、脑内成像和结构化理解，帮助孩子应对阅读慢、读不完、读完说不清的问题。',
     list: ['破除逐字默读习惯', '整页摄入与脑内成像', '速读理解与复述输出'],
-    detailIntro: '通过破除逐字默读、整页摄入、脑内成像和结构化理解训练，让孩子把文字转化为画面和结构，提升阅读速度、理解率和复述表达能力。',
+    detailIntro: '阅读慢的孩子，往往不是不认真，而是被逐字默读和线性阅读拖住了速度。心脑学习力阅读营通过破除默读、整页摄入、脑内成像和结构化复述，帮助孩子把文字转化为画面、结构和表达。',
     paths: ['破除默读', '整页摄入', '脑内成像', '实战检验', '阅读计划'],
-    audience: ['12-18岁青少年', '阅读慢、读完说不清重点的学生', '面对应试阅读量增加，希望提升阅读效率的孩子'],
-    effects: ['阅读速度提升', '读完能复述核心结构', '面对大篇幅材料更从容']
+    audience: ['12-18岁青少年', '阅读速度慢、文章读不完、读完说不清重点的学生', '考试阅读量大，容易因为时间不够影响答题的孩子', '希望提升阅读效率、理解结构和复述表达能力的学生'],
+    effects: ['阅读速度和信息摄入效率提升', '读完后更容易复述核心结构和关键细节', '面对大篇幅材料更从容，减少“读不完”的焦虑', '逐步把阅读从苦差事转化为更沉浸的学习体验']
   },
   self: {
     tag: '数学自学', systemTag: '数学自主营',
-    text: '面向小学三年级至初中三年级，围绕数学教材自学训练，使用格定义五步法、格定理四步法和AI辅助提问验证，帮助孩子建立不依赖补课的自主学习能力。',
+    text: '面向小学三年级至初中三年级，围绕数学教材自学训练，帮助孩子从“等老师讲”转向“自己读懂、自己提问、自己验证”。',
     list: ['格定义五步法', '格定理四步法', 'AI辅助提问与答案验证'],
-    detailIntro: '这是一门面向数学学习的自主学习能力训练营。孩子携带对应年级数学教材、学参和试卷，在导学引导下使用课本、AI工具、问天录和错题本，训练“自己读懂、自己提问、自己验证、自己讲清楚”的学习能力。',
+    detailIntro: '很多孩子数学学不好，并不只是知识点不会，而是没有形成独立学习新知识的路径。心脑学习力自主营（数学）通过格定义五步法、格定理四步法和AI辅助提问验证，训练孩子自己读懂教材、讲清概念、整理错题、建立知识全景图。',
     paths: ['格物入门', '攻坚深化', '知识联网', '自证结营'],
-    audience: ['小学三年级至初中三年级学生', '希望减少补习依赖、提升数学自学能力的孩子', '具备基本学习意愿，愿意尝试用AI作为学习助教的学生'],
-    effects: ['拿到新数学教材知道怎么学', '能用大白话讲清定义和定理', '能绘制跨章节知识全景图', '形成可迁移到其他学科的自学方法']
+    audience: ['小学三年级至初中三年级学生', '希望减少补习依赖、提升数学自学能力的孩子', '拿到新课本不知道怎么学，遇到定义和定理就卡住的学生', '愿意尝试把AI当作学习助教，而不是抄答案工具的孩子'],
+    effects: ['拿到新数学教材知道怎么开始学', '能用大白话讲清定义和定理', '能用错题本和问天录定位自己的知识漏洞', '能绘制跨章节知识全景图，形成可迁移到其他学科的自学方法']
   }
 };
 
@@ -266,32 +266,47 @@ function setupDetailPage() {
   const tags = document.querySelector('.detail-tags');
   if (tags) tags.innerHTML = `<span>${copy.tag}</span><span>青少年学习力</span><span>阶段训练</span><span>过程反馈</span>`;
   const pathText = {
-    experience: ['第1步：通过简单任务观察孩子的专注、记忆、表达和任务启动状态', '第2步：安排短时训练体验，让家长看到孩子在方法引导下的过程变化', '第3步：对比体验前后的表现，帮助家长判断主要卡点和优势', '第4步：根据孩子状态匹配专注营、记忆营、阅读营或自主营方向'],
+    experience: ['观察孩子当前学习状态', '通过短时任务体验训练过程', '对比反馈孩子过程变化', '给出后续课程建议'],
     focus: ['第1阶段：身体锚定与呼吸训练，让孩子先从身体层面安定下来，建立进入学习状态的入口', '第2阶段：微观观察、听觉追踪和感官专注训练，帮助大脑学会过滤干扰、锁定任务', '第3阶段：图像记忆、心像显化和表达训练，把“记不住”转化为“看得见、说得出”', '第4阶段：情绪觉察、目标承诺和21天家庭陪跑，把营期变化延伸到家庭学习场景'],
-    memory: ['第1-2天：静定训练、残像训练和脑屏激活，建立稳定成像基础', '第3-4天：从整段摄入到整页摄入，训练从脑内页面直接提取信息', '第5-6天：迁移到古诗文、英语单词和理科公式等学科内容', '第7天：通过陌生材料笔试和口试，检验真实记忆效果'],
-    reading: ['破除逐字默读习惯', '训练整页摄入和脑内快照', '形成脑内电影或结构图', '通过复述和测试检验理解'],
+    memory: ['第1-2天：静定训练、数息和残像训练，先把“坐不住、看不稳”的状态稳定下来', '第3-4天：从整段摄入到整页摄入，训练闭眼后从脑内页面提取信息', '第5-6天：迁移到古诗文、英语单词和理科公式，进入真实学科学习场景', '第7天：通过陌生材料笔试和口试，检验阶段训练效果并制定日常巩固计划'],
+    reading: ['第1-2天：破除逐字默读习惯，用节奏、软眼和整页感知打开视觉通道', '第3-4天：训练脑内电影和结构图，让叙事文变画面、议论文变框架', '第5-6天：通过速读、复述、演讲和综合测试，提升理解深度与表达输出', '第7天：制定阅读计划，把“读得快”转化为长期阅读习惯'],
     self: ['第1天：格物入门，掌握格定义五步法并完成第一章通关', '第2天：攻坚深化，训练格定理四步法并完成二三章学习', '第3天：知识联网，绘制数学知识全景图并进行模拟考', '第4天：自证结营，错题围剿、闭卷大考和自学计划制定']
   };
+  const painMap = {
+    focus: { title: '为什么孩子需要先训练专注力？', items: [['坐不住', '不是孩子故意拖拉，而是身体和注意系统还没有稳定下来，学习一开始就容易分心。'], ['记不牢', '只靠反复读和硬背，容易学得慢、忘得快，需要把文字、声音和画面连接起来。'], ['容易烦', '遇到难题就抵触，往往不是态度问题，而是情绪觉察和自我调节能力还需要训练。'], ['没动力', '当孩子看不到自己的进步，就容易被动学习；课程通过可感知的小变化重建“我能行”。']] },
+    memory: { title: '为什么孩子背了很多，还是记不住？', items: [['死记硬背', '只靠重复朗读，孩子很累，但信息没有形成稳定提取路径。'], ['考场提取慢', '平时背过，考试想不起来，往往是没有建立清晰的脑内线索。'], ['公式单词混乱', '古诗、单词、公式都靠硬塞，学科压力越大，记忆越容易失控。'], ['缺少信心', '反复忘会让孩子误以为自己记性差，进而逃避背诵任务。']] },
+    reading: { title: '为什么孩子读得慢、读完还说不清？', items: [['逐字默读', '阅读速度被心里默念拖住，越认真越容易慢。'], ['抓不住重点', '读完一大段，只记得零散句子，没有形成整体结构。'], ['考试读不完', '阅读量变大时，速度慢会直接压缩审题和检查时间。'], ['不愿阅读', '阅读长期变成负担，孩子自然会逃避长文和整本书。']] },
+    self: { title: '为什么补了很多课，孩子还是不会自己学？', items: [['等老师讲', '孩子习惯被动听课，拿到新教材不知道第一步怎么开始。'], ['不会提问', '遇到定义和定理卡住，只会问答案，不会问原因和条件。'], ['AI用不好', '把AI当抄答案工具，而不是24小时学习助教，反而削弱思考。'], ['错题不复盘', '题做错了只是改答案，没有形成自己的知识漏洞地图。']] }
+  };
+  const numberMap = {
+    experience: ['199元 / 节，约2小时，适合作为首次了解课程的低门槛入口', '重点观察专注、记忆、表达、情绪和任务启动等学习状态', '体验后根据孩子状态，初步匹配专注营、记忆营、阅读营或自主营方向'],
+    focus: ['面向8-16岁青少年，处于专注力、记忆力和价值观形成的重要阶段', '课程目标覆盖专注力、记忆力、想象力、自我觉察和学习内驱力等底层能力', '配合21天家庭陪跑机制，每天约10分钟家庭练习，帮助家长把营期效果延续到日常'],
+    memory: ['面向10-18岁青少年，建议具备基本静坐能力，能够安静坐下15分钟以上', '训练目标包括静坐专注时长提升至30分钟以上、10秒摄入一页等阶段指标', '学科迁移覆盖古诗文、英语单词、理科公式等内容，训练目标为默写正确率明显提升', '结营通过陌生材料笔试和口试进行阶段验证，帮助孩子建立“我能记住”的信心'],
+    reading: ['面向12-18岁青少年，适合有阅读效率和应试阅读需求的学生', '训练目标从约300字/分钟的逐字默读，逐步向更高效的视觉阅读方式过渡', '通过整页摄入、脑内电影、结构图、复述和测试，提升速度、理解与输出', '课程设置速读马拉松、笔试口试和结营阅读计划，帮助孩子建立持续阅读习惯'],
+    self: ['面向小学三年级至初中三年级，围绕数学教材进行自主学习训练', '4天训练路径：格物入门、攻坚深化、知识联网、自证结营', '训练使用课本、AI工具、问天录和错题本，目标是让孩子自己读懂、自己提问、自己验证', '通过通关考核、模拟考、闭卷大考和知识全景图，检验是否真正学会自学']
+  };
   let extra = '';
-  if (item.key === 'experience') {
-    extra = `<div class="detail-block reveal show"><h2>为什么建议先上体验课？</h2><div class="course-flow"><div class="flow-item"><b>1</b><span>少走弯路</span><p>很多家庭一开始并不知道孩子到底卡在专注、记忆、阅读、情绪还是学习方法上，先体验能降低盲目报名成本。</p></div><div class="flow-item"><b>2</b><span>看见过程</span><p>不是只听介绍，而是通过短时任务观察孩子真实反应，看他能不能跟上训练、是否愿意投入。</p></div><div class="flow-item"><b>3</b><span>判断适配</span><p>体验后再判断适合专注营、记忆营、阅读营还是自主营，避免课程选择和孩子状态不匹配。</p></div><div class="flow-item"><b>4</b><span>低门槛决策</span><p>199元约2小时，先看孩子状态和服务方式，再决定是否进入9800元系统训练营。</p></div></div></div><div class="detail-block reveal show"><h2>体验课家长关注点</h2>${setList(['孩子进入任务的速度：是很快投入，还是需要反复提醒', '孩子面对任务的反应：是愿意尝试，还是容易烦躁退缩', '孩子的信息处理方式：是能观察、能复述，还是看完说不清', '孩子对训练方式的接受度：是否愿意跟随老师完成短时训练'])}</div>`;
+  if (painMap[item.key]) {
+    const pain = painMap[item.key];
+    extra += `<div class="detail-block reveal show"><h2>${pain.title}</h2><div class="course-flow">${pain.items.map((it, index) => `<div class="flow-item"><b>${index + 1}</b><span>${it[0]}</span><p>${it[1]}</p></div>`).join('')}</div></div>`;
   }
-  if (item.key === 'focus') {
-    extra = `<div class="detail-block reveal show"><h2>为什么孩子需要先训练专注力？</h2><div class="course-flow"><div class="flow-item"><b>1</b><span>坐不住</span><p>不是孩子故意拖拉，而是身体和注意系统还没有稳定下来，学习一开始就容易分心。</p></div><div class="flow-item"><b>2</b><span>记不牢</span><p>只靠反复读和硬背，容易学得慢、忘得快，需要把文字、声音和画面连接起来。</p></div><div class="flow-item"><b>3</b><span>容易烦</span><p>遇到难题就抵触，往往不是态度问题，而是情绪觉察和自我调节能力还需要训练。</p></div><div class="flow-item"><b>4</b><span>没动力</span><p>当孩子看不到自己的进步，就容易被动学习；课程通过可感知的小变化重建“我能行”。</p></div></div></div><div class="detail-block reveal show"><h2>数字化亮点</h2>${setList(['面向8-16岁青少年，处于专注力、记忆力和价值观形成的重要阶段', '课程目标包含专注力、记忆力、想象力、自我觉察和学习内驱力等底层能力', '训练后以“能静下来、能观察、能表达、能坚持”为主要反馈指标', '配合21天家庭陪跑机制，每天约10分钟家庭练习，帮助家长把营期效果延续到日常'])}</div>`;
-  }
-  if (item.key === 'memory') extra = `<div class="detail-block reveal show"><h2>记忆训练重点</h2>${setList(['训练静坐、数息、残像等基础专注能力，先让孩子坐得住、看得稳', '通过烛光观想、曼陀罗内观和实物心像激活脑内成像能力', '从整段摄入逐步过渡到整页摄入，训练闭眼后的信息提取', '把能力迁移到古诗文、英语单词、理科公式等真实学科内容'])}</div>`;
-  if (item.key === 'self') extra = `<div class="detail-block reveal show"><h2>数学训练重点</h2>${setList(['用“逐字读—问自己—问AI—做例题—一句话总结”理解数学定义', '用“条件结论—逆定理—多种证明—生活实例”吃透数学定理', '训练孩子向AI提出精准问题，并验证AI答案是否可靠', '用费曼互讲、错题本和知识全景图检验是否真正学懂'])}</div>`;
+  if (numberMap[item.key]) extra += `<div class="detail-block reveal show"><h2>数字化亮点</h2>${setList(numberMap[item.key])}</div>`;
+  if (item.key === 'memory') extra += `<div class="detail-block reveal show"><h2>记忆训练重点</h2>${setList(['先训练静坐、数息、残像等基础专注能力，让孩子坐得住、看得稳', '通过烛光观想、曼陀罗内观和实物心像激活脑内成像能力', '从整段摄入逐步过渡到整页摄入，训练闭眼后的信息提取', '把能力迁移到古诗文、英语单词、理科公式等真实学科内容'])}</div>`;
+  if (item.key === 'reading') extra += `<div class="detail-block reveal show"><h2>阅读训练重点</h2>${setList(['破除逐字默读，让孩子不再被“心里念字”的速度限制', '训练整页摄入和脑内快照，提升大篇幅信息处理效率', '叙事文形成脑内电影，议论文形成结构图，读完能讲出来', '通过速读、复述、辩论和仿写，把阅读能力转化为表达能力'])}</div>`;
+  if (item.key === 'self') extra += `<div class="detail-block reveal show"><h2>数学训练重点</h2>${setList(['用“逐字读—问自己—问AI—做例题—一句话总结”理解数学定义', '用“条件结论—逆定理—多种证明—生活实例”吃透数学定理', '训练孩子向AI提出精准问题，并验证AI答案是否可靠', '用费曼互讲、错题本和知识全景图检验是否真正学懂'])}</div>`;
   const main = document.querySelector('.detail-main');
   if (main) {
     const pathItems = pathText[item.key] || copy.paths;
-    const firstTitle = item.key === 'focus' ? '先解决学习状态，成绩提升才有入口' : item.key === 'experience' ? '先看清问题，再决定训练方向' : '课程定位';
-    const firstText = item.key === 'focus' ? '很多孩子不是不想学，而是进入学习状态太慢、抗干扰弱、记忆方式单一、遇到困难容易情绪化。专注营不是简单让孩子“坐着别动”，而是通过身体、感官、心像、情绪和家庭陪跑五个层面，系统重建学习状态。' : item.key === 'experience' ? '体验课的价值，不是把系统课程压缩成一节课，而是用较短时间帮助家长看清孩子当前的真实学习状态。通过任务观察、短时训练和结果反馈，先判断孩子主要卡点，再选择后续课程路径。' : (copy.detailIntro || copy.text);
-    main.innerHTML = `<div class="detail-block reveal show"><h2>${firstTitle}</h2><p>${firstText}</p></div>${extra}<div class="detail-block reveal show"><h2>核心体验内容</h2>${setList(copy.list)}</div><div class="detail-block reveal show"><h2>典型体验路径</h2><div class="course-flow">${pathItems.map((text, index) => `<div class="flow-item"><b>${index + 1}</b><span>${copy.paths[index] || text}</span><p>${text}</p></div>`).join('')}</div></div><div class="detail-block reveal show"><h2>适合对象</h2>${setList(copy.audience)}</div><div class="detail-block reveal show"><h2>家长能获得什么</h2>${setList(copy.effects)}</div>`;
+    const firstTitleMap = { experience: '先看清孩子状态，再决定是否系统训练', focus: '先解决学习状态，成绩提升才有入口', memory: '先改变记忆方式，背诵效率才有突破', reading: '先突破阅读方式，理解和输出才会变快', self: '先建立自学路径，孩子才不再依赖补课' };
+    const firstTextMap = { experience: '体验课不是简单试听，而是通过任务观察、训练体验和结果反馈，帮助家长判断孩子真正卡在哪里，以及适合从哪一类课程开始。', focus: '很多孩子不是不想学，而是进入学习状态太慢、抗干扰弱、记忆方式单一、遇到困难容易情绪化。专注营不是简单让孩子“坐着别动”，而是通过身体、感官、心像、情绪和家庭陪跑五个层面，系统重建学习状态。', memory: '背得慢、忘得快，很多时候不是孩子不用功，而是没有把信息变成可提取的脑内图像。记忆营先训练专注和成像，再把能力迁移到古诗、单词、公式等真实学习任务中。', reading: '阅读慢不只是速度问题，还会影响审题、理解、表达和考试时间分配。阅读营帮助孩子从逐字阅读转向整体摄入，从“读过”走向“读懂、讲得出”。', self: '补课能解决一部分知识点，但如果孩子不会自己读教材、不会提问、不会验证，就容易长期依赖外部讲解。自主营（数学）训练的是孩子面对新知识时的自学方法。' };
+    main.innerHTML = `<div class="detail-block reveal show"><h2>${firstTitleMap[item.key] || '课程定位'}</h2><p>${firstTextMap[item.key] || copy.detailIntro || copy.text}</p></div>${extra}<div class="detail-block reveal show"><h2>核心训练内容</h2>${setList(copy.list)}</div><div class="detail-block reveal show"><h2>典型训练路径</h2><div class="course-flow">${pathItems.map((text, index) => `<div class="flow-item"><b>${index + 1}</b><span>${copy.paths[index] || text}</span><p>${text}</p></div>`).join('')}</div></div><div class="detail-block reveal show"><h2>适合对象</h2>${setList(copy.audience)}</div><div class="detail-block reveal show"><h2>家长能看到的变化</h2>${setList(copy.effects)}</div>`;
   }
   const side = document.querySelector('.side-card');
   if (side) side.innerHTML = `<h3>课程信息</h3><p>${copy.text}</p><div class="side-list"><div><b>课程</b><span>${item.name}</span></div><div><b>重点</b><span>${copy.list[0]}</span></div><div><b>方式</b><span>${item.key === 'experience' ? '体验 / 测评 / 反馈' : '训练营 / 阶段反馈'}</span></div><div><b>价格</b><span>${item.price}</span></div></div><a class="btn btn-gold" href="${contactUrl('trial')}">预约体验</a><a class="btn btn-line" href="courses.html">返回课程产品</a>`;
   const cta = document.querySelector('.detail-cta-wrap');
-  if (cta) cta.innerHTML = `<div><h2>${item.key === 'focus' ? '孩子专注力问题，不适合只靠催促解决' : item.key === 'experience' ? '不确定孩子适合哪门课？先从体验课开始' : '想进一步了解这门课程？'}</h2><p>${item.key === 'focus' ? '可以先预约体验或咨询，我们会根据孩子当前学习状态和家庭关注点，给出更具体的课程建议。' : item.key === 'experience' ? '用一节课先看清孩子状态，再决定是否进入系统训练，比直接报名更稳妥。' : '可以先预约体验或咨询课程，我们会根据孩子情况给出更具体的建议。'}</p></div><div class="detail-cta-actions"><a class="btn btn-gold" href="${contactUrl('trial')}">预约体验</a><a class="btn btn-line" href="${contactUrl('consult')}">咨询课程</a></div>`;
+  const ctaTitleMap = { experience: '先体验一次，再决定是否系统训练', focus: '孩子专注力问题，不适合只靠催促解决', memory: '孩子记不住，不一定是不用功', reading: '阅读慢，影响的不只是语文成绩', self: '数学自学能力，比多刷几套题更关键' };
+  const ctaTextMap = { experience: '可以先预约体验课，用一节约2小时的训练观察，判断孩子适合从哪个方向开始。', focus: '可以先预约体验或咨询，我们会根据孩子当前学习状态和家庭关注点，给出更具体的课程建议。', memory: '可以先咨询孩子当前背诵、记忆和专注情况，再判断是否适合进入记忆训练阶段。', reading: '可以先评估孩子阅读速度、理解表达和考试阅读压力，再匹配是否适合阅读营。', self: '可以先了解孩子当前数学基础、学习意愿和AI使用情况，再判断是否适合自主营训练。' };
+  if (cta) cta.innerHTML = `<div><h2>${ctaTitleMap[item.key] || '想进一步了解这门课程？'}</h2><p>${ctaTextMap[item.key] || '可以先预约体验或咨询课程，我们会根据孩子情况给出更具体的建议。'}</p></div><div class="detail-cta-actions"><a class="btn btn-gold" href="${contactUrl('trial')}">预约体验</a><a class="btn btn-line" href="${contactUrl('consult')}">咨询课程</a></div>`;
 }
 function setupHeroSlider() {
   const hero = document.querySelector('.hero');
@@ -300,7 +315,11 @@ function setupHeroSlider() {
   const dots = [...hero.querySelectorAll('.hero-dots button')];
   if (!slides.length) return;
   let index = Math.max(0, slides.findIndex(slide => slide.classList.contains('active')));
-  const show = next => { index = (next + slides.length) % slides.length; slides.forEach((slide, i) => slide.classList.toggle('active', i === index)); dots.forEach((dot, i) => dot.classList.toggle('active', i === index)); };
+  const show = next => {
+    index = (next + slides.length) % slides.length;
+    slides.forEach((slide, i) => slide.classList.toggle('active', i === index));
+    dots.forEach((dot, i) => dot.classList.toggle('active', i === index));
+  };
   dots.forEach((dot, i) => dot.addEventListener('click', () => show(i)));
   setInterval(() => show(index + 1), HERO_SLIDE_DURATION);
 }
