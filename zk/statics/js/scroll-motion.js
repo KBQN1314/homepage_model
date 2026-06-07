@@ -14,7 +14,7 @@
     ['数学定义', '定义'],
     ['数学定理', '定理'],
     ['数学知识全景图', '知识全景图'],
-    ['跨章节数学知识全景图', '跨章节知识全景图']
+    ['跨章节数学知识全景图', '知识全景图']
   ];
 
   function normalizeTextValue(value) {
@@ -72,16 +72,17 @@
           content: '';
           position: fixed;
           inset: 0;
-          background: rgba(3, 24, 18, .42);
+          background: rgba(255,255,255,.62) !important;
           z-index: 998;
           pointer-events: none;
+          backdrop-filter: blur(2px);
         }
         header .hamb {
           display: inline-flex !important;
           cursor: pointer;
           position: relative;
           z-index: 1005;
-          background: rgba(255,255,255,.92) !important;
+          background: rgba(255,255,255,.96) !important;
           border-color: rgba(4,92,57,.2) !important;
           box-shadow: 0 8px 24px rgba(16,27,23,.12) !important;
         }
@@ -96,11 +97,12 @@
           display: grid !important;
           gap: 0 !important;
           padding: 18px 22px 22px !important;
-          background: #ffffff !important;
+          background-color: #fbfaf6 !important;
+          background-image: none !important;
           color: #1e2b27 !important;
-          border: 1px solid rgba(4,92,57,.08) !important;
+          border: 1px solid rgba(4,92,57,.1) !important;
           border-radius: 18px !important;
-          box-shadow: 0 22px 60px rgba(3,24,18,.26) !important;
+          box-shadow: 0 22px 60px rgba(3,24,18,.18) !important;
           transform: translate3d(0,-14px,0) !important;
           opacity: 0 !important;
           visibility: hidden !important;
@@ -137,14 +139,12 @@
         header .nav-link:hover,
         header .nav-direct:hover {
           color: #045c39 !important;
-          background: rgba(199,175,130,.13) !important;
+          background: rgba(199,175,130,.16) !important;
           padding-left: 14px !important;
         }
         header nav a::after,
         header .nav-link::after,
-        header .nav-direct::after {
-          display: none !important;
-        }
+        header .nav-direct::after { display: none !important; }
         header .nav-item { width: 100% !important; }
         header .nav-panel {
           position: static !important;
@@ -155,7 +155,7 @@
           pointer-events: auto !important;
           box-shadow: none !important;
           border: 0 !important;
-          background: #f7f5ef !important;
+          background: #f1eee6 !important;
           padding: 6px 14px !important;
           margin: 0 0 8px !important;
           border-radius: 12px !important;
