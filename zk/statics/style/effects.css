@@ -50,141 +50,47 @@ body.nav-open{overflow:hidden}.hamb{transition:.35s ease}.hamb i{transition:.35s
 @media(max-width:680px){.hero-tracker{display:none}.hero-inner h1{transform:translate3d(0,0,120px)}.hero-inner h2,.hero-inner p{transform:translate3d(0,30px,0)}}
 
 /* Site-wide card motion for content modules. */
-.sec :where(.position-item,.object-card,.value-card,.vision-step,.assess-item,.pain-card,.product-card,.trust-card,.news-card,.step,.partner-card,.case-card,.expert-card,.assistant-card,.course-card,.feature-card,.target-card,.process-card,.support-card,.flow-card,.join-card,.contact-card,.info-card,.path-card,.advantage-card,.article-card,.limited-card,.company-card,.growth-card,.detail-card,.lesson-card,.plan-card,.result-card,[class$='-card'],[class*='-card '],[class$='-item'],[class*='-item '],[class$='-step'],[class*='-step ']) {
-  transform-style: preserve-3d;
-  backface-visibility: hidden;
-  transition:
-    transform .38s cubic-bezier(.22,.61,.36,1),
-    box-shadow .38s ease,
-    border-color .38s ease,
-    background-color .38s ease,
-    filter .38s ease;
-  will-change: transform, box-shadow;
-}
-
-@media (hover:hover) and (pointer:fine) {
-  .sec :where(.position-item,.object-card,.value-card,.vision-step,.assess-item,.pain-card,.product-card,.trust-card,.news-card,.step,.partner-card,.case-card,.expert-card,.assistant-card,.course-card,.feature-card,.target-card,.process-card,.support-card,.flow-card,.join-card,.contact-card,.info-card,.path-card,.advantage-card,.article-card,.limited-card,.company-card,.growth-card,.detail-card,.lesson-card,.plan-card,.result-card,[class$='-card'],[class*='-card '],[class$='-item'],[class*='-item '],[class$='-step'],[class*='-step ']):not(.nav-item):not(.form-row):not(.page-item):not(.menu-item):hover,
-  .sec :where(.position-item,.object-card,.value-card,.vision-step,.assess-item,.pain-card,.product-card,.trust-card,.news-card,.step,.partner-card,.case-card,.expert-card,.assistant-card,.course-card,.feature-card,.target-card,.process-card,.support-card,.flow-card,.join-card,.contact-card,.info-card,.path-card,.advantage-card,.article-card,.limited-card,.company-card,.growth-card,.detail-card,.lesson-card,.plan-card,.result-card,[class$='-card'],[class*='-card '],[class$='-item'],[class*='-item '],[class$='-step'],[class*='-step ']):not(.nav-item):not(.form-row):not(.page-item):not(.menu-item):focus-within {
-    transform: translateY(-8px) scale(1.01);
-    border-color: rgba(199, 175, 130, .46);
-    box-shadow: 0 24px 54px rgba(16, 27, 23, .13);
-    filter: saturate(1.04);
-  }
-
-  .sec :where(.position-item,.object-card,.value-card,.vision-step,.assess-item,.pain-card,.product-card,.trust-card,.news-card,.step,.partner-card,.case-card,.expert-card,.assistant-card,.course-card,.feature-card,.target-card,.process-card,.support-card,.flow-card,.join-card,.contact-card,.info-card,.path-card,.advantage-card,.article-card,.limited-card,.company-card,.growth-card,.detail-card,.lesson-card,.plan-card,.result-card,[class$='-card'],[class*='-card '],[class$='-item'],[class*='-item '],[class$='-step'],[class*='-step ']):not(.nav-item):not(.form-row):not(.page-item):not(.menu-item):hover :where(h3,h4) {
-    color: var(--green);
-  }
-
-  .vision-section :where(.vision-step,[class$='-card'],[class*='-card ']):hover :where(h3,h4) {
-    color: #fff;
-  }
-
-  .sec :where(.position-item,.object-card,.value-card,.vision-step,.assess-item,.pain-card,.product-card,.trust-card,.news-card,.step,.partner-card,.case-card,.expert-card,.assistant-card,.course-card,.feature-card,.target-card,.process-card,.support-card,.flow-card,.join-card,.contact-card,.info-card,.path-card,.advantage-card,.article-card,.limited-card,.company-card,.growth-card,.detail-card,.lesson-card,.plan-card,.result-card,[class$='-card'],[class*='-card '],[class$='-item'],[class*='-item '],[class$='-step'],[class*='-step ']):not(.nav-item):not(.form-row):not(.page-item):not(.menu-item):active {
-    transform: translateY(-4px) scale(1.004);
-  }
-}
+.sec :where(.position-item,.object-card,.value-card,.vision-step,.assess-item,.pain-card,.product-card,.trust-card,.news-card,.step,.partner-card,.case-card,.expert-card,.assistant-card,.course-card,.feature-card,.target-card,.process-card,.support-card,.flow-card,.join-card,.contact-card,.info-card,.path-card,.advantage-card,.article-card,.limited-card,.company-card,.growth-card,.detail-card,.lesson-card,.plan-card,.result-card,[class$='-card'],[class*='-card '],[class$='-item'],[class*='-item '],[class$='-step'],[class*='-step ']){transform-style:preserve-3d;backface-visibility:hidden;transition:transform .38s cubic-bezier(.22,.61,.36,1),box-shadow .38s ease,border-color .38s ease,background-color .38s ease,filter .38s ease;will-change:transform,box-shadow;}
+@media (hover:hover) and (pointer:fine){.sec :where(.position-item,.object-card,.value-card,.vision-step,.assess-item,.pain-card,.product-card,.trust-card,.news-card,.step,.partner-card,.case-card,.expert-card,.assistant-card,.course-card,.feature-card,.target-card,.process-card,.support-card,.flow-card,.join-card,.contact-card,.info-card,.path-card,.advantage-card,.article-card,.limited-card,.company-card,.growth-card,.detail-card,.lesson-card,.plan-card,.result-card,[class$='-card'],[class*='-card '],[class$='-item'],[class*='-item '],[class$='-step'],[class*='-step ']):not(.nav-item):not(.form-row):not(.page-item):not(.menu-item):hover,.sec :where(.position-item,.object-card,.value-card,.vision-step,.assess-item,.pain-card,.product-card,.trust-card,.news-card,.step,.partner-card,.case-card,.expert-card,.assistant-card,.course-card,.feature-card,.target-card,.process-card,.support-card,.flow-card,.join-card,.contact-card,.info-card,.path-card,.advantage-card,.article-card,.limited-card,.company-card,.growth-card,.detail-card,.lesson-card,.plan-card,.result-card,[class$='-card'],[class*='-card '],[class$='-item'],[class*='-item '],[class$='-step'],[class*='-step ']):not(.nav-item):not(.form-row):not(.page-item):not(.menu-item):focus-within{transform:translateY(-8px) scale(1.01);border-color:rgba(199,175,130,.46);box-shadow:0 24px 54px rgba(16,27,23,.13);filter:saturate(1.04)}.sec :where(.position-item,.object-card,.value-card,.vision-step,.assess-item,.pain-card,.product-card,.trust-card,.news-card,.step,.partner-card,.case-card,.expert-card,.assistant-card,.course-card,.feature-card,.target-card,.process-card,.support-card,.flow-card,.join-card,.contact-card,.info-card,.path-card,.advantage-card,.article-card,.limited-card,.company-card,.growth-card,.detail-card,.lesson-card,.plan-card,.result-card,[class$='-card'],[class*='-card '],[class$='-item'],[class*='-item '],[class$='-step'],[class*='-step ']):not(.nav-item):not(.form-row):not(.page-item):not(.menu-item):hover :where(h3,h4){color:var(--green)}.vision-section :where(.vision-step,[class$='-card'],[class*='-card ']):hover :where(h3,h4){color:#fff}.sec :where(.position-item,.object-card,.value-card,.vision-step,.assess-item,.pain-card,.product-card,.trust-card,.news-card,.step,.partner-card,.case-card,.expert-card,.assistant-card,.course-card,.feature-card,.target-card,.process-card,.support-card,.flow-card,.join-card,.contact-card,.info-card,.path-card,.advantage-card,.article-card,.limited-card,.company-card,.growth-card,.detail-card,.lesson-card,.plan-card,.result-card,[class$='-card'],[class*='-card '],[class$='-item'],[class*='-item '],[class$='-step'],[class*='-step ']):not(.nav-item):not(.form-row):not(.page-item):not(.menu-item):active{transform:translateY(-4px) scale(1.004)}}
 
 /* AOS-like vertical scroll reveal. */
-.scroll-reveal {
-  opacity: 0;
-  transition:
-    opacity .78s cubic-bezier(.22,.61,.36,1) var(--scroll-delay, 0ms),
-    transform .88s cubic-bezier(.22,.61,.36,1) var(--scroll-delay, 0ms),
-    filter .88s ease var(--scroll-delay, 0ms);
-  will-change: opacity, transform, filter;
-  filter: blur(4px);
-}
-
-.scroll-reveal[data-scroll-effect="fade-up"] { transform: translate3d(0, 58px, 0) scale(.985); }
-.scroll-reveal[data-scroll-effect="fade-down"] { transform: translate3d(0, -42px, 0) scale(.99); }
-.scroll-reveal[data-scroll-effect="fade-left"] { transform: translate3d(54px, 0, 0) scale(.99); }
-.scroll-reveal[data-scroll-effect="fade-right"] { transform: translate3d(-54px, 0, 0) scale(.99); }
-.scroll-reveal[data-scroll-effect="zoom-up"] { transform: translate3d(0, 36px, 0) scale(.94); }
-
-.scroll-reveal.scroll-in {
-  opacity: 1;
-  transform: translate3d(0, 0, 0) scale(1);
-  filter: blur(0);
-}
-
-.scroll-reveal.scroll-in[data-scroll-effect="zoom-up"] {
-  transform: translate3d(0, 0, 0) scale(1);
-}
+.scroll-reveal{opacity:0;transition:opacity .78s cubic-bezier(.22,.61,.36,1) var(--scroll-delay,0ms),transform .88s cubic-bezier(.22,.61,.36,1) var(--scroll-delay,0ms),filter .88s ease var(--scroll-delay,0ms);will-change:opacity,transform,filter;filter:blur(4px)}
+.scroll-reveal[data-scroll-effect="fade-up"]{transform:translate3d(0,58px,0) scale(.985)}.scroll-reveal[data-scroll-effect="fade-down"]{transform:translate3d(0,-42px,0) scale(.99)}.scroll-reveal[data-scroll-effect="fade-left"]{transform:translate3d(54px,0,0) scale(.99)}.scroll-reveal[data-scroll-effect="fade-right"]{transform:translate3d(-54px,0,0) scale(.99)}.scroll-reveal[data-scroll-effect="zoom-up"]{transform:translate3d(0,36px,0) scale(.94)}.scroll-reveal.scroll-in{opacity:1;transform:translate3d(0,0,0) scale(1);filter:blur(0)}.scroll-reveal.scroll-in[data-scroll-effect="zoom-up"]{transform:translate3d(0,0,0) scale(1)}
 
 /* Fallback: keep homepage hero text visible even if the JS animation class is not applied. */
-.hero .hero-inner,
-.hero .hero-inner .eyebrow,
-.hero .hero-inner h1,
-.hero .hero-inner h2,
-.hero .hero-inner p,
-.hero .hero-actions {
-  opacity: 1 !important;
-  transform: translate3d(0,0,0) !important;
-}
+.hero .hero-inner,.hero .hero-inner .eyebrow,.hero .hero-inner h1,.hero .hero-inner h2,.hero .hero-inner p,.hero .hero-actions{opacity:1!important;transform:translate3d(0,0,0)!important}
 
 /* Smooth page-load opening for the JS transition layer. */
-.zk-page-transition:not(.active)::before {
-  animation: zkPageOpenTop .92s cubic-bezier(.76,0,.24,1) .08s both !important;
-  will-change: transform;
-}
-
-.zk-page-transition:not(.active)::after {
-  animation: zkPageOpenBottom .92s cubic-bezier(.76,0,.24,1) .08s both !important;
-  will-change: transform;
-}
-
-.zk-page-transition:not(.active) .zk-mark {
-  animation: zkPageMarkOut .5s ease .18s both !important;
-}
-
-.zk-page-transition.active::before,
-.zk-page-transition.active::after,
-.zk-page-transition.active .zk-mark {
-  animation: none !important;
-}
-
-@keyframes zkPageOpenTop {
-  from { transform: translate3d(0,0,0); }
-  to { transform: translate3d(0,-100%,0); }
-}
-
-@keyframes zkPageOpenBottom {
-  from { transform: translate3d(0,0,0); }
-  to { transform: translate3d(0,100%,0); }
-}
-
-@keyframes zkPageMarkOut {
-  0% { opacity: 1; transform: scale(1); }
-  65% { opacity: 1; transform: scale(1.03); }
-  100% { opacity: 0; transform: scale(.9); }
-}
+.zk-page-transition:not(.active)::before{animation:zkPageOpenTop .92s cubic-bezier(.76,0,.24,1) .08s both!important;will-change:transform}.zk-page-transition:not(.active)::after{animation:zkPageOpenBottom .92s cubic-bezier(.76,0,.24,1) .08s both!important;will-change:transform}.zk-page-transition:not(.active) .zk-mark{animation:zkPageMarkOut .5s ease .18s both!important}.zk-page-transition.active::before,.zk-page-transition.active::after,.zk-page-transition.active .zk-mark{animation:none!important}
+@keyframes zkPageOpenTop{from{transform:translate3d(0,0,0)}to{transform:translate3d(0,-100%,0)}}@keyframes zkPageOpenBottom{from{transform:translate3d(0,0,0)}to{transform:translate3d(0,100%,0)}}@keyframes zkPageMarkOut{0%{opacity:1;transform:scale(1)}65%{opacity:1;transform:scale(1.03)}100%{opacity:0;transform:scale(.9)}}
 
 /* Hide the legacy page-loading mark; page transitions are handled by main.js. */
-.loading.hide {
-  display: none !important;
-  opacity: 0 !important;
-  visibility: hidden !important;
-  pointer-events: none !important;
-}
+.loading.hide{display:none!important;opacity:0!important;visibility:hidden!important;pointer-events:none!important}.loading.hide .mark,.loading.hide::before,.loading.hide::after{display:none!important;animation:none!important}
 
-.loading.hide .mark,
-.loading.hide::before,
-.loading.hide::after {
-  display: none !important;
-  animation: none !important;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: .001ms !important;
-    animation-iteration-count: 1 !important;
-    scroll-behavior: auto !important;
-    transition-duration: .001ms !important;
+/* CSS-only scroll entrance animations for modern browsers. */
+@supports (animation-timeline: view()) {
+  .sec :where(.sec-head,.sec-title,.sec-desc,.page-kicker,h2,.pain-card,.product-card,.trust-card,.news-card,.step,.partner-card,.course-card,.system-card,.detail-block,.side-card,.faq-card,.contact-info-panel,.contact-info,.contact-map,.join-panel,.case-card,.expert-card,.assistant-card,.flow-item,.assess-item,.quote-box) {
+    animation-name: zkScrollUp;
+    animation-duration: 1ms;
+    animation-fill-mode: both;
+    animation-timing-function: cubic-bezier(.22,.61,.36,1);
+    animation-timeline: view();
+    animation-range: entry 0% cover 28%;
+    will-change: opacity, transform, filter;
   }
-
-  .scroll-reveal {
-    opacity: 1 !important;
-    transform: none !important;
-    filter: none !important;
-  }
+  .sec :where(.sec-head,.page-kicker) { animation-name: zkScrollDown; }
+  .sec :where(.side-card,.contact-map) { animation-name: zkScrollLeft; }
+  .sec :where(.contact-info,.join-panel) { animation-name: zkScrollRight; }
+  .sec :where(.partner-card,.flow-item) { animation-name: zkScrollZoom; }
+  .product-card:nth-child(2),.pain-card:nth-child(2),.trust-card:nth-child(2),.news-card:nth-child(2),.faq-card:nth-child(2),.flow-item:nth-child(2){animation-range:entry 4% cover 32%}
+  .product-card:nth-child(3),.pain-card:nth-child(3),.trust-card:nth-child(3),.news-card:nth-child(3),.faq-card:nth-child(3),.flow-item:nth-child(3){animation-range:entry 8% cover 36%}
+  .product-card:nth-child(4),.pain-card:nth-child(4),.trust-card:nth-child(4),.flow-item:nth-child(4){animation-range:entry 12% cover 40%}
 }
+
+@keyframes zkScrollUp{from{opacity:0;transform:translate3d(0,72px,0) scale(.985);filter:blur(5px)}to{opacity:1;transform:translate3d(0,0,0) scale(1);filter:blur(0)}}
+@keyframes zkScrollDown{from{opacity:0;transform:translate3d(0,-52px,0) scale(.99);filter:blur(4px)}to{opacity:1;transform:translate3d(0,0,0) scale(1);filter:blur(0)}}
+@keyframes zkScrollLeft{from{opacity:0;transform:translate3d(72px,0,0) scale(.99);filter:blur(4px)}to{opacity:1;transform:translate3d(0,0,0) scale(1);filter:blur(0)}}
+@keyframes zkScrollRight{from{opacity:0;transform:translate3d(-72px,0,0) scale(.99);filter:blur(4px)}to{opacity:1;transform:translate3d(0,0,0) scale(1);filter:blur(0)}}
+@keyframes zkScrollZoom{from{opacity:0;transform:translate3d(0,36px,0) scale(.92);filter:blur(5px)}to{opacity:1;transform:translate3d(0,0,0) scale(1);filter:blur(0)}}
+
+@media (prefers-reduced-motion: reduce){*,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.001ms!important}.scroll-reveal{opacity:1!important;transform:none!important;filter:none!important}}
