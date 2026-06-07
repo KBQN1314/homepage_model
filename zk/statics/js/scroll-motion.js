@@ -28,6 +28,60 @@
     '[class*="wrap"]', '.course-flow', '.detail-main', '.detail-layout', '.container'
   ].join(',');
 
+  const SELF_COURSE_REPLACEMENTS = [
+    ['心脑学习力自主营（数学）（数学）', '心脑学习力自主营'],
+    ['心脑学习力自主营（数学）', '心脑学习力自主营'],
+    ['心脑学习力自主营 （数学）', '心脑学习力自主营'],
+    ['自主营（数学）', '自主营'],
+    ['自主营 （数学）', '自主营'],
+    ['数学自学', 'AI自主'],
+    ['数学自主营', 'AI自主'],
+    ['面向小学三年级至初中三年级，围绕数学教材自学训练', '面向小学三年级至初中三年级，围绕语文、数学、英语等课本进行自主学习训练'],
+    ['围绕数学教材自学训练', '围绕语文、数学、英语等课本进行自主学习训练'],
+    ['很多孩子数学学不好，并不只是知识点不会，而是没有形成独立学习新知识的路径。', '很多孩子学不好，并不只是知识点不会，而是没有形成独立学习新知识的路径。'],
+    ['一本数学教材', '一本课本或教材'],
+    ['围绕一本数学教材', '围绕一本课本或教材'],
+    ['数学教材', '课本/教材'],
+    ['新数学教材', '新课本'],
+    ['数学书', '课本'],
+    ['数学定义', '定义'],
+    ['数学定理', '定理'],
+    ['数学知识全景图', '知识全景图'],
+    ['跨章节数学知识全景图', '跨章节知识全景图'],
+    ['数学知识点', '知识点'],
+    ['数学教材的核心学习任务', '课本/教材的核心学习任务'],
+    ['数学教材完成核心学习任务', '课本/教材完成核心学习任务']
+  ];
+
+  function normalizeSelfCourseTextValue(value) {
+    let next = value;
+    SELF_COURSE_REPLACEMENTS.forEach(([from, to]) => { next = next.replaceAll(from, to); });
+    next = next.replaceAll('心脑学习力自主营（数学）', '心脑学习力自主营');
+    next = next.replaceAll('心脑学习力自主营  ', '心脑学习力自主营 ');
+    return next;
+  }
+
+  function normalizeSelfCourseTexts(root = document.body) {
+    if (!root) return;
+    document.title = normalizeSelfCourseTextValue(document.title);
+    document.querySelectorAll('meta[content]').forEach(meta => { meta.content = normalizeSelfCourseTextValue(meta.content); });
+
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (!node.nodeValue) return NodeFilter.FILTER_REJECT;
+        const parent = node.parentElement;
+        if (parent && ['SCRIPT', 'STYLE', 'NOSCRIPT'].includes(parent.tagName)) return NodeFilter.FILTER_REJECT;
+        return SELF_COURSE_REPLACEMENTS.some(([from]) => node.nodeValue.includes(from)) || node.nodeValue.includes('心脑学习力自主营（数学）')
+          ? NodeFilter.FILTER_ACCEPT
+          : NodeFilter.FILTER_REJECT;
+      }
+    });
+
+    const nodes = [];
+    while (walker.nextNode()) nodes.push(walker.currentNode);
+    nodes.forEach(node => { node.nodeValue = normalizeSelfCourseTextValue(node.nodeValue); });
+  }
+
   function ensureStyle() {
     const oldStyle = document.getElementById('scrollMotionStyle');
     if (oldStyle) oldStyle.remove();
@@ -225,6 +279,7 @@
   }
 
   function initMotion() {
+    normalizeSelfCourseTexts();
     ensureStyle();
     const elements = prepareElements();
     if (!elements.length) return;
@@ -256,4 +311,8 @@
   } else {
     initMotion();
   }
+
+  setTimeout(() => normalizeSelfCourseTexts(), 120);
+  setTimeout(() => normalizeSelfCourseTexts(), 420);
+  setTimeout(() => normalizeSelfCourseTexts(), 900);
 })();
