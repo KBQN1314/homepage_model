@@ -95,7 +95,44 @@ body.nav-open{overflow:hidden}.hamb{transition:.35s ease}.hamb i{transition:.35s
   transform: translate3d(0,0,0) !important;
 }
 
-/* Hide the legacy page-loading mark; page transitions are handled by main.js on link navigation. */
+/* Smooth page-load opening for the JS transition layer. */
+.zk-page-transition:not(.active)::before {
+  animation: zkPageOpenTop .92s cubic-bezier(.76,0,.24,1) .08s both !important;
+  will-change: transform;
+}
+
+.zk-page-transition:not(.active)::after {
+  animation: zkPageOpenBottom .92s cubic-bezier(.76,0,.24,1) .08s both !important;
+  will-change: transform;
+}
+
+.zk-page-transition:not(.active) .zk-mark {
+  animation: zkPageMarkOut .5s ease .18s both !important;
+}
+
+.zk-page-transition.active::before,
+.zk-page-transition.active::after,
+.zk-page-transition.active .zk-mark {
+  animation: none !important;
+}
+
+@keyframes zkPageOpenTop {
+  from { transform: translate3d(0,0,0); }
+  to { transform: translate3d(0,-100%,0); }
+}
+
+@keyframes zkPageOpenBottom {
+  from { transform: translate3d(0,0,0); }
+  to { transform: translate3d(0,100%,0); }
+}
+
+@keyframes zkPageMarkOut {
+  0% { opacity: 1; transform: scale(1); }
+  65% { opacity: 1; transform: scale(1.03); }
+  100% { opacity: 0; transform: scale(.9); }
+}
+
+/* Hide the legacy page-loading mark; page transitions are handled by main.js. */
 .loading.hide {
   display: none !important;
   opacity: 0 !important;
