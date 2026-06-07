@@ -35,28 +35,36 @@
     const style = document.createElement('style');
     style.id = 'scrollMotionStyle';
     style.textContent = `
-      .scroll-motion {
-        opacity: 0;
-        transform: translate3d(0, 28px, 0);
-        transition-property: opacity, transform;
-        transition-duration: .94s, 1.08s;
-        transition-timing-function: cubic-bezier(.19, 1, .22, 1), cubic-bezier(.19, 1, .22, 1);
-        transition-delay: var(--motion-delay, 0ms), var(--motion-delay, 0ms);
+      .scroll-motion,
+      .scroll-motion.reveal,
+      .scroll-motion.reveal.show {
+        opacity: 0 !important;
+        transform: translate3d(0, 34px, 0) !important;
+        transition-property: opacity, transform !important;
+        transition-duration: 1.02s, 1.16s !important;
+        transition-timing-function: cubic-bezier(.19, 1, .22, 1), cubic-bezier(.19, 1, .22, 1) !important;
+        transition-delay: var(--motion-delay, 0ms), var(--motion-delay, 0ms) !important;
         will-change: opacity, transform;
       }
 
-      .scroll-motion.motion-soft {
-        transform: translate3d(0, 18px, 0);
-        transition-duration: .98s, 1.12s;
+      .scroll-motion.motion-soft,
+      .scroll-motion.motion-soft.reveal,
+      .scroll-motion.motion-soft.reveal.show {
+        transform: translate3d(0, 22px, 0) !important;
+        transition-duration: 1s, 1.12s !important;
       }
 
-      .scroll-motion.motion-card {
-        transform: translate3d(0, 32px, 0);
+      .scroll-motion.motion-card,
+      .scroll-motion.motion-card.reveal,
+      .scroll-motion.motion-card.reveal.show {
+        transform: translate3d(0, 42px, 0) !important;
       }
 
-      .scroll-motion.motion-in {
-        opacity: 1;
-        transform: translate3d(0, 0, 0);
+      .scroll-motion.motion-in,
+      .scroll-motion.motion-in.reveal,
+      .scroll-motion.motion-in.reveal.show {
+        opacity: 1 !important;
+        transform: translate3d(0, 0, 0) !important;
       }
 
       @media (prefers-reduced-motion: reduce) {
@@ -164,10 +172,10 @@
     const index = getGroupIndex(el);
     const isCard = el.matches(CARD_LIKE_SELECTOR) || Boolean(group);
 
-    if (group && isCard) return Math.min(560, index * 108);
-    if (group) return Math.min(460, index * 90);
-    if (isCard) return Math.min(300, (index % 5) * 78);
-    return Math.min(150, (index % 3) * 50);
+    if (group && isCard) return Math.min(820, index * 145);
+    if (group) return Math.min(620, index * 115);
+    if (isCard) return Math.min(420, (index % 6) * 92);
+    return Math.min(180, (index % 3) * 60);
   }
 
   function shouldAnimateParentInstead(el, selected) {
