@@ -95,57 +95,20 @@ body.nav-open{overflow:hidden}.hamb{transition:.35s ease}.hamb i{transition:.35s
   transform: translate3d(0,0,0) !important;
 }
 
-/* Page-load transition: play the ZK curtain every time a page is loaded. */
+/* Hide the legacy page-loading mark; page transitions are handled by main.js on link navigation. */
 .loading.hide {
-  display: grid !important;
-  place-items: center !important;
-  overflow: hidden !important;
-  opacity: 1 !important;
-  visibility: visible !important;
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
   pointer-events: none !important;
-  background: transparent !important;
-  animation: zkPageLoadLayerDone 1.28s cubic-bezier(.22,.78,.18,1) forwards !important;
-  animation-delay: 0s !important;
 }
 
+.loading.hide .mark,
 .loading.hide::before,
 .loading.hide::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  width: 100%;
-  height: 50.2%;
-  z-index: 1;
-  will-change: transform;
-  backface-visibility: hidden;
-  transform: translate3d(0,0,0);
+  display: none !important;
+  animation: none !important;
 }
-
-.loading.hide::before {
-  top: 0;
-  background: radial-gradient(circle at 18% 18%, rgba(199,175,130,.16), transparent 34%), linear-gradient(135deg,#061f18 0%,#08442f 58%,#0a6a45 100%);
-  animation: zkPageLoadCurtainTop 1.05s cubic-bezier(.22,.78,.18,1) .22s forwards;
-}
-
-.loading.hide::after {
-  bottom: 0;
-  background: radial-gradient(circle at 82% 78%, rgba(255,255,255,.08), transparent 32%), linear-gradient(135deg,#1a231f 0%,#344236 52%,#8b7243 100%);
-  animation: zkPageLoadCurtainBottom 1.05s cubic-bezier(.22,.78,.18,1) .22s forwards;
-}
-
-.loading.hide .mark {
-  position: relative;
-  z-index: 2;
-  opacity: 1 !important;
-  transform: scale(1) !important;
-  background: rgba(255,255,255,.96) !important;
-  animation: zkPageLoadMarkOut .62s cubic-bezier(.22,.78,.18,1) .18s forwards;
-}
-
-@keyframes zkPageLoadCurtainTop { to { transform: translate3d(0,-105%,0); } }
-@keyframes zkPageLoadCurtainBottom { to { transform: translate3d(0,105%,0); } }
-@keyframes zkPageLoadMarkOut { to { opacity: 0; transform: scale(.78); } }
-@keyframes zkPageLoadLayerDone { 0%,88% { opacity: 1; visibility: visible; } 100% { opacity: 0; visibility: hidden; } }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
