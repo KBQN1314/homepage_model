@@ -17,17 +17,17 @@
     style.textContent = `
       .scroll-motion {
         opacity: 0 !important;
-        transform: translate3d(0, 72px, 0) !important;
+        transform: translate3d(0, 28px, 0) !important;
         filter: none !important;
         transition:
-          opacity .82s cubic-bezier(.22,.61,.36,1) var(--motion-delay, 0ms),
-          transform .92s cubic-bezier(.22,.61,.36,1) var(--motion-delay, 0ms),
+          opacity .95s cubic-bezier(.25,.46,.45,.94) var(--motion-delay, 0ms),
+          transform 1.05s cubic-bezier(.25,.46,.45,.94) var(--motion-delay, 0ms),
           box-shadow .35s ease !important;
         will-change: opacity, transform;
       }
 
       .scroll-motion.motion-soft {
-        transform: translate3d(0, 42px, 0) !important;
+        transform: translate3d(0, 18px, 0) !important;
       }
 
       .scroll-motion.motion-in {
@@ -38,12 +38,12 @@
 
       .scroll-motion.motion-out {
         opacity: 0 !important;
-        transform: translate3d(0, 72px, 0) !important;
+        transform: translate3d(0, 28px, 0) !important;
         filter: none !important;
       }
 
       .scroll-motion.motion-out.motion-soft {
-        transform: translate3d(0, 42px, 0) !important;
+        transform: translate3d(0, 18px, 0) !important;
       }
 
       @media (prefers-reduced-motion: reduce) {
@@ -63,7 +63,7 @@
     if (!parent) return 0;
     const siblings = Array.from(parent.children).filter(child => child.matches && child.matches(MOTION_SELECTOR));
     const index = Math.max(0, siblings.indexOf(el));
-    return Math.min(300, (index % 6) * 70);
+    return Math.min(180, (index % 5) * 42);
   }
 
   function prepareElements() {
@@ -81,7 +81,7 @@
       el.classList.remove('show', 'motion-in');
       el.classList.add('scroll-motion', 'motion-out');
 
-      if (el.matches('.sec-head,.sec-title,.sec-desc,.page-kicker,.detail-hero h1,.detail-hero p,.quote-box')) {
+      if (el.matches('.sec-head,.sec-title,.sec-desc,.page-kicker,.detail-hero h1,.detail-hero p,.quote-box,.contact-wrap,.join-wrap')) {
         el.classList.add('motion-soft');
       }
 
@@ -110,14 +110,14 @@
         if (entry.isIntersecting) {
           el.classList.remove('motion-out');
           el.classList.add('motion-in');
-        } else {
+        } else if (entry.boundingClientRect.top > window.innerHeight || entry.boundingClientRect.bottom < 0) {
           el.classList.remove('motion-in');
           el.classList.add('motion-out');
         }
       });
     }, {
-      threshold: 0.14,
-      rootMargin: '0px 0px -10% 0px'
+      threshold: 0.16,
+      rootMargin: '0px 0px -6% 0px'
     });
 
     requestAnimationFrame(() => {
