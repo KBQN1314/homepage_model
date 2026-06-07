@@ -142,7 +142,8 @@
 }
 
 .news-page-thumb.library-open-class {
-  background-image: url('../../news/company/images/2026.5.30/p1.png');
+  background-image: url('../images/news/六一图书馆-2026.05.30.png');
+  background-position: center center;
 }
 
 .news-page-thumb.library-open-news-cover {
