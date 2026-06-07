@@ -15,9 +15,9 @@ const COURSE_COPY = {
     tag: '体验变化', systemTag: '低门槛体验',
     text: '通过短时间任务观察、训练体验和结果反馈，帮助家长初步了解孩子的学习状态和后续训练方向。',
     list: ['初步状态测评', '过程变化体验', '明确改进方向'],
-    detailIntro: '适合作为家长了解孩子学习状态的第一步，通过简单任务、训练体验和结果反馈，让家长初步看到孩子的专注、记忆、表达和学习状态变化。',
+    detailIntro: '适合作为家长了解孩子学习状态的第一步，通过简单任务、训练体验和结果反馈，帮助家长观察孩子的专注、记忆、表达和学习状态变化。',
     paths: ['状态观察', '任务体验', '结果反馈', '后续建议'],
-    audience: ['希望先了解孩子学习状态的家庭', '暂不确定适合哪类课程的学生', '希望通过短时体验看到过程变化的家长'],
+    audience: ['希望先了解孩子学习状态的家庭', '暂不确定适合哪类课程的学生', '希望通过短时体验观察过程变化的家长'],
     effects: ['更清楚孩子当前学习状态', '获得初步训练体验', '明确后续课程匹配方向']
   },
   focus: {
@@ -389,7 +389,7 @@ function setupDetailPage() {
   const main = document.querySelector('.detail-main');
   if (main) {
     const pathItems = pathText[item.key] || copy.paths;
-    main.innerHTML = `<div class="detail-block reveal show"><h2>课程定位</h2><p>${copy.detailIntro || copy.text}</p><p>官网页面只展示家长判断课程是否适合所需的核心信息，完整课表和细化方案建议在咨询后根据孩子情况单独沟通。</p></div><div class="detail-block reveal show"><h2>核心训练内容</h2>${setList(copy.list)}</div>${extra}<div class="detail-block reveal show"><h2>典型训练路径</h2><div class="course-flow">${pathItems.map((text, index) => `<div class="flow-item"><b>${index + 1}</b><span>${copy.paths[index] || text}</span><p>${text}</p></div>`).join('')}</div></div><div class="detail-block reveal show"><h2>适合对象</h2>${setList(copy.audience)}</div><div class="detail-block reveal show"><h2>学后变化</h2>${setList(copy.effects)}</div>`;
+    main.innerHTML = `<div class="detail-block reveal show"><h2>课程定位</h2><p>${copy.detailIntro || copy.text}</p><p>页面展示课程定位、训练重点和适合对象，帮助家长快速了解课程价值与服务方向；更具体的训练安排可在咨询沟通时进一步了解。</p></div><div class="detail-block reveal show"><h2>核心训练内容</h2>${setList(copy.list)}</div>${extra}<div class="detail-block reveal show"><h2>典型训练路径</h2><div class="course-flow">${pathItems.map((text, index) => `<div class="flow-item"><b>${index + 1}</b><span>${copy.paths[index] || text}</span><p>${text}</p></div>`).join('')}</div></div><div class="detail-block reveal show"><h2>适合对象</h2>${setList(copy.audience)}</div><div class="detail-block reveal show"><h2>学后变化</h2>${setList(copy.effects)}</div>`;
   }
 
   const side = document.querySelector('.side-card');
@@ -477,46 +477,43 @@ function setupHeaderScroll() {
 }
 
 function setupSimplePageTransitions() {
-  if (document.getElementById('zkSplitPageTransitionStyle')) return;
+  if (document.getElementById('pageTransitionStyle')) return;
   const style = document.createElement('style');
-  style.id = 'zkSplitPageTransitionStyle';
-  style.textContent = `.page-transition-mask{position:fixed;inset:0;z-index:99999;pointer-events:none;opacity:0;visibility:hidden;overflow:hidden;background:transparent;transition:opacity .18s ease,visibility .18s ease;contain:layout paint style}.page-transition-mask.active{opacity:1;visibility:visible;pointer-events:auto}.page-transition-panel{position:absolute;left:0;width:100%;height:50.2%;will-change:transform;backface-visibility:hidden;transform:translate3d(0,0,0);transition:transform .68s cubic-bezier(.22,.78,.18,1)}.page-transition-panel.top{top:0;transform:translate3d(0,-102%,0);background:radial-gradient(circle at 18% 18%,rgba(199,175,130,.14),transparent 34%),linear-gradient(135deg,#061f18 0%,#08442f 58%,#0a6a45 100%)}.page-transition-panel.bottom{bottom:0;transform:translate3d(0,102%,0);background:radial-gradient(circle at 82% 78%,rgba(255,255,255,.08),transparent 32%),linear-gradient(135deg,#1a231f 0%,#344236 52%,#8b7243 100%)}.page-transition-mask.closing .page-transition-panel.top,.page-transition-mask.closing .page-transition-panel.bottom{transform:translate3d(0,0,0)}.page-transition-mask.opening .page-transition-panel.top{transform:translate3d(0,-102%,0)}.page-transition-mask.opening .page-transition-panel.bottom{transform:translate3d(0,102%,0)}.page-transition-mark{position:absolute;left:50%;top:50%;width:88px;height:88px;transform:translate3d(-50%,-50%,0) scale(.82);border-radius:50%;display:grid;place-items:center;border:1px solid rgba(199,175,130,.68);background:rgba(255,255,255,.96);color:#045c39;font-weight:800;letter-spacing:3px;box-shadow:0 26px 70px rgba(0,0,0,.26);opacity:0;will-change:opacity,transform;transition:opacity .24s ease,transform .52s cubic-bezier(.22,.78,.18,1)}.page-transition-mask.closing .page-transition-mark{opacity:1;transform:translate3d(-50%,-50%,0) scale(1)}.page-transition-mask.opening .page-transition-mark{opacity:0;transform:translate3d(-50%,-50%,0) scale(.78)}@media(prefers-reduced-motion:reduce){.page-transition-mask,.page-transition-panel,.page-transition-mark{transition:none!important}}`;
+  style.id = 'pageTransitionStyle';
+  style.textContent = `
+    .page-transition{position:fixed;inset:0;z-index:99999;pointer-events:none;opacity:0;visibility:hidden;overflow:hidden}
+    .page-transition::before,.page-transition::after{content:'';position:absolute;left:0;width:100%;height:50%;transform:translate3d(0,0,0);transition:transform .78s cubic-bezier(.77,0,.18,1),opacity .45s ease;will-change:transform;backface-visibility:hidden}
+    .page-transition::before{top:0;background:linear-gradient(135deg,#f8f5ec,#d9c08a)}
+    .page-transition::after{bottom:0;background:linear-gradient(135deg,#063a2a,#0d5b3c)}
+    .page-transition .pt-mark{position:absolute;left:50%;top:50%;z-index:2;width:76px;height:76px;margin:-38px 0 0 -38px;border-radius:50%;display:grid;place-items:center;background:#fff;color:#075f3d;border:1px solid rgba(199,175,130,.45);box-shadow:0 22px 50px rgba(0,0,0,.18);font-weight:800;letter-spacing:2px;opacity:0;transform:scale(.86);transition:opacity .28s ease,transform .42s cubic-bezier(.22,1,.36,1);will-change:opacity,transform}
+    .page-transition.show{opacity:1;visibility:visible}
+    .page-transition.show .pt-mark{opacity:1;transform:scale(1)}
+    .page-transition.opening{opacity:1;visibility:visible}
+    .page-transition.opening::before{transform:translate3d(0,-100%,0)}
+    .page-transition.opening::after{transform:translate3d(0,100%,0)}
+    .page-transition.opening .pt-mark{opacity:0;transform:scale(.92)}
+  `;
   document.head.appendChild(style);
+  const transition = document.createElement('div');
+  transition.className = 'page-transition opening';
+  transition.innerHTML = '<div class="pt-mark">ZK</div>';
+  document.body.appendChild(transition);
+  setTimeout(() => transition.remove(), 900);
 
-  document.querySelector('.page-transition-mask')?.remove();
-  const mask = document.createElement('div');
-  mask.className = 'page-transition-mask';
-  mask.innerHTML = '<div class="page-transition-panel top"></div><div class="page-transition-panel bottom"></div><div class="page-transition-mark">ZK</div>';
-  document.body.appendChild(mask);
-
-  const open = () => {
-    mask.className = 'page-transition-mask active closing';
-    requestAnimationFrame(() => requestAnimationFrame(() => {
-      mask.classList.remove('closing');
-      mask.classList.add('opening');
-    }));
-    setTimeout(() => { mask.className = 'page-transition-mask'; }, 760);
-  };
-
-  if (sessionStorage.getItem('zkPageTransition') === '1') {
-    sessionStorage.removeItem('zkPageTransition');
-    open();
-  }
-  addEventListener('pageshow', event => { if (event.persisted) mask.className = 'page-transition-mask'; });
   document.addEventListener('click', event => {
     const link = event.target.closest('a[href]');
-    if (!link) return;
-    const href = link.getAttribute('href');
-    if (!href || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:') || href.startsWith('javascript:')) return;
-    if (link.target && link.target !== '_self') return;
-    if (link.hasAttribute('download')) return;
-    let url;
-    try { url = new URL(href, location.href); } catch (error) { return; }
-    if (url.origin !== location.origin || url.pathname === location.pathname || !/\.html$|\/$/.test(url.pathname)) return;
+    if (!link || link.target === '_blank' || link.hasAttribute('download')) return;
+    const raw = link.getAttribute('href');
+    if (!raw || raw.startsWith('#') || raw.startsWith('mailto:') || raw.startsWith('tel:') || raw.startsWith('javascript:')) return;
+    const url = new URL(raw, location.href);
+    if (url.origin !== location.origin) return;
+    const samePage = url.pathname === location.pathname && url.search === location.search;
+    if (samePage && url.hash) return;
     event.preventDefault();
-    sessionStorage.setItem('zkPageTransition', '1');
-    mask.className = 'page-transition-mask active';
-    requestAnimationFrame(() => requestAnimationFrame(() => mask.classList.add('closing')));
+    const overlay = document.createElement('div');
+    overlay.className = 'page-transition show';
+    overlay.innerHTML = '<div class="pt-mark">ZK</div>';
+    document.body.appendChild(overlay);
     setTimeout(() => { location.href = url.href; }, 540);
   });
 }
