@@ -8,11 +8,16 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="stylesheet" href="statics/style/style.css">
   <link rel="stylesheet" href="statics/style/effects.css">
-  <link rel="stylesheet" href="statics/style/contact.css">
+  <link rel="stylesheet" href="statics/style/contact.css?v=20260607-faq">
   <style>
-    .contact-qr-panel { display: grid; place-items: center; }
-    .contact-qr-card.qr-only-card { grid-template-columns: 1fr; place-items: center; width: fit-content; margin: 0 auto; }
-    .contact-qr-card.qr-only-card .contact-qr-image { width: 220px; height: 220px; }
+    .faq-section{background:#fff!important;padding:96px 0!important;}
+    .faq-section .sec-head{text-align:center!important;margin-bottom:52px!important;}
+    .faq-grid{width:min(1280px,92vw)!important;margin:0 auto!important;display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:28px!important;}
+    .faq-card{position:relative!important;min-height:210px!important;padding:42px 38px 38px!important;background:#fff!important;border:1px solid rgba(199,175,130,.18)!important;border-left:4px solid var(--gold,#c7af82)!important;box-shadow:0 18px 44px rgba(16,27,23,.08)!important;transition:transform .35s ease,box-shadow .35s ease!important;}
+    .faq-card:hover{transform:translateY(-6px)!important;box-shadow:0 26px 58px rgba(16,27,23,.12)!important;}
+    .faq-card h3{color:var(--green,#045c39)!important;font-size:22px!important;line-height:1.45!important;margin:0 0 16px!important;font-weight:700!important;}
+    .faq-card p{color:#67736d!important;font-size:16px!important;line-height:1.9!important;margin:0!important;}
+    @media(max-width:1100px){.faq-grid{grid-template-columns:1fr!important;}.faq-card{min-height:auto!important;}}
   </style>
 </head>
 <body>
@@ -54,7 +59,7 @@
           <div class="contact-info-panel">
             <div class="sec-kicker">Contact Information</div>
             <h2>联系信息</h2>
-            <p>如需咨询课程或合作，请直接通过电话、微信或扫码沟通。</p>
+            <p>官网已取消在线表单提交。如需咨询课程或合作，请直接通过电话、微信或扫码沟通。</p>
             <div class="contact-detail-list">
               <div class="contact-detail-item"><b>电话</b><span>19321941587</span></div>
               <div class="contact-detail-item"><b>微信</b><span>puzd1898</span></div>
@@ -63,9 +68,9 @@
             </div>
           </div>
 
-          <div class="contact-info-panel contact-qr-panel" aria-label="微信咨询二维码">
-            <div class="contact-qr-card contact-qr-card-large qr-only-card">
-              <div class="contact-qr-image"></div>
+          <div class="contact-info-panel contact-qr-panel">
+            <div class="contact-qr-card contact-qr-card-large">
+              <div class="contact-qr-image" aria-label="微信咨询二维码"></div>
             </div>
           </div>
         </div>
