@@ -11,17 +11,19 @@
     '.detail-hero h1', '.detail-hero p', '.detail-tags', '.detail-layout > *',
     '.detail-main > *', '.side-card', '.detail-cta-wrap',
     '.container > :where(div,article,section,ul,ol):not(.hero-dots):not(.nav-wrap)',
-    '.grid > *', '[class*="grid"] > *', '[class*="list"] > *', '[class*="wrap"] > *',
+    'section :where(article,li)',
+    'section :where(div[class],article[class],li[class])',
+    '[class*="grid"] > *', '[class*="list"] > *', '[class*="wrap"] > *',
     '[class$="-card"]', '[class*="-card "]', '[class$="-item"]', '[class*="-item "]',
     '[class$="-step"]', '[class*="-step "]', '.detail-block', '.flow-item'
   ].join(',');
 
   const CARD_LIKE_SELECTOR = [
-    '[class$="-card"]', '[class*="-card "]', '[class$="-item"]', '[class*="-item "]',
+    'article', 'li', '[class$="-card"]', '[class*="-card "]', '[class$="-item"]', '[class*="-item "]',
     '[class$="-step"]', '[class*="-step "]', '.flow-item', '.detail-block'
   ].join(',');
 
-  const STAGGER_PARENT_SELECTOR = [
+  const NAMED_GROUP_SELECTOR = [
     '[class*="grid"]', '[class*="list"]', '[class*="steps"]', '[class*="cards"]',
     '[class*="wrap"]', '.course-flow', '.detail-main', '.detail-layout'
   ].join(',');
@@ -71,7 +73,6 @@
   function isVisibleContent(el) {
     if (!el || el.nodeType !== 1) return false;
     if (el.closest(EXCLUDE_SELECTOR)) return false;
-    if (el.classList.contains('scroll-motion')) return false;
     if (el.classList.contains('motion-ignore')) return false;
 
     const tag = el.tagName.toLowerCase();
@@ -86,50 +87,80 @@
     return true;
   }
 
-  function getVisibleChildren(parent) {
-    if (!parent) return [];
-    return Array.from(parent.children).filter(child => {
-      if (!child.matches || !child.matches(TARGET_SELECTOR)) return false;
-      return isVisibleContent(child) || child.classList.contains('scroll-motion');
-    });
+  function isMeaningfulModule(el) {
+    if (!isVisibleContent(el)) return false;
+    const tag = el.tagName.toLowerCase();
+    if (['a', 'span', 'b', 'strong', 'em', 'i', 'small', 'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'].includes(tag)) return false;
+    const rect = el.getBoundingClientRect();
+    return rect.width >= 80 && rect.height >= 42;
   }
 
-  function getStaggerGroup(el) {
-    const parent = el.parentElement;
-    if (!parent) return null;
+  function looksLikeModuleGroup(parent) {
+    if (!parent || parent.nodeType !== 1) return false;
+    if (parent.closest(EXCLUDE_SELECTOR)) return false;
+    if (parent.matches('body,html,main,section,.container')) return false;
 
-    if (parent.matches(STAGGER_PARENT_SELECTOR)) return parent;
+    const children = Array.from(parent.children).filter(isMeaningfulModule);
+    if (children.length < 2) return false;
 
-    const grand = parent.parentElement;
-    if (grand && grand.matches(STAGGER_PARENT_SELECTOR) && parent.children.length <= 1) return grand;
+    const first = children[0];
+    const firstTag = first.tagName;
+    const similarCount = children.filter(child => {
+      const sameTag = child.tagName === firstTag;
+      const childClass = Array.from(child.classList).find(cls => /card|item|step|block|panel|box|col|cell|article|news|case|expert|course|faq|flow/i.test(cls));
+      const firstClass = Array.from(first.classList).find(cls => /card|item|step|block|panel|box|col|cell|article|news|case|expert|course|faq|flow/i.test(cls));
+      return sameTag || (childClass && firstClass && childClass === firstClass);
+    }).length;
 
-    return parent;
+    return similarCount >= 2;
+  }
+
+  function getModuleChildren(parent) {
+    if (!parent) return [];
+    return Array.from(parent.children).filter(isMeaningfulModule);
+  }
+
+  function findStructuralGroup(el) {
+    let current = el.parentElement;
+    while (current && current !== document.body) {
+      if (current.matches(NAMED_GROUP_SELECTOR) || looksLikeModuleGroup(current)) return current;
+      current = current.parentElement;
+    }
+    return null;
   }
 
   function getGroupIndex(el) {
-    const group = getStaggerGroup(el);
+    const group = findStructuralGroup(el);
     if (!group) return 0;
-    const siblings = getVisibleChildren(group);
+    const siblings = getModuleChildren(group);
     const index = siblings.indexOf(el);
     return index < 0 ? 0 : index;
   }
 
   function getDelay(el) {
+    const group = findStructuralGroup(el);
     const index = getGroupIndex(el);
     const isCard = el.matches(CARD_LIKE_SELECTOR);
-    const group = getStaggerGroup(el);
-    const isStaggerGroup = group && group.matches && group.matches(STAGGER_PARENT_SELECTOR);
 
-    if (isCard && isStaggerGroup) return Math.min(240, index * 62);
+    if (group && isCard) return Math.min(300, index * 62);
+    if (group) return Math.min(220, index * 48);
     if (isCard) return Math.min(180, (index % 4) * 46);
-    return Math.min(120, (index % 3) * 34);
+    return Math.min(90, (index % 3) * 30);
   }
 
   function shouldAnimateParentInstead(el, selected) {
     const parent = el.parentElement;
     if (!parent) return false;
-    if (selected.has(parent) && !el.matches(CARD_LIKE_SELECTOR)) return true;
+    if (selected.has(parent) && !el.matches(CARD_LIKE_SELECTOR) && !findStructuralGroup(el)) return true;
     return false;
+  }
+
+  function addStructuralGroupChildren(selected) {
+    const candidates = Array.from(document.querySelectorAll('section *'));
+    candidates.forEach(parent => {
+      if (!looksLikeModuleGroup(parent) && !parent.matches(NAMED_GROUP_SELECTOR)) return;
+      getModuleChildren(parent).forEach(child => selected.add(child));
+    });
   }
 
   function prepareElements() {
@@ -141,6 +172,8 @@
       selected.add(el);
     });
 
+    addStructuralGroupChildren(selected);
+
     const elements = Array.from(selected).filter(el => !shouldAnimateParentInstead(el, selected));
 
     elements.forEach(el => {
@@ -151,7 +184,7 @@
         el.classList.add('motion-soft');
       }
 
-      if (el.matches(CARD_LIKE_SELECTOR)) {
+      if (el.matches(CARD_LIKE_SELECTOR) || findStructuralGroup(el)) {
         el.classList.add('motion-card');
       }
 
