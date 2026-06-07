@@ -25,7 +25,7 @@
 
   const NAMED_GROUP_SELECTOR = [
     '[class*="grid"]', '[class*="list"]', '[class*="steps"]', '[class*="cards"]',
-    '[class*="wrap"]', '.course-flow', '.detail-main', '.detail-layout'
+    '[class*="wrap"]', '.course-flow', '.detail-main', '.detail-layout', '.container'
   ].join(',');
 
   function ensureStyle() {
@@ -95,35 +95,57 @@
     return rect.width >= 80 && rect.height >= 42;
   }
 
+  function getClassSignature(el) {
+    const classes = Array.from(el.classList || []);
+    const useful = classes.find(cls => /card|item|step|block|panel|box|col|cell|article|news|case|expert|course|faq|flow|pain|product|trust|partner|feature|service/i.test(cls));
+    return useful || '';
+  }
+
+  function areSimilarModules(a, b) {
+    if (!a || !b) return false;
+    if (a.tagName === b.tagName && ['ARTICLE', 'LI'].includes(a.tagName)) return true;
+    const aSig = getClassSignature(a);
+    const bSig = getClassSignature(b);
+    if (aSig && bSig && aSig === bSig) return true;
+    const aRole = Array.from(a.classList || []).some(cls => /card|item|step|block|panel|box/i.test(cls));
+    const bRole = Array.from(b.classList || []).some(cls => /card|item|step|block|panel|box/i.test(cls));
+    return aRole && bRole;
+  }
+
   function looksLikeModuleGroup(parent) {
     if (!parent || parent.nodeType !== 1) return false;
     if (parent.closest(EXCLUDE_SELECTOR)) return false;
-    if (parent.matches('body,html,main,section,.container')) return false;
+    if (parent.matches('body,html,main,section')) return false;
 
     const children = Array.from(parent.children).filter(isMeaningfulModule);
     if (children.length < 2) return false;
 
-    const first = children[0];
-    const firstTag = first.tagName;
-    const similarCount = children.filter(child => {
-      const sameTag = child.tagName === firstTag;
-      const childClass = Array.from(child.classList).find(cls => /card|item|step|block|panel|box|col|cell|article|news|case|expert|course|faq|flow/i.test(cls));
-      const firstClass = Array.from(first.classList).find(cls => /card|item|step|block|panel|box|col|cell|article|news|case|expert|course|faq|flow/i.test(cls));
-      return sameTag || (childClass && firstClass && childClass === firstClass);
-    }).length;
+    for (let i = 0; i < children.length; i += 1) {
+      let similarCount = 1;
+      for (let j = 0; j < children.length; j += 1) {
+        if (i === j) continue;
+        if (areSimilarModules(children[i], children[j])) similarCount += 1;
+      }
+      if (similarCount >= 2) return true;
+    }
 
-    return similarCount >= 2;
+    return false;
   }
 
   function getModuleChildren(parent) {
     if (!parent) return [];
-    return Array.from(parent.children).filter(isMeaningfulModule);
+    const children = Array.from(parent.children).filter(isMeaningfulModule);
+    if (children.length < 2) return children;
+
+    const firstSimilar = children.find(child => children.some(other => other !== child && areSimilarModules(child, other)));
+    if (!firstSimilar) return children;
+    return children.filter(child => areSimilarModules(firstSimilar, child));
   }
 
   function findStructuralGroup(el) {
     let current = el.parentElement;
     while (current && current !== document.body) {
-      if (current.matches(NAMED_GROUP_SELECTOR) || looksLikeModuleGroup(current)) return current;
+      if ((current.matches(NAMED_GROUP_SELECTOR) || looksLikeModuleGroup(current)) && looksLikeModuleGroup(current)) return current;
       current = current.parentElement;
     }
     return null;
@@ -140,11 +162,11 @@
   function getDelay(el) {
     const group = findStructuralGroup(el);
     const index = getGroupIndex(el);
-    const isCard = el.matches(CARD_LIKE_SELECTOR);
+    const isCard = el.matches(CARD_LIKE_SELECTOR) || Boolean(group);
 
-    if (group && isCard) return Math.min(420, index * 96);
-    if (group) return Math.min(340, index * 78);
-    if (isCard) return Math.min(260, (index % 4) * 72);
+    if (group && isCard) return Math.min(560, index * 108);
+    if (group) return Math.min(460, index * 90);
+    if (isCard) return Math.min(300, (index % 5) * 78);
     return Math.min(150, (index % 3) * 50);
   }
 
@@ -156,9 +178,9 @@
   }
 
   function addStructuralGroupChildren(selected) {
-    const candidates = Array.from(document.querySelectorAll('section *'));
+    const candidates = Array.from(document.querySelectorAll('section *, main *'));
     candidates.forEach(parent => {
-      if (!looksLikeModuleGroup(parent) && !parent.matches(NAMED_GROUP_SELECTOR)) return;
+      if (!looksLikeModuleGroup(parent)) return;
       getModuleChildren(parent).forEach(child => selected.add(child));
     });
   }
