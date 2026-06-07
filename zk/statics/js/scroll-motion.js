@@ -121,6 +121,61 @@
         transform: translate3d(0, 0, 0) !important;
       }
 
+      @media (max-width: 1100px) {
+        header nav,
+        header .nav-dropdowns {
+          position: fixed !important;
+          left: 0 !important;
+          right: 0 !important;
+          top: 68px !important;
+          z-index: 9998 !important;
+          display: none !important;
+          flex-direction: column !important;
+          align-items: stretch !important;
+          gap: 0 !important;
+          padding: 14px 22px 22px !important;
+          background: rgba(255,255,255,.98) !important;
+          color: #2f3936 !important;
+          box-shadow: 0 18px 42px rgba(16,27,23,.16) !important;
+          max-height: calc(100vh - 68px) !important;
+          overflow-y: auto !important;
+        }
+        body.mobile-menu-open header nav,
+        body.mobile-menu-open header .nav-dropdowns {
+          display: flex !important;
+        }
+        header nav a,
+        header .nav-dropdowns a,
+        header .nav-dropdowns .nav-link,
+        header .nav-dropdowns .nav-direct {
+          color: #2f3936 !important;
+          padding: 14px 4px !important;
+          border-bottom: 1px solid rgba(4,92,57,.08) !important;
+        }
+        .hamb {
+          display: flex !important;
+          cursor: pointer !important;
+          position: relative !important;
+          z-index: 10000 !important;
+        }
+        body.mobile-menu-open .hamb i:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+        body.mobile-menu-open .hamb i:nth-child(2) { opacity: 0; }
+        body.mobile-menu-open .hamb i:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+        .hamb i { transition: .28s ease; }
+        header .nav-panel {
+          position: static !important;
+          display: none !important;
+          opacity: 1 !important;
+          transform: none !important;
+          box-shadow: none !important;
+          padding: 4px 0 8px 16px !important;
+          background: transparent !important;
+        }
+        header .nav-item.open .nav-panel {
+          display: grid !important;
+        }
+      }
+
       @media (prefers-reduced-motion: reduce) {
         .scroll-motion {
           opacity: 1 !important;
@@ -130,6 +185,54 @@
       }
     `;
     document.head.appendChild(style);
+  }
+
+  function setupMobileMenu() {
+    const hamb = document.querySelector('.hamb');
+    const nav = document.querySelector('header nav');
+    if (!hamb || !nav || hamb.dataset.mobileBound === 'true') return;
+
+    hamb.dataset.mobileBound = 'true';
+    hamb.setAttribute('role', 'button');
+    hamb.setAttribute('tabindex', '0');
+    hamb.setAttribute('aria-label', '打开或关闭导航菜单');
+    hamb.setAttribute('aria-expanded', 'false');
+
+    const closeMenu = () => {
+      document.body.classList.remove('mobile-menu-open');
+      hamb.setAttribute('aria-expanded', 'false');
+      document.querySelectorAll('header .nav-item.open').forEach(item => item.classList.remove('open'));
+    };
+
+    const toggleMenu = event => {
+      event.preventDefault();
+      event.stopPropagation();
+      const isOpen = document.body.classList.toggle('mobile-menu-open');
+      hamb.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    };
+
+    hamb.addEventListener('click', toggleMenu);
+    hamb.addEventListener('keydown', event => {
+      if (event.key === 'Enter' || event.key === ' ') toggleMenu(event);
+      if (event.key === 'Escape') closeMenu();
+    });
+
+    nav.addEventListener('click', event => {
+      const link = event.target.closest('a');
+      if (!link) return;
+      if (link.classList.contains('nav-link') && link.parentElement?.classList.contains('has-dropdown') && matchMedia('(max-width: 1100px)').matches) return;
+      closeMenu();
+    });
+
+    document.addEventListener('click', event => {
+      if (!document.body.classList.contains('mobile-menu-open')) return;
+      if (event.target.closest('header')) return;
+      closeMenu();
+    });
+
+    window.addEventListener('resize', () => {
+      if (!matchMedia('(max-width: 1100px)').matches) closeMenu();
+    });
   }
 
   function isVisibleContent(el) {
@@ -281,6 +384,7 @@
   function initMotion() {
     normalizeSelfCourseTexts();
     ensureStyle();
+    setupMobileMenu();
     const elements = prepareElements();
     if (!elements.length) return;
 
@@ -315,4 +419,6 @@
   setTimeout(() => normalizeSelfCourseTexts(), 120);
   setTimeout(() => normalizeSelfCourseTexts(), 420);
   setTimeout(() => normalizeSelfCourseTexts(), 900);
+  setTimeout(() => setupMobileMenu(), 120);
+  setTimeout(() => setupMobileMenu(), 420);
 })();
