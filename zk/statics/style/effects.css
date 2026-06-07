@@ -1,96 +1,48 @@
-/* Dynamic effects inspired by the homepage_model index animation style. */
-.loading.loading-curtain{display:grid;place-items:center;overflow:hidden;background:transparent;opacity:1;visibility:visible;transition:visibility .1s linear 1.45s;}
-.loading.loading-curtain .curtain-panel{position:absolute;left:0;width:100%;height:50%;background:#fff;z-index:1;transition:transform 1.15s cubic-bezier(.77,0,.175,1);}
-.loading.loading-curtain .curtain-top{top:0;box-shadow:0 18px 50px rgba(16,27,23,.08)}
-.loading.loading-curtain .curtain-bottom{bottom:0;box-shadow:0 -18px 50px rgba(16,27,23,.08)}
-.loading.loading-curtain .mark{z-index:2;background:#fff;transition:opacity .4s ease,transform .6s cubic-bezier(.77,0,.175,1)}
-.loading.loading-curtain.hide{opacity:1;visibility:visible;pointer-events:none;}
-.loading.loading-curtain.hide .curtain-top{transform:translateY(-105%)}
-.loading.loading-curtain.hide .curtain-bottom{transform:translateY(105%)}
-.loading.loading-curtain.hide .mark{opacity:0;transform:scale(.82)}
-.loading.loading-curtain.done{opacity:0;visibility:hidden;}
+/* Global visual effects. Keep this file lightweight and avoid duplicating scroll reveal logic. */
+
+/* Hero slide and text entrance */
 .hero{perspective:900px;}
-.slide{opacity:0;transform:scale(1.18) translateX(10%);transition:opacity 1.4s cubic-bezier(.77,0,.175,1),transform 2s cubic-bezier(.77,0,.175,1);will-change:opacity,transform;}
+.slide{opacity:0;transform:scale(1.08) translateX(4%);transition:opacity 1.15s cubic-bezier(.22,.61,.36,1),transform 1.6s cubic-bezier(.22,.61,.36,1);will-change:opacity,transform;}
 .slide.active{opacity:1;transform:scale(1) translateX(0)}
-.slide.prev{transform:scale(1.18) translateX(-18%)}
-.slide.next{transform:scale(1.18) translateX(18%)}
 .progress-line{left:-100%;width:100%;animation:none;transition:left 7s linear;}
 .progress-line.cur{left:0;}
-.hero-inner{opacity:0;transform:rotateX(28deg) translate3d(0,18px,180px);transform-origin:center;transition:opacity 1.2s cubic-bezier(.77,0,.175,1),transform 1.2s cubic-bezier(.77,0,.175,1);}
-.hero-inner.anim{opacity:1;transform:rotateX(0deg) translate3d(0,0,0);}
-.hero-inner .eyebrow,.hero-inner h1,.hero-inner h2,.hero-inner p,.hero-actions{opacity:0;transition:opacity 1s cubic-bezier(.77,0,.175,1),transform 1s cubic-bezier(.77,0,.175,1);}
-.hero-inner .eyebrow{transform:translate3d(0,-30px,120px)}
-.hero-inner h1{transform:translate3d(0,0,260px)}
-.hero-inner h2{transform:translate3d(60px,0,0)}
-.hero-inner p{transform:translate3d(-60px,0,0)}
-.hero-actions{transform:translate3d(0,40px,0)}
+.hero-inner{opacity:0;transform:translate3d(0,22px,0);transform-origin:center;transition:opacity 1s cubic-bezier(.22,.61,.36,1),transform 1s cubic-bezier(.22,.61,.36,1);}
+.hero-inner.anim{opacity:1;transform:translate3d(0,0,0);}
+.hero-inner .eyebrow,.hero-inner h1,.hero-inner h2,.hero-inner p,.hero-actions{opacity:0;transition:opacity .9s cubic-bezier(.22,.61,.36,1),transform .9s cubic-bezier(.22,.61,.36,1);}
+.hero-inner .eyebrow{transform:translate3d(0,-18px,0)}
+.hero-inner h1,.hero-inner h2,.hero-inner p,.hero-actions{transform:translate3d(0,24px,0)}
 .hero-inner.anim .eyebrow,.hero-inner.anim h1,.hero-inner.anim h2,.hero-inner.anim p,.hero-inner.anim .hero-actions{opacity:1;transform:translate3d(0,0,0)}
-.hero-inner.anim h1{transition-delay:.05s}.hero-inner.anim h2{transition-delay:.18s}.hero-inner.anim p{transition-delay:.28s}.hero-inner.anim .hero-actions{transition-delay:.38s}
-.hero-tracker{position:absolute;z-index:6;left:22%;top:49%;width:1px;height:1px;opacity:0;transition:opacity .8s ease;animation:trackerPath 14s linear infinite;}
-.hero-tracker.show{opacity:1;}
-.hero-tracker svg{position:absolute;left:0;top:0;width:1px;height:1px;overflow:visible;}
-.hero-tracker line{stroke:#fff;stroke-width:1;stroke-dasharray:245;stroke-dashoffset:-3;opacity:.72;}
-.hero-tracker .pointer{position:absolute;left:50%;top:50%;width:62px;height:62px;border-radius:50%;transform:translate(-50%,-50%);}
-.hero-tracker .pulse{position:absolute;left:50%;top:50%;width:70px;height:70px;border:1px solid rgba(255,255,255,.35);border-radius:50%;transform:translate3d(-36px,-36px,0);animation:trackerPulse .8s ease infinite alternate;}
-.hero-tracker .dot{position:absolute;left:50%;top:50%;width:26px;height:26px;border:1px solid #fff;border-radius:50%;transform:translate(-50%,-50%);transition:.45s ease;background:rgba(255,255,255,.05);}
-.hero-tracker:hover .dot{transform:translate(-50%,-50%) scale(1.2);background:rgba(199,175,130,.24)}
-.hero-tracker .bubble{position:absolute;bottom:50%;right:-20px;margin-bottom:-176px;width:290px;min-height:230px;background:#fff;color:#26332f;box-shadow:0 0 40px rgba(255,255,255,.32);opacity:0;visibility:hidden;transform:translateY(16px) scale(.96);transition:.55s cubic-bezier(.77,0,.175,1);padding:32px;text-align:center;}
-.hero-tracker:hover .bubble{opacity:1;visibility:visible;transform:translateY(0) scale(1)}
-.hero-tracker .bubble b{display:block;color:#045c39;font-size:20px;margin-bottom:12px}.hero-tracker .bubble span{display:block;color:#6b7772;font-size:14px;line-height:1.8}.hero-tracker .bubble em{display:inline-block;margin-top:20px;padding:8px 18px;border:1px solid #101b17;font-style:normal;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:#101b17;position:relative;overflow:hidden}.hero-tracker .bubble em:before{content:'';position:absolute;inset:0;background:#101b17;transform:translateX(-105%) skewX(-18deg);transition:.45s ease;z-index:-1}.hero-tracker .bubble em:hover{color:#fff}.hero-tracker .bubble em:hover:before{transform:translateX(0) skewX(-18deg)}
-@keyframes trackerPulse{from{opacity:.25;transform:translate3d(-36px,-36px,0) scale(1)}to{opacity:.85;transform:translate3d(-36px,-36px,0) scale(.9)}}
-@keyframes trackerPath{0%{transform:translate(0,0)}25%{transform:translate(52px,50px)}50%{transform:translate(102px,0)}75%{transform:translate(50px,-50px)}100%{transform:translate(0,0)}}
-.reveal{opacity:0;transform:translateY(52px) scale(.98);transition:opacity .75s ease,transform .75s cubic-bezier(.22,.61,.36,1);will-change:opacity,transform;}
-.reveal.show{opacity:1;transform:translateY(0) scale(1)}
+.hero-inner.anim h1{transition-delay:.05s}.hero-inner.anim h2{transition-delay:.16s}.hero-inner.anim p{transition-delay:.26s}.hero-inner.anim .hero-actions{transition-delay:.36s}
+
+/* Basic reveal fallback used by existing markup. */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .72s cubic-bezier(.22,.61,.36,1),transform .78s cubic-bezier(.22,.61,.36,1);will-change:opacity,transform;}
+.reveal.show{opacity:1;transform:translateY(0)}
+
+/* Card hover motion */
 .product-card,.pain-card,.trust-card,.news-card,.step{transform-style:preserve-3d;backface-visibility:hidden;}
-.product-card:hover,.pain-card:hover,.trust-card:hover,.news-card:hover,.step:hover{transform:translateY(-10px) rotateX(0deg) scale(1.015);}
-.product-card:after,.news-card:after,.step:after{content:'';position:absolute;inset:0;background:linear-gradient(120deg,transparent 0%,rgba(255,255,255,.0) 40%,rgba(255,255,255,.28) 50%,rgba(255,255,255,0) 60%,transparent 100%);transform:translateX(-130%);transition:transform .9s cubic-bezier(.77,0,.175,1);pointer-events:none;}
-.product-card:hover:after,.news-card:hover:after,.step:hover:after{transform:translateX(130%);}
+@media (hover:hover) and (pointer:fine){
+  .product-card:hover,.pain-card:hover,.trust-card:hover,.news-card:hover,.step:hover{transform:translateY(-8px) scale(1.01);}
+  .product-card:after,.news-card:after,.step:after{content:'';position:absolute;inset:0;background:linear-gradient(120deg,transparent 0%,rgba(255,255,255,0) 40%,rgba(255,255,255,.24) 50%,rgba(255,255,255,0) 60%,transparent 100%);transform:translateX(-130%);transition:transform .8s cubic-bezier(.22,.61,.36,1);pointer-events:none;}
+  .product-card:hover:after,.news-card:hover:after,.step:hover:after{transform:translateX(130%);}
+}
+
+/* Mobile menu motion */
 body.nav-open{overflow:hidden}.hamb{transition:.35s ease}.hamb i{transition:.35s ease}.hamb.expanded i:nth-child(1){transform:translateY(7px) rotate(45deg)}.hamb.expanded i:nth-child(2){opacity:0}.hamb.expanded i:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
-@media(max-width:1100px){body.nav-open header nav{position:fixed;inset:68px 0 auto 0;min-height:calc(100vh - 68px);display:flex;flex-direction:column;justify-content:center;gap:18px;background:rgba(255,255,255,.96);color:#4b5652;backdrop-filter:blur(12px);animation:navDrop .55s cubic-bezier(.77,0,.175,1) both}body.nav-open header nav a{font-size:22px;opacity:0;transform:translateY(24px);animation:navItem .5s ease forwards}body.nav-open header nav a:nth-child(1){animation-delay:.1s}body.nav-open header nav a:nth-child(2){animation-delay:.18s}body.nav-open header nav a:nth-child(3){animation-delay:.26s}body.nav-open header nav a:nth-child(4){animation-delay:.34s}body.nav-open header nav a:nth-child(5){animation-delay:.42s}@keyframes navDrop{from{transform:translateY(-100%)}to{transform:translateY(0)}}@keyframes navItem{to{opacity:1;transform:translateY(0)}}}
-@media(max-width:680px){.hero-tracker{display:none}.hero-inner h1{transform:translate3d(0,0,120px)}.hero-inner h2,.hero-inner p{transform:translate3d(0,30px,0)}}
+@media(max-width:1100px){body.nav-open header nav{position:fixed;inset:68px 0 auto 0;min-height:calc(100vh - 68px);display:flex;flex-direction:column;justify-content:center;gap:18px;background:rgba(255,255,255,.96);color:#4b5652;backdrop-filter:blur(12px);animation:navDrop .55s cubic-bezier(.22,.61,.36,1) both}body.nav-open header nav a{font-size:22px;opacity:0;transform:translateY(18px);animation:navItem .45s ease forwards}body.nav-open header nav a:nth-child(1){animation-delay:.06s}body.nav-open header nav a:nth-child(2){animation-delay:.12s}body.nav-open header nav a:nth-child(3){animation-delay:.18s}body.nav-open header nav a:nth-child(4){animation-delay:.24s}body.nav-open header nav a:nth-child(5){animation-delay:.30s}@keyframes navDrop{from{transform:translateY(-100%)}to{transform:translateY(0)}}@keyframes navItem{to{opacity:1;transform:translateY(0)}}}
 
-/* Site-wide card motion for content modules. */
-.sec :where(.position-item,.object-card,.value-card,.vision-step,.assess-item,.pain-card,.product-card,.trust-card,.news-card,.step,.partner-card,.case-card,.expert-card,.assistant-card,.course-card,.feature-card,.target-card,.process-card,.support-card,.flow-card,.join-card,.contact-card,.info-card,.path-card,.advantage-card,.article-card,.limited-card,.company-card,.growth-card,.detail-card,.lesson-card,.plan-card,.result-card,[class$='-card'],[class*='-card '],[class$='-item'],[class*='-item '],[class$='-step'],[class*='-step ']){transform-style:preserve-3d;backface-visibility:hidden;transition:transform .38s cubic-bezier(.22,.61,.36,1),box-shadow .38s ease,border-color .38s ease,background-color .38s ease,filter .38s ease;will-change:transform,box-shadow;}
-@media (hover:hover) and (pointer:fine){.sec :where(.position-item,.object-card,.value-card,.vision-step,.assess-item,.pain-card,.product-card,.trust-card,.news-card,.step,.partner-card,.case-card,.expert-card,.assistant-card,.course-card,.feature-card,.target-card,.process-card,.support-card,.flow-card,.join-card,.contact-card,.info-card,.path-card,.advantage-card,.article-card,.limited-card,.company-card,.growth-card,.detail-card,.lesson-card,.plan-card,.result-card,[class$='-card'],[class*='-card '],[class$='-item'],[class*='-item '],[class$='-step'],[class*='-step ']):not(.nav-item):not(.form-row):not(.page-item):not(.menu-item):hover,.sec :where(.position-item,.object-card,.value-card,.vision-step,.assess-item,.pain-card,.product-card,.trust-card,.news-card,.step,.partner-card,.case-card,.expert-card,.assistant-card,.course-card,.feature-card,.target-card,.process-card,.support-card,.flow-card,.join-card,.contact-card,.info-card,.path-card,.advantage-card,.article-card,.limited-card,.company-card,.growth-card,.detail-card,.lesson-card,.plan-card,.result-card,[class$='-card'],[class*='-card '],[class$='-item'],[class*='-item '],[class$='-step'],[class*='-step ']):not(.nav-item):not(.form-row):not(.page-item):not(.menu-item):focus-within{transform:translateY(-8px) scale(1.01);border-color:rgba(199,175,130,.46);box-shadow:0 24px 54px rgba(16,27,23,.13);filter:saturate(1.04)}.sec :where(.position-item,.object-card,.value-card,.vision-step,.assess-item,.pain-card,.product-card,.trust-card,.news-card,.step,.partner-card,.case-card,.expert-card,.assistant-card,.course-card,.feature-card,.target-card,.process-card,.support-card,.flow-card,.join-card,.contact-card,.info-card,.path-card,.advantage-card,.article-card,.limited-card,.company-card,.growth-card,.detail-card,.lesson-card,.plan-card,.result-card,[class$='-card'],[class*='-card '],[class$='-item'],[class*='-item '],[class$='-step'],[class*='-step ']):not(.nav-item):not(.form-row):not(.page-item):not(.menu-item):hover :where(h3,h4){color:var(--green)}.vision-section :where(.vision-step,[class$='-card'],[class*='-card ']):hover :where(h3,h4){color:#fff}.sec :where(.position-item,.object-card,.value-card,.vision-step,.assess-item,.pain-card,.product-card,.trust-card,.news-card,.step,.partner-card,.case-card,.expert-card,.assistant-card,.course-card,.feature-card,.target-card,.process-card,.support-card,.flow-card,.join-card,.contact-card,.info-card,.path-card,.advantage-card,.article-card,.limited-card,.company-card,.growth-card,.detail-card,.lesson-card,.plan-card,.result-card,[class$='-card'],[class*='-card '],[class$='-item'],[class*='-item '],[class$='-step'],[class*='-step ']):not(.nav-item):not(.form-row):not(.page-item):not(.menu-item):active{transform:translateY(-4px) scale(1.004)}}
-
-/* AOS-like vertical scroll reveal. */
-.scroll-reveal{opacity:0;transition:opacity .78s cubic-bezier(.22,.61,.36,1) var(--scroll-delay,0ms),transform .88s cubic-bezier(.22,.61,.36,1) var(--scroll-delay,0ms),filter .88s ease var(--scroll-delay,0ms);will-change:opacity,transform,filter;filter:blur(4px)}
-.scroll-reveal[data-scroll-effect="fade-up"]{transform:translate3d(0,58px,0) scale(.985)}.scroll-reveal[data-scroll-effect="fade-down"]{transform:translate3d(0,-42px,0) scale(.99)}.scroll-reveal[data-scroll-effect="fade-left"]{transform:translate3d(54px,0,0) scale(.99)}.scroll-reveal[data-scroll-effect="fade-right"]{transform:translate3d(-54px,0,0) scale(.99)}.scroll-reveal[data-scroll-effect="zoom-up"]{transform:translate3d(0,36px,0) scale(.94)}.scroll-reveal.scroll-in{opacity:1;transform:translate3d(0,0,0) scale(1);filter:blur(0)}.scroll-reveal.scroll-in[data-scroll-effect="zoom-up"]{transform:translate3d(0,0,0) scale(1)}
-
-/* Fallback: keep homepage hero text visible even if the JS animation class is not applied. */
+/* Keep homepage hero text visible even if the JS animation class is not applied. */
 .hero .hero-inner,.hero .hero-inner .eyebrow,.hero .hero-inner h1,.hero .hero-inner h2,.hero .hero-inner p,.hero .hero-actions{opacity:1!important;transform:translate3d(0,0,0)!important}
 
-/* Smooth page-load opening for the JS transition layer. */
-.zk-page-transition:not(.active)::before{animation:zkPageOpenTop .92s cubic-bezier(.76,0,.24,1) .08s both!important;will-change:transform}.zk-page-transition:not(.active)::after{animation:zkPageOpenBottom .92s cubic-bezier(.76,0,.24,1) .08s both!important;will-change:transform}.zk-page-transition:not(.active) .zk-mark{animation:zkPageMarkOut .5s ease .18s both!important}.zk-page-transition.active::before,.zk-page-transition.active::after,.zk-page-transition.active .zk-mark{animation:none!important}
-@keyframes zkPageOpenTop{from{transform:translate3d(0,0,0)}to{transform:translate3d(0,-100%,0)}}@keyframes zkPageOpenBottom{from{transform:translate3d(0,0,0)}to{transform:translate3d(0,100%,0)}}@keyframes zkPageMarkOut{0%{opacity:1;transform:scale(1)}65%{opacity:1;transform:scale(1.03)}100%{opacity:0;transform:scale(.9)}}
+/* Page transition opening for the JS transition layer. */
+.zk-page-transition:not(.active)::before{animation:zkPageOpenTop .92s cubic-bezier(.76,0,.24,1) .08s both!important;will-change:transform}
+.zk-page-transition:not(.active)::after{animation:zkPageOpenBottom .92s cubic-bezier(.76,0,.24,1) .08s both!important;will-change:transform}
+.zk-page-transition:not(.active) .zk-mark{animation:zkPageMarkOut .56s ease .12s both!important}
+@keyframes zkPageOpenTop{from{transform:translate3d(0,0,0)}to{transform:translate3d(0,-100%,0)}}
+@keyframes zkPageOpenBottom{from{transform:translate3d(0,0,0)}to{transform:translate3d(0,100%,0)}}
+@keyframes zkPageMarkOut{0%{opacity:1;transform:scale(1)}65%{opacity:1;transform:scale(1.03)}100%{opacity:0;transform:scale(.9)}}
 
 /* Hide the legacy page-loading mark; page transitions are handled by main.js. */
 .loading.hide{display:none!important;opacity:0!important;visibility:hidden!important;pointer-events:none!important}.loading.hide .mark,.loading.hide::before,.loading.hide::after{display:none!important;animation:none!important}
 
-/* CSS-only scroll entrance animations for modern browsers. */
-@supports (animation-timeline: view()) {
-  .sec :where(.sec-head,.sec-title,.sec-desc,.page-kicker,h2,.pain-card,.product-card,.trust-card,.news-card,.step,.partner-card,.course-card,.system-card,.detail-block,.side-card,.faq-card,.contact-info-panel,.contact-info,.contact-map,.join-panel,.case-card,.expert-card,.assistant-card,.flow-item,.assess-item,.quote-box) {
-    animation-name: zkScrollUp;
-    animation-duration: 1ms;
-    animation-fill-mode: both;
-    animation-timing-function: cubic-bezier(.22,.61,.36,1);
-    animation-timeline: view();
-    animation-range: entry 0% cover 28%;
-    will-change: opacity, transform, filter;
-  }
-  .sec :where(.sec-head,.page-kicker) { animation-name: zkScrollDown; }
-  .sec :where(.side-card,.contact-map) { animation-name: zkScrollLeft; }
-  .sec :where(.contact-info,.join-panel) { animation-name: zkScrollRight; }
-  .sec :where(.partner-card,.flow-item) { animation-name: zkScrollZoom; }
-  .product-card:nth-child(2),.pain-card:nth-child(2),.trust-card:nth-child(2),.news-card:nth-child(2),.faq-card:nth-child(2),.flow-item:nth-child(2){animation-range:entry 4% cover 32%}
-  .product-card:nth-child(3),.pain-card:nth-child(3),.trust-card:nth-child(3),.news-card:nth-child(3),.faq-card:nth-child(3),.flow-item:nth-child(3){animation-range:entry 8% cover 36%}
-  .product-card:nth-child(4),.pain-card:nth-child(4),.trust-card:nth-child(4),.flow-item:nth-child(4){animation-range:entry 12% cover 40%}
-}
-
-@keyframes zkScrollUp{from{opacity:0;transform:translate3d(0,72px,0) scale(.985);filter:blur(5px)}to{opacity:1;transform:translate3d(0,0,0) scale(1);filter:blur(0)}}
-@keyframes zkScrollDown{from{opacity:0;transform:translate3d(0,-52px,0) scale(.99);filter:blur(4px)}to{opacity:1;transform:translate3d(0,0,0) scale(1);filter:blur(0)}}
-@keyframes zkScrollLeft{from{opacity:0;transform:translate3d(72px,0,0) scale(.99);filter:blur(4px)}to{opacity:1;transform:translate3d(0,0,0) scale(1);filter:blur(0)}}
-@keyframes zkScrollRight{from{opacity:0;transform:translate3d(-72px,0,0) scale(.99);filter:blur(4px)}to{opacity:1;transform:translate3d(0,0,0) scale(1);filter:blur(0)}}
-@keyframes zkScrollZoom{from{opacity:0;transform:translate3d(0,36px,0) scale(.92);filter:blur(5px)}to{opacity:1;transform:translate3d(0,0,0) scale(1);filter:blur(0)}}
-
-@media (prefers-reduced-motion: reduce){*,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.001ms!important}.scroll-reveal{opacity:1!important;transform:none!important;filter:none!important}}
+/* Accessibility */
+@media (prefers-reduced-motion: reduce){*,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.001ms!important}.reveal{opacity:1!important;transform:none!important}}
