@@ -26,6 +26,116 @@
   .product-card:hover:after,.news-card:hover:after,.step:hover:after{transform:translateX(130%);}
 }
 
+/* Unified global footer */
+.footer{
+  background:
+    radial-gradient(circle at 8% 12%, rgba(4,92,57,.26), transparent 30%),
+    linear-gradient(90deg,#062f24 0%,#101b17 58%,#1c211d 100%)!important;
+  color:#fff!important;
+  padding:92px 0 44px!important;
+  position:relative;
+  overflow:hidden;
+}
+.footer::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);
+  background-size:72px 72px;
+  opacity:.48;
+  pointer-events:none;
+}
+.footer>.container{position:relative;z-index:1;width:min(1360px,92vw)!important;}
+.footer-grid{
+  display:grid!important;
+  grid-template-columns:minmax(250px,1.55fr) repeat(5,minmax(145px,1fr))!important;
+  gap:18px!important;
+  align-items:stretch!important;
+}
+.footer-grid>div{
+  min-height:245px!important;
+  border:1px solid rgba(255,255,255,.11)!important;
+  background:rgba(255,255,255,.025)!important;
+  padding:34px 34px!important;
+}
+.footer-grid>div:first-child{
+  background:linear-gradient(135deg,rgba(4,92,57,.35),rgba(255,255,255,.035))!important;
+  display:flex!important;
+  align-items:center!important;
+}
+.footer .brand-mini{
+  display:block!important;
+  color:#fff!important;
+  font-size:32px!important;
+  font-weight:800!important;
+  letter-spacing:1px!important;
+  line-height:1.25!important;
+  padding-top:108px!important;
+  position:relative!important;
+}
+.footer .brand-mini::before{
+  content:'';
+  position:absolute;
+  left:0;
+  top:0;
+  width:78px;
+  height:78px;
+  background:url('../images/logo.svg') center/contain no-repeat;
+  filter:drop-shadow(0 12px 22px rgba(0,0,0,.18));
+}
+.footer .brand-mini::after{
+  content:'EDUCATION PLATFORM\A\A青少年学习力成长 · 家庭教育支持\A· 课程合作共创';
+  white-space:pre-line;
+  display:block;
+  margin-top:8px;
+  color:rgba(255,255,255,.64);
+  font-size:15px;
+  line-height:1.9;
+  font-weight:400;
+  letter-spacing:.5px;
+}
+.footer h4{
+  color:#fff!important;
+  font-size:19px!important;
+  line-height:1.35!important;
+  margin:0 0 28px!important;
+  position:relative!important;
+}
+.footer h4::after{
+  content:'';
+  display:block;
+  width:34px;
+  height:2px;
+  background:#c7af82;
+  margin-top:15px;
+}
+.footer a{
+  display:block!important;
+  color:rgba(255,255,255,.66)!important;
+  font-size:15px!important;
+  line-height:1.7!important;
+  margin:0 0 16px!important;
+  transition:.28s ease!important;
+}
+.footer a:hover{color:#c7af82!important;transform:translateX(4px);}
+.footer .copyright{
+  margin-top:46px!important;
+  padding-top:26px!important;
+  border-top:1px solid rgba(255,255,255,.1)!important;
+  text-align:center!important;
+  color:rgba(255,255,255,.54)!important;
+  font-size:14px!important;
+}
+@media(max-width:1180px){
+  .footer-grid{grid-template-columns:repeat(3,1fr)!important;}
+  .footer-grid>div:first-child{grid-column:span 3;}
+}
+@media(max-width:760px){
+  .footer{padding:64px 0 34px!important;}
+  .footer-grid{grid-template-columns:1fr!important;gap:14px!important;}
+  .footer-grid>div,.footer-grid>div:first-child{grid-column:auto!important;min-height:auto!important;padding:28px!important;}
+}
+
 /* Site-wide scroll entrance animations.
    Works on every page because effects.css is loaded globally. */
 @supports (animation-timeline: view()) {
