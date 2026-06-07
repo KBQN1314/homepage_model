@@ -80,7 +80,7 @@ function setupViewportStability() {
   if (document.getElementById('viewportStabilityStyle')) return;
   const style = document.createElement('style');
   style.id = 'viewportStabilityStyle';
-  style.textContent = `html{font-size:100%;-webkit-text-size-adjust:100%;text-size-adjust:100%}html,body{width:100%;max-width:100%;min-width:0}input,select,textarea,button{font-size:16px}.reveal{transform:translateY(52px)!important}.reveal.show{transform:translateY(0)!important}.hero .hero-inner,.hero .hero-inner .eyebrow,.hero .hero-inner h1,.hero .hero-inner h2,.hero .hero-inner p,.hero .hero-actions{opacity:1!important;visibility:visible!important;transform:translate3d(0,0,0)!important}`;
+  style.textContent = `html{font-size:100%;-webkit-text-size-adjust:100%;text-size-adjust:100%}html,body{width:100%;max-width:100%;min-width:0}input,select,textarea,button{font-size:16px}.reveal{transform:translateY(52px)!important}.reveal.show{transform:translateY(0)!important}.hero .hero-inner,.hero .hero-inner .eyebrow,.hero .hero-inner h1,.hero .hero-inner h2,.hero .hero-inner p,.hero .hero-actions{opacity:1!important;visibility:visible!important;transform:translate3d(0,0,0)!important}.contact-map::before{background:#fff url('statics/images/QR.png') center/82% no-repeat!important}`;
   document.head.appendChild(style);
 }
 function replaceTextInNode(root, replacements) {
