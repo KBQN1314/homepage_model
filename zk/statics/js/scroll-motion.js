@@ -17,12 +17,12 @@
     style.textContent = `
       .scroll-motion {
         opacity: 0 !important;
-        transform: translate3d(0, 28px, 0) !important;
+        transform: translate3d(0, 30px, 0) !important;
         filter: none !important;
-        transition:
-          opacity .95s cubic-bezier(.25,.46,.45,.94) var(--motion-delay, 0ms),
-          transform 1.05s cubic-bezier(.25,.46,.45,.94) var(--motion-delay, 0ms),
-          box-shadow .35s ease !important;
+        transition-property: opacity, transform !important;
+        transition-duration: .92s, 1.02s !important;
+        transition-timing-function: cubic-bezier(.22,.61,.36,1), cubic-bezier(.22,.61,.36,1) !important;
+        transition-delay: var(--motion-delay, 0ms), var(--motion-delay, 0ms) !important;
         will-change: opacity, transform;
       }
 
@@ -38,7 +38,7 @@
 
       .scroll-motion.motion-out {
         opacity: 0 !important;
-        transform: translate3d(0, 28px, 0) !important;
+        transform: translate3d(0, 30px, 0) !important;
         filter: none !important;
       }
 
@@ -63,7 +63,7 @@
     if (!parent) return 0;
     const siblings = Array.from(parent.children).filter(child => child.matches && child.matches(MOTION_SELECTOR));
     const index = Math.max(0, siblings.indexOf(el));
-    return Math.min(180, (index % 5) * 42);
+    return Math.min(160, (index % 5) * 38);
   }
 
   function prepareElements() {
@@ -116,8 +116,8 @@
         }
       });
     }, {
-      threshold: 0.16,
-      rootMargin: '0px 0px -6% 0px'
+      threshold: 0.14,
+      rootMargin: '0px 0px -5% 0px'
     });
 
     requestAnimationFrame(() => {
