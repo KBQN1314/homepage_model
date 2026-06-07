@@ -84,6 +84,33 @@ body.nav-open{overflow:hidden}.hamb{transition:.35s ease}.hamb i{transition:.35s
   }
 }
 
+/* AOS-like vertical scroll reveal. */
+.scroll-reveal {
+  opacity: 0;
+  transition:
+    opacity .78s cubic-bezier(.22,.61,.36,1) var(--scroll-delay, 0ms),
+    transform .88s cubic-bezier(.22,.61,.36,1) var(--scroll-delay, 0ms),
+    filter .88s ease var(--scroll-delay, 0ms);
+  will-change: opacity, transform, filter;
+  filter: blur(4px);
+}
+
+.scroll-reveal[data-scroll-effect="fade-up"] { transform: translate3d(0, 58px, 0) scale(.985); }
+.scroll-reveal[data-scroll-effect="fade-down"] { transform: translate3d(0, -42px, 0) scale(.99); }
+.scroll-reveal[data-scroll-effect="fade-left"] { transform: translate3d(54px, 0, 0) scale(.99); }
+.scroll-reveal[data-scroll-effect="fade-right"] { transform: translate3d(-54px, 0, 0) scale(.99); }
+.scroll-reveal[data-scroll-effect="zoom-up"] { transform: translate3d(0, 36px, 0) scale(.94); }
+
+.scroll-reveal.scroll-in {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+  filter: blur(0);
+}
+
+.scroll-reveal.scroll-in[data-scroll-effect="zoom-up"] {
+  transform: translate3d(0, 0, 0) scale(1);
+}
+
 /* Fallback: keep homepage hero text visible even if the JS animation class is not applied. */
 .hero .hero-inner,
 .hero .hero-inner .eyebrow,
@@ -153,5 +180,11 @@ body.nav-open{overflow:hidden}.hamb{transition:.35s ease}.hamb i{transition:.35s
     animation-iteration-count: 1 !important;
     scroll-behavior: auto !important;
     transition-duration: .001ms !important;
+  }
+
+  .scroll-reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
   }
 }
