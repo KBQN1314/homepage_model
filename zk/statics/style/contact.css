@@ -134,13 +134,18 @@
   line-height: 1.75;
 }
 
-.contact-qr-card {
-  margin-top: 26px;
-  padding: 24px;
-  display: grid;
-  grid-template-columns: 132px 1fr;
-  gap: 22px;
+.contact-qr-panel {
+  display: flex;
   align-items: center;
+  justify-content: center;
+}
+
+.contact-qr-card {
+  width: 100%;
+  min-height: 360px;
+  padding: 34px;
+  display: grid;
+  place-items: center;
   background:
     radial-gradient(circle at 90% 10%, rgba(199, 175, 130, .18), transparent 35%),
     linear-gradient(135deg, #0b5f3e, #10231e);
@@ -148,27 +153,18 @@
 }
 
 .contact-qr-image {
-  width: 132px;
-  height: 132px;
-  padding: 10px;
-  border-radius: 16px;
+  width: 220px;
+  height: 220px;
+  padding: 12px;
+  border-radius: 18px;
   background: #fff url('../images/QR.png') center/82% no-repeat;
   box-shadow:
     0 16px 34px rgba(0, 0, 0, .18),
     inset 0 0 0 1px rgba(199, 175, 130, .18);
 }
 
-.contact-qr-text b {
-  display: block;
-  margin-bottom: 8px;
-  color: #fff;
-  font-size: 20px;
-}
-
-.contact-qr-text span {
-  display: block;
-  color: rgba(255, 255, 255, .78);
-  line-height: 1.8;
+.contact-qr-text {
+  display: none;
 }
 
 .contact-form {
@@ -216,10 +212,53 @@
   box-shadow: 0 8px 24px rgba(0, 0, 0, .04);
 }
 
+.faq-section {
+  background: #fff;
+  padding-top: 96px;
+}
+
+.faq-grid {
+  width: min(1280px, 92vw);
+  margin: 52px auto 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 28px;
+}
+
+.faq-card {
+  position: relative;
+  min-height: 210px;
+  padding: 42px 38px 38px;
+  background: #fff;
+  border: 1px solid rgba(199, 175, 130, .18);
+  border-left: 4px solid var(--gold);
+  box-shadow: 0 18px 44px rgba(16, 27, 23, .08);
+  transition: transform .35s ease, box-shadow .35s ease;
+}
+
+.faq-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 26px 58px rgba(16, 27, 23, .12);
+}
+
+.faq-card h3 {
+  color: var(--green);
+  font-size: 22px;
+  line-height: 1.45;
+  margin-bottom: 16px;
+}
+
+.faq-card p {
+  color: #67736d;
+  font-size: 16px;
+  line-height: 1.9;
+}
+
 @media(max-width:1100px) {
   .contact-grid,
   .contact-main-wrap,
-  .map-wrap {
+  .map-wrap,
+  .faq-grid {
     grid-template-columns: 1fr;
   }
 }
@@ -231,6 +270,21 @@
   }
 
   .contact-qr-card {
-    grid-template-columns: 1fr;
+    min-height: 280px;
+    padding: 26px;
+  }
+
+  .contact-qr-image {
+    width: 180px;
+    height: 180px;
+  }
+
+  .faq-section {
+    padding-top: 72px;
+  }
+
+  .faq-card {
+    min-height: auto;
+    padding: 30px 26px 28px;
   }
 }
