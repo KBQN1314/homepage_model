@@ -152,7 +152,7 @@
   height: 132px;
   padding: 10px;
   border-radius: 16px;
-  background: #fff url('../images/QR.svg') center/82% no-repeat;
+  background: #fff url('../images/QR.png') center/82% no-repeat;
   box-shadow:
     0 16px 34px rgba(0, 0, 0, .18),
     inset 0 0 0 1px rgba(199, 175, 130, .18);
@@ -172,49 +172,7 @@
 }
 
 .contact-form {
-  background: var(--green);
-  padding: 42px;
-  color: #fff;
-}
-
-.contact-form h3 {
-  font-size: 24px;
-  margin-bottom: 20px;
-}
-
-.contact-form .form-row {
-  margin-bottom: 12px;
-}
-
-.contact-form input,
-.contact-form select,
-.contact-form textarea {
-  width: 100%;
-  border: 1px solid rgba(255, 255, 255, .22);
-  background: rgba(255, 255, 255, .1);
-  color: #fff;
-  padding: 14px 15px;
-  border-radius: 2px;
-  font-family: inherit;
-}
-
-.contact-form textarea {
-  min-height: 120px;
-  resize: vertical;
-}
-
-.contact-form input::placeholder,
-.contact-form textarea::placeholder {
-  color: rgba(255, 255, 255, .65);
-}
-
-.contact-form select option {
-  color: #333;
-}
-
-.contact-form .btn {
-  width: 100%;
-  margin-top: 8px;
+  display: none;
 }
 
 .map-section {
@@ -258,81 +216,21 @@
   box-shadow: 0 8px 24px rgba(0, 0, 0, .04);
 }
 
-.map-placeholder h3 {
-  font-size: 34px;
-  margin-bottom: 12px;
-}
-
-.map-placeholder p {
-  max-width: 540px;
-  color: rgba(255, 255, 255, .78);
-  line-height: 1.9;
-}
-
-.faq-section {
-  background: #f7f5ef;
-}
-
-.faq-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-}
-
-.faq-card {
-  background: #fff;
-  padding: 30px 26px;
-  border-left: 4px solid var(--gold);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, .04);
-}
-
-.faq-card h3 {
-  color: var(--green);
-  font-size: 20px;
-  margin-bottom: 10px;
-}
-
-.faq-card p {
-  color: #6d7873;
-  line-height: 1.8;
-}
-
-@media(max-width: 1100px) {
+@media(max-width:1100px) {
   .contact-grid,
-  .faq-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
   .contact-main-wrap,
   .map-wrap {
     grid-template-columns: 1fr;
   }
 }
 
-@media(max-width: 680px) {
-  .contact-hero {
-    min-height: 460px;
-    padding: 130px 0 70px;
-  }
-
-  .contact-grid,
-  .faq-grid {
-    grid-template-columns: 1fr;
-  }
-
+@media(max-width:680px) {
   .contact-info-panel,
-  .contact-form,
   .map-info {
     padding: 30px;
   }
 
-  .contact-detail-item {
-    grid-template-columns: 1fr;
-  }
-
   .contact-qr-card {
     grid-template-columns: 1fr;
-    justify-items: center;
-    text-align: center;
   }
 }
