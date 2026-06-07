@@ -12,13 +12,13 @@ const COURSE_ITEMS = [
 
 const COURSE_COPY = {
   experience: {
-    tag: '体验变化', systemTag: '低门槛体验',
-    text: '通过短时间任务观察、训练体验和结果反馈，帮助家长初步了解孩子的学习状态和后续训练方向。',
-    list: ['初步状态测评', '过程变化体验', '明确改进方向'],
-    detailIntro: '适合作为家长了解孩子学习状态的第一步，通过简单任务、训练体验和结果反馈，帮助家长观察孩子的专注、记忆、表达和学习状态变化。',
-    paths: ['状态观察', '任务体验', '结果反馈', '后续建议'],
-    audience: ['希望先了解孩子学习状态的家庭', '暂不确定适合哪类课程的学生', '希望通过短时体验观察过程变化的家长'],
-    effects: ['更清楚孩子当前学习状态', '获得初步训练体验', '明确后续课程匹配方向']
+    tag: '低门槛体验', systemTag: '状态测评',
+    text: '用一节约2小时的体验课，帮助家长看清孩子真实学习状态：专注、记忆、表达、情绪和任务启动到底卡在哪里，再判断后续是否需要系统训练。',
+    list: ['学习状态观察', '短时训练体验', '结果反馈与建议'],
+    detailIntro: '很多家长并不确定孩子到底是“不想学”、 “不会学”，还是专注、记忆、情绪和任务启动能力出了问题。心脑学习力体验课以约2小时的低门槛体验，让家长先看到孩子在任务中的真实表现和初步变化，再决定是否继续系统训练。',
+    paths: ['状态观察', '训练体验', '对比反馈', '课程匹配'],
+    audience: ['第一次了解课程体系，希望先低成本体验的家庭', '不确定孩子适合专注营、记忆营、阅读营还是自主营的家长', '孩子存在拖拉、走神、记不住、表达不清或学习动力不足等情况', '希望先看到孩子过程变化，再决定是否报名系统课程的家庭'],
+    effects: ['更清楚孩子当前学习状态和主要卡点', '通过短时任务看到孩子的专注、记忆和表达反应', '获得更具体的后续课程匹配建议', '降低盲目报名成本，让家长先判断是否适合继续训练']
   },
   focus: {
     tag: '专注力提升', systemTag: '专注力提升',
@@ -266,33 +266,32 @@ function setupDetailPage() {
   const tags = document.querySelector('.detail-tags');
   if (tags) tags.innerHTML = `<span>${copy.tag}</span><span>青少年学习力</span><span>阶段训练</span><span>过程反馈</span>`;
   const pathText = {
-    experience: ['观察孩子当前学习状态', '通过短时任务体验训练过程', '对比反馈孩子过程变化', '给出后续课程建议'],
+    experience: ['第1步：通过简单任务观察孩子的专注、记忆、表达和任务启动状态', '第2步：安排短时训练体验，让家长看到孩子在方法引导下的过程变化', '第3步：对比体验前后的表现，帮助家长判断主要卡点和优势', '第4步：根据孩子状态匹配专注营、记忆营、阅读营或自主营方向'],
     focus: ['第1阶段：身体锚定与呼吸训练，让孩子先从身体层面安定下来，建立进入学习状态的入口', '第2阶段：微观观察、听觉追踪和感官专注训练，帮助大脑学会过滤干扰、锁定任务', '第3阶段：图像记忆、心像显化和表达训练，把“记不住”转化为“看得见、说得出”', '第4阶段：情绪觉察、目标承诺和21天家庭陪跑，把营期变化延伸到家庭学习场景'],
     memory: ['第1-2天：静定训练、残像训练和脑屏激活，建立稳定成像基础', '第3-4天：从整段摄入到整页摄入，训练从脑内页面直接提取信息', '第5-6天：迁移到古诗文、英语单词和理科公式等学科内容', '第7天：通过陌生材料笔试和口试，检验真实记忆效果'],
     reading: ['破除逐字默读习惯', '训练整页摄入和脑内快照', '形成脑内电影或结构图', '通过复述和测试检验理解'],
     self: ['第1天：格物入门，掌握格定义五步法并完成第一章通关', '第2天：攻坚深化，训练格定理四步法并完成二三章学习', '第3天：知识联网，绘制数学知识全景图并进行模拟考', '第4天：自证结营，错题围剿、闭卷大考和自学计划制定']
   };
   let extra = '';
+  if (item.key === 'experience') {
+    extra = `<div class="detail-block reveal show"><h2>为什么建议先上体验课？</h2><div class="course-flow"><div class="flow-item"><b>1</b><span>少走弯路</span><p>很多家庭一开始并不知道孩子到底卡在专注、记忆、阅读、情绪还是学习方法上，先体验能降低盲目报名成本。</p></div><div class="flow-item"><b>2</b><span>看见过程</span><p>不是只听介绍，而是通过短时任务观察孩子真实反应，看他能不能跟上训练、是否愿意投入。</p></div><div class="flow-item"><b>3</b><span>判断适配</span><p>体验后再判断适合专注营、记忆营、阅读营还是自主营，避免课程选择和孩子状态不匹配。</p></div><div class="flow-item"><b>4</b><span>低门槛决策</span><p>199元约2小时，先看孩子状态和服务方式，再决定是否进入9800元系统训练营。</p></div></div></div><div class="detail-block reveal show"><h2>体验课家长关注点</h2>${setList(['孩子进入任务的速度：是很快投入，还是需要反复提醒', '孩子面对任务的反应：是愿意尝试，还是容易烦躁退缩', '孩子的信息处理方式：是能观察、能复述，还是看完说不清', '孩子对训练方式的接受度：是否愿意跟随老师完成短时训练'])}</div>`;
+  }
   if (item.key === 'focus') {
     extra = `<div class="detail-block reveal show"><h2>为什么孩子需要先训练专注力？</h2><div class="course-flow"><div class="flow-item"><b>1</b><span>坐不住</span><p>不是孩子故意拖拉，而是身体和注意系统还没有稳定下来，学习一开始就容易分心。</p></div><div class="flow-item"><b>2</b><span>记不牢</span><p>只靠反复读和硬背，容易学得慢、忘得快，需要把文字、声音和画面连接起来。</p></div><div class="flow-item"><b>3</b><span>容易烦</span><p>遇到难题就抵触，往往不是态度问题，而是情绪觉察和自我调节能力还需要训练。</p></div><div class="flow-item"><b>4</b><span>没动力</span><p>当孩子看不到自己的进步，就容易被动学习；课程通过可感知的小变化重建“我能行”。</p></div></div></div><div class="detail-block reveal show"><h2>数字化亮点</h2>${setList(['面向8-16岁青少年，处于专注力、记忆力和价值观形成的重要阶段', '课程目标包含专注力、记忆力、想象力、自我觉察和学习内驱力等底层能力', '训练后以“能静下来、能观察、能表达、能坚持”为主要反馈指标', '配合21天家庭陪跑机制，每天约10分钟家庭练习，帮助家长把营期效果延续到日常'])}</div>`;
   }
-  if (item.key === 'memory') {
-    extra = `<div class="detail-block reveal show"><h2>记忆训练重点</h2>${setList(['训练静坐、数息、残像等基础专注能力，先让孩子坐得住、看得稳', '通过烛光观想、曼陀罗内观和实物心像激活脑内成像能力', '从整段摄入逐步过渡到整页摄入，训练闭眼后的信息提取', '把能力迁移到古诗文、英语单词、理科公式等真实学科内容'])}</div>`;
-  }
-  if (item.key === 'self') {
-    extra = `<div class="detail-block reveal show"><h2>数学训练重点</h2>${setList(['用“逐字读—问自己—问AI—做例题—一句话总结”理解数学定义', '用“条件结论—逆定理—多种证明—生活实例”吃透数学定理', '训练孩子向AI提出精准问题，并验证AI答案是否可靠', '用费曼互讲、错题本和知识全景图检验是否真正学懂'])}</div>`;
-  }
+  if (item.key === 'memory') extra = `<div class="detail-block reveal show"><h2>记忆训练重点</h2>${setList(['训练静坐、数息、残像等基础专注能力，先让孩子坐得住、看得稳', '通过烛光观想、曼陀罗内观和实物心像激活脑内成像能力', '从整段摄入逐步过渡到整页摄入，训练闭眼后的信息提取', '把能力迁移到古诗文、英语单词、理科公式等真实学科内容'])}</div>`;
+  if (item.key === 'self') extra = `<div class="detail-block reveal show"><h2>数学训练重点</h2>${setList(['用“逐字读—问自己—问AI—做例题—一句话总结”理解数学定义', '用“条件结论—逆定理—多种证明—生活实例”吃透数学定理', '训练孩子向AI提出精准问题，并验证AI答案是否可靠', '用费曼互讲、错题本和知识全景图检验是否真正学懂'])}</div>`;
   const main = document.querySelector('.detail-main');
   if (main) {
     const pathItems = pathText[item.key] || copy.paths;
-    const firstTitle = item.key === 'focus' ? '先解决学习状态，成绩提升才有入口' : '课程定位';
-    const firstText = item.key === 'focus' ? '很多孩子不是不想学，而是进入学习状态太慢、抗干扰弱、记忆方式单一、遇到困难容易情绪化。专注营不是简单让孩子“坐着别动”，而是通过身体、感官、心像、情绪和家庭陪跑五个层面，系统重建学习状态。' : (copy.detailIntro || copy.text);
-    main.innerHTML = `<div class="detail-block reveal show"><h2>${firstTitle}</h2><p>${firstText}</p></div>${extra}<div class="detail-block reveal show"><h2>核心训练内容</h2>${setList(copy.list)}</div><div class="detail-block reveal show"><h2>典型训练路径</h2><div class="course-flow">${pathItems.map((text, index) => `<div class="flow-item"><b>${index + 1}</b><span>${copy.paths[index] || text}</span><p>${text}</p></div>`).join('')}</div></div><div class="detail-block reveal show"><h2>适合对象</h2>${setList(copy.audience)}</div><div class="detail-block reveal show"><h2>家长能看到的变化</h2>${setList(copy.effects)}</div>`;
+    const firstTitle = item.key === 'focus' ? '先解决学习状态，成绩提升才有入口' : item.key === 'experience' ? '先看清问题，再决定训练方向' : '课程定位';
+    const firstText = item.key === 'focus' ? '很多孩子不是不想学，而是进入学习状态太慢、抗干扰弱、记忆方式单一、遇到困难容易情绪化。专注营不是简单让孩子“坐着别动”，而是通过身体、感官、心像、情绪和家庭陪跑五个层面，系统重建学习状态。' : item.key === 'experience' ? '体验课的价值，不是把系统课程压缩成一节课，而是用较短时间帮助家长看清孩子当前的真实学习状态。通过任务观察、短时训练和结果反馈，先判断孩子主要卡点，再选择后续课程路径。' : (copy.detailIntro || copy.text);
+    main.innerHTML = `<div class="detail-block reveal show"><h2>${firstTitle}</h2><p>${firstText}</p></div>${extra}<div class="detail-block reveal show"><h2>核心体验内容</h2>${setList(copy.list)}</div><div class="detail-block reveal show"><h2>典型体验路径</h2><div class="course-flow">${pathItems.map((text, index) => `<div class="flow-item"><b>${index + 1}</b><span>${copy.paths[index] || text}</span><p>${text}</p></div>`).join('')}</div></div><div class="detail-block reveal show"><h2>适合对象</h2>${setList(copy.audience)}</div><div class="detail-block reveal show"><h2>家长能获得什么</h2>${setList(copy.effects)}</div>`;
   }
   const side = document.querySelector('.side-card');
   if (side) side.innerHTML = `<h3>课程信息</h3><p>${copy.text}</p><div class="side-list"><div><b>课程</b><span>${item.name}</span></div><div><b>重点</b><span>${copy.list[0]}</span></div><div><b>方式</b><span>${item.key === 'experience' ? '体验 / 测评 / 反馈' : '训练营 / 阶段反馈'}</span></div><div><b>价格</b><span>${item.price}</span></div></div><a class="btn btn-gold" href="${contactUrl('trial')}">预约体验</a><a class="btn btn-line" href="courses.html">返回课程产品</a>`;
   const cta = document.querySelector('.detail-cta-wrap');
-  if (cta) cta.innerHTML = `<div><h2>${item.key === 'focus' ? '孩子专注力问题，不适合只靠催促解决' : '想进一步了解这门课程？'}</h2><p>${item.key === 'focus' ? '可以先预约体验或咨询，我们会根据孩子当前学习状态和家庭关注点，给出更具体的课程建议。' : '可以先预约体验或咨询课程，我们会根据孩子情况给出更具体的建议。'}</p></div><div class="detail-cta-actions"><a class="btn btn-gold" href="${contactUrl('trial')}">预约体验</a><a class="btn btn-line" href="${contactUrl('consult')}">咨询课程</a></div>`;
+  if (cta) cta.innerHTML = `<div><h2>${item.key === 'focus' ? '孩子专注力问题，不适合只靠催促解决' : item.key === 'experience' ? '不确定孩子适合哪门课？先从体验课开始' : '想进一步了解这门课程？'}</h2><p>${item.key === 'focus' ? '可以先预约体验或咨询，我们会根据孩子当前学习状态和家庭关注点，给出更具体的课程建议。' : item.key === 'experience' ? '用一节课先看清孩子状态，再决定是否进入系统训练，比直接报名更稳妥。' : '可以先预约体验或咨询课程，我们会根据孩子情况给出更具体的建议。'}</p></div><div class="detail-cta-actions"><a class="btn btn-gold" href="${contactUrl('trial')}">预约体验</a><a class="btn btn-line" href="${contactUrl('consult')}">咨询课程</a></div>`;
 }
 function setupHeroSlider() {
   const hero = document.querySelector('.hero');
@@ -301,11 +300,7 @@ function setupHeroSlider() {
   const dots = [...hero.querySelectorAll('.hero-dots button')];
   if (!slides.length) return;
   let index = Math.max(0, slides.findIndex(slide => slide.classList.contains('active')));
-  const show = next => {
-    index = (next + slides.length) % slides.length;
-    slides.forEach((slide, i) => slide.classList.toggle('active', i === index));
-    dots.forEach((dot, i) => dot.classList.toggle('active', i === index));
-  };
+  const show = next => { index = (next + slides.length) % slides.length; slides.forEach((slide, i) => slide.classList.toggle('active', i === index)); dots.forEach((dot, i) => dot.classList.toggle('active', i === index)); };
   dots.forEach((dot, i) => dot.addEventListener('click', () => show(i)));
   setInterval(() => show(index + 1), HERO_SLIDE_DURATION);
 }
