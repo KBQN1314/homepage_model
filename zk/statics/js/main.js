@@ -3,7 +3,6 @@ const COMPANY_SHORT_NAME = '中科明心';
 const HERO_SLIDE_DURATION = 7000;
 
 const COURSE_ITEMS = [
-  { key: 'experience', name: '心脑学习力体验课', href: 'evaluation-detail.html', price: '199元 / 节（约2小时）' },
   { key: 'focus', name: '心脑学习力专注营', href: 'course-detail.html', price: '9800元 / 期（7天6夜）' },
   { key: 'memory', name: '心脑学习力记忆营', href: 'photo-memory-detail.html', price: '9800元 / 期（7天6夜）' },
   { key: 'reading', name: '心脑学习力阅读营', href: 'camp-detail.html', price: '9800元 / 期（7天6夜）' },
@@ -11,15 +10,6 @@ const COURSE_ITEMS = [
 ];
 
 const COURSE_COPY = {
-  experience: {
-    tag: '低门槛体验', systemTag: '状态测评',
-    text: '用一节约2小时的体验课，帮助家长看清孩子真实学习状态：专注、记忆、表达、情绪和任务启动到底卡在哪里，再判断后续是否需要系统训练。',
-    list: ['学习状态观察', '短时训练体验', '结果反馈与建议'],
-    detailIntro: '很多家长并不确定孩子到底是“不想学”、“不会学”，还是专注、记忆、情绪和任务启动能力出了问题。心脑学习力体验课以约2小时的低门槛体验，让家长先看到孩子在任务中的真实表现和初步变化，再决定是否继续系统训练。',
-    paths: ['状态观察', '训练体验', '对比反馈', '课程匹配'],
-    audience: ['第一次了解课程体系，希望先低成本体验的家庭', '不确定孩子适合专注营、记忆营、阅读营还是自主营的家长', '孩子存在拖拉、走神、记不住、表达不清或学习动力不足等情况', '希望先看到孩子过程变化，再决定是否报名系统课程的家庭'],
-    effects: ['更清楚孩子当前学习状态和主要卡点', '通过短时任务看到孩子的专注、记忆和表达反应', '获得更具体的后续课程匹配建议', '降低盲目报名成本，让家长先判断是否适合继续训练']
-  },
   focus: {
     tag: '专注力提升', systemTag: '专注力提升',
     text: '面向8-16岁青少年，围绕专注力、记忆力、情绪觉察和学习内驱力进行系统训练，帮助孩子从“坐不住、记不牢、容易烦”逐步走向更稳定的学习状态。',
@@ -75,7 +65,7 @@ function getActivePage() {
   const f = p.split('/').pop() || 'index.html';
   if (f === 'index.html' || p.endsWith('/zk/')) return 'home';
   if (f === 'about.html') return 'about';
-  if (['courses.html', 'course-detail.html', 'evaluation-detail.html', 'camp-detail.html', 'public-class-detail.html', 'photo-memory-detail.html'].includes(f)) return 'courses';
+  if (['courses.html', 'course-detail.html', 'camp-detail.html', 'public-class-detail.html', 'photo-memory-detail.html'].includes(f)) return 'courses';
   if (['team.html', 'team-page-2.html', 'experts.html', 'assistants.html'].includes(f) || p.includes('/zk/expert/')) return 'team';
   if (f === 'cases.html' || p.includes('/zk/cases/')) return 'cases';
   if (['news.html', 'company-news.html', 'growth-news.html', 'limited-activity.html'].includes(f) || p.includes('/zk/news/')) return 'news';
@@ -113,7 +103,7 @@ function replaceTextInNode(root, replacements) {
 function replaceGlobalTexts() {
   const replacements = [
     ['中科心智能教育科技服务平台', COMPANY_FULL_NAME], ['中科心智能', COMPANY_SHORT_NAME],
-    ['照相记忆', '心脑学习力记忆营'], ['身心脑一体化专注力课程', '心脑学习力专注营'], ['心脑学习力成长课', '心脑学习力专注营'], ['学习力成长体系', '心脑学习力专注营'],
+    ['照相记忆', '心脑学习力记忆营'], ['身心脑一体化专注力课程', '心脑学习力专注营'], ['心脑学习力成长课', '心脑学习力专注营'], ['学习力成长体系', '心脑学习力专注营'], ['心脑学习力体验课', '心脑学习力专注营'],
     ['潜意识阅读', '心脑学习力阅读营'], ['心脑学习力强化营', '心脑学习力阅读营'],
     ['五四学习法数学实训营', '心脑学习力自主营（数学）'], ['心脑学习力公开课', '心脑学习力自主营（数学）'],
     ['心脑学习力自主营（数学）（数学）', '心脑学习力自主营（数学）'], ['心脑学习力自主营', '心脑学习力自主营（数学）']
@@ -145,8 +135,7 @@ function setupUnifiedLinks() {
   const prefix = getPathPrefix(); const active = getActivePage(); const link = file => `${prefix}${file}`;
   injectNavStylesheet(prefix);
   const brand = document.querySelector('.brand');
-  if (brand) brand.innerHTML = `<img src="${link('statics/images/logo.svg')}" alt="${COMPANY_SHORT_NAME} Logo" style="width:50px;height:50px;display:block;flex:none;object-fit:contain;filter:drop-shadow(0 8px 18px rgba(16,27,23,.18));"><span><strong>${COMPANY_SHORT_NAME}</strong><span>Education Platform</span></span>`;
-  if (brand) brand.href = link('index.html');
+  if (brand) { brand.innerHTML = `<img src="${link('statics/images/logo.svg')}" alt="${COMPANY_SHORT_NAME} Logo" style="width:50px;height:50px;display:block;flex:none;object-fit:contain;filter:drop-shadow(0 8px 18px rgba(16,27,23,.18));"><span><strong>${COMPANY_SHORT_NAME}</strong><span>Education Platform</span></span>`; brand.href = link('index.html'); }
   const nav = document.querySelector('header nav');
   if (nav) {
     nav.className = 'nav-dropdowns';
@@ -162,7 +151,8 @@ function normalizeLegacyAnchors() {
   const map = { '#assessment': contactUrl(), 'index.html#assessment': contactUrl(), '#join': buildUrl('join.html'), 'index.html#join': buildUrl('join.html'), '#contact': buildUrl('contact.html'), '#join-form': buildUrl('contact.html') };
   document.querySelectorAll('a[href]').forEach(link => { const href = link.getAttribute('href'); if (map[href]) link.href = map[href]; });
 }
-function ensureCards(container, selector, html) { if (!container) return; while (container.querySelectorAll(selector).length < COURSE_ITEMS.length) container.insertAdjacentHTML('beforeend', html()); }
+function trimCards(container, selector) { if (!container) return; [...container.querySelectorAll(selector)].slice(COURSE_ITEMS.length).forEach(card => card.remove()); }
+function ensureCards(container, selector, html) { if (!container) return; while (container.querySelectorAll(selector).length < COURSE_ITEMS.length) container.insertAdjacentHTML('beforeend', html()); trimCards(container, selector); }
 function updateCourseCard(card, item, mode = 'home') {
   if (!card || !item) return; const copy = COURSE_COPY[item.key];
   const title = card.querySelector('h3'); const text = card.querySelector('p'); const list = card.querySelector('ul'); const tag = card.querySelector('.tag,.label'); const more = card.querySelector('.more');
@@ -175,23 +165,52 @@ function updateCourseCards() {
 }
 function setupDetailPage() {
   const file = location.pathname.split('/').pop();
-  const map = { 'evaluation-detail.html': COURSE_ITEMS[0], 'course-detail.html': COURSE_ITEMS[1], 'photo-memory-detail.html': COURSE_ITEMS[2], 'camp-detail.html': COURSE_ITEMS[3], 'public-class-detail.html': COURSE_ITEMS[4] };
+  const map = { 'course-detail.html': COURSE_ITEMS[0], 'photo-memory-detail.html': COURSE_ITEMS[1], 'camp-detail.html': COURSE_ITEMS[2], 'public-class-detail.html': COURSE_ITEMS[3] };
   const item = map[file]; if (!item) return; const copy = COURSE_COPY[item.key];
   const heroTitle = document.querySelector('.detail-hero h1'); const heroDesc = document.querySelector('.detail-hero p'); if (heroTitle) heroTitle.textContent = item.name; if (heroDesc) heroDesc.textContent = copy.detailIntro || copy.text;
   const tags = document.querySelector('.detail-tags'); if (tags) tags.innerHTML = `<span>${copy.tag}</span><span>青少年学习力</span><span>阶段训练</span><span>过程反馈</span>`;
-  const pathText = { experience: ['观察孩子当前学习状态', '通过短时任务体验训练过程', '对比反馈孩子过程变化', '给出后续课程建议'], focus: ['第1阶段：身体锚定与呼吸训练，让孩子先从身体层面安定下来，建立进入学习状态的入口', '第2阶段：微观观察、听觉追踪和感官专注训练，帮助大脑学会过滤干扰、锁定任务', '第3阶段：图像记忆、心像显化和表达训练，把“记不住”转化为“看得见、说得出”', '第4阶段：情绪觉察、目标承诺和21天家庭陪跑，把营期变化延伸到家庭学习场景'], memory: ['第1-2天：静定训练、残像训练和脑屏激活，建立稳定成像基础', '第3-4天：从整段摄入到整页摄入，训练从脑内页面直接提取信息', '第5-6天：迁移到古诗文、英语单词和理科公式等学科内容', '第7天：通过陌生材料笔试和口试，检验真实记忆效果'], reading: ['破除逐字默读习惯', '训练整页摄入和脑内快照', '形成脑内电影或结构图', '通过复述和测试检验理解'], self: ['第1天：格物入门，掌握格定义五步法并完成第一章通关', '第2天：攻坚深化，训练格定理四步法并完成二三章学习', '第3天：知识联网，绘制数学知识全景图并进行模拟考', '第4天：自证结营，错题围剿、闭卷大考和自学计划制定'] };
+  const pathText = {
+    focus: ['第1阶段：身体锚定与呼吸训练，让孩子先从身体层面安定下来，建立进入学习状态的入口', '第2阶段：微观观察、听觉追踪和感官专注训练，帮助大脑学会过滤干扰、锁定任务', '第3阶段：图像记忆、心像显化和表达训练，把“记不住”转化为“看得见、说得出”', '第4阶段：情绪觉察、目标承诺和21天家庭陪跑，把营期变化延伸到家庭学习场景'],
+    memory: ['第1-2天：静定训练、残像训练和脑屏激活，建立稳定成像基础', '第3-4天：从整段摄入到整页摄入，训练从脑内页面直接提取信息', '第5-6天：迁移到古诗文、英语单词和理科公式等学科内容', '第7天：通过陌生材料笔试和口试，检验真实记忆效果'],
+    reading: ['破除逐字默读习惯', '训练整页摄入和脑内快照', '形成脑内电影或结构图', '通过复述和测试检验理解'],
+    self: ['第1天：格物入门，掌握格定义五步法并完成第一章通关', '第2天：攻坚深化，训练格定理四步法并完成二三章学习', '第3天：知识联网，绘制数学知识全景图并进行模拟考', '第4天：自证结营，错题围剿、闭卷大考和自学计划制定']
+  };
   let extra = '';
-  if (item.key === 'focus') extra = `<div class="detail-block reveal show"><h2>为什么孩子需要先训练专注力？</h2><div class="course-flow"><div class="flow-item"><b>1</b><span>坐不住</span><p>不是孩子故意拖拉，而是身体和注意系统还没有稳定下来。</p></div><div class="flow-item"><b>2</b><span>记不牢</span><p>只靠反复读和硬背，容易学得慢、忘得快。</p></div><div class="flow-item"><b>3</b><span>容易烦</span><p>遇到难题就抵触，往往是情绪觉察和自我调节能力需要训练。</p></div><div class="flow-item"><b>4</b><span>没动力</span><p>通过可感知的小变化重建“我能行”。</p></div></div></div><div class="detail-block reveal show"><h2>数字化亮点</h2>${setList(['面向8-16岁青少年', '课程目标覆盖专注力、记忆力、想象力、自我觉察和学习内驱力', '以“能静下来、能观察、能表达、能坚持”为主要反馈指标', '配合21天家庭陪跑机制，每天约10分钟家庭练习'])}</div>`;
-  if (item.key === 'memory') extra = `<div class="detail-block reveal show"><h2>看得见的结营挑战</h2>${setList(['5秒单词成像挑战，观察快速图像记忆能力', '1分钟古诗记忆挑战，观察图像化记忆与语言提取', '5分钟短文整体摄入挑战，观察整体摄入和复述/默写能力', '陌生材料限时理解反馈，观察迁移应用能力'])}</div>`;
-  if (item.key === 'reading') extra = `<div class="detail-block reveal show"><h2>阅读突破挑战</h2>${setList(['训练目标从逐字默读转向整页摄入', '通过脑内电影和结构图提升理解表达', '通过限时阅读与复述观察真实阅读效果', '以读完能讲出来作为核心反馈方向'])}</div>`;
-  if (item.key === 'self') extra = `<div class="detail-block reveal show"><h2>数学自学挑战</h2>${setList(['4天围绕一本数学教材进行自学训练', '掌握格定义五步法和格定理四步法', '学会向AI提问，并验证AI答案', '用知识全景图和闭卷测评检验学习结果'])}</div>`;
+  if (item.key === 'focus') extra = `<div class="detail-block reveal show"><h2>为什么孩子需要先训练专注力？</h2><div class="course-flow"><div class="flow-item"><b>1</b><span>坐不住</span><p>不是孩子故意拖拉，而是身体和注意系统还没有稳定下来，学习一开始就容易分心。</p></div><div class="flow-item"><b>2</b><span>记不牢</span><p>只靠反复读和硬背，容易学得慢、忘得快，需要把文字、声音和画面连接起来。</p></div><div class="flow-item"><b>3</b><span>容易烦</span><p>遇到难题就抵触，往往不是态度问题，而是情绪觉察和自我调节能力还需要训练。</p></div><div class="flow-item"><b>4</b><span>没动力</span><p>当孩子看不到自己的进步，就容易被动学习；课程通过可感知的小变化重建“我能行”。</p></div></div></div><div class="detail-block reveal show"><h2>数字化亮点</h2>${setList(['面向8-16岁青少年，处于专注力、记忆力和价值观形成的重要阶段', '课程目标包含专注力、记忆力、想象力、自我觉察和学习内驱力等底层能力', '训练后以“能静下来、能观察、能表达、能坚持”为主要反馈指标', '配合21天家庭陪跑机制，每天约10分钟家庭练习，帮助家长把营期效果延续到日常'])}</div>`;
+  if (item.key === 'memory') extra = `<div class="detail-block reveal show"><h2>记忆训练重点</h2>${setList(['训练静坐、数息、残像等基础专注能力，先让孩子坐得住、看得稳', '通过烛光观想、曼陀罗内观和实物心像激活脑内成像能力', '从整段摄入逐步过渡到整页摄入，训练闭眼后的信息提取', '把能力迁移到古诗文、英语单词、理科公式等真实学科内容'])}</div><div class="detail-block reveal show"><h2>结营挑战项目</h2>${setList(['5秒单词成像挑战', '1分钟古诗图像记忆挑战', '5分钟短文整体摄入与复述/默写挑战', '陌生材料限时理解反馈'])}</div>`;
+  if (item.key === 'reading') extra = `<div class="detail-block reveal show"><h2>阅读突破重点</h2>${setList(['破除逐字默读习惯，尝试绕开语音通道进行视觉加工', '训练整页摄入和脑内快照，让文字转化为画面和结构', '叙事文形成脑内电影，议论文形成结构图', '通过速读复述和限时理解反馈观察真实阅读变化'])}</div><div class="detail-block reveal show"><h2>阶段挑战项目</h2>${setList(['阅读速度提升训练', '整页摄入与脑内成像挑战', '读完能复述核心结构挑战', '大篇幅材料限时阅读反馈'])}</div>`;
+  if (item.key === 'self') extra = `<div class="detail-block reveal show"><h2>数学训练重点</h2>${setList(['用“逐字读—问自己—问AI—做例题—一句话总结”理解数学定义', '用“条件结论—逆定理—多种证明—生活实例”吃透数学定理', '训练孩子向AI提出精准问题，并验证AI答案是否可靠', '用费曼互讲、错题本和知识全景图检验是否真正学懂'])}</div><div class="detail-block reveal show"><h2>4天自学挑战</h2>${setList(['4天完成一本数学教材的核心学习任务', '绘制跨章节数学知识全景图', '用大白话讲清定义、定理和解题逻辑', '通过闭卷测评观察真实掌握情况'])}</div>`;
   const main = document.querySelector('.detail-main');
-  if (main) { const pathItems = pathText[item.key] || copy.paths; const firstTitle = item.key === 'focus' ? '先解决学习状态，成绩提升才有入口' : '课程定位'; const firstText = item.key === 'focus' ? '很多孩子不是不想学，而是进入学习状态太慢、抗干扰弱、记忆方式单一、遇到困难容易情绪化。专注营不是简单让孩子“坐着别动”，而是通过身体、感官、心像、情绪和家庭陪跑五个层面，系统重建学习状态。' : (copy.detailIntro || copy.text); main.innerHTML = `<div class="detail-block reveal show"><h2>${firstTitle}</h2><p>${firstText}</p></div>${extra}<div class="detail-block reveal show"><h2>核心训练内容</h2>${setList(copy.list)}</div><div class="detail-block reveal show"><h2>典型训练路径</h2><div class="course-flow">${pathItems.map((text, index) => `<div class="flow-item"><b>${index + 1}</b><span>${copy.paths[index] || text}</span><p>${text}</p></div>`).join('')}</div></div><div class="detail-block reveal show"><h2>适合对象</h2>${setList(copy.audience)}</div><div class="detail-block reveal show"><h2>家长能看到的变化</h2>${setList(copy.effects)}</div>`; }
-  const side = document.querySelector('.side-card'); if (side) side.innerHTML = `<h3>课程信息</h3><p>${copy.text}</p><div class="side-list"><div><b>课程</b><span>${item.name}</span></div><div><b>重点</b><span>${copy.list[0]}</span></div><div><b>方式</b><span>${item.key === 'experience' ? '体验 / 测评 / 反馈' : '训练营 / 阶段反馈'}</span></div><div><b>价格</b><span>${item.price}</span></div></div><a class="btn btn-gold" href="${contactUrl()}">微信咨询</a><a class="btn btn-line" href="courses.html">返回课程产品</a>`;
-  const cta = document.querySelector('.detail-cta-wrap'); if (cta) cta.innerHTML = `<div><h2>想进一步了解这门课程？</h2><p>可以通过微信或电话咨询，我们会根据孩子情况给出更具体的建议。</p></div><div class="detail-cta-actions"><a class="btn btn-gold" href="${contactUrl()}">微信咨询</a><a class="btn btn-line" href="${contactUrl()}">联系我们</a></div>`;
+  if (main) {
+    const pathItems = pathText[item.key] || copy.paths;
+    const firstTitle = item.key === 'focus' ? '先解决学习状态，成绩提升才有入口' : item.key === 'memory' ? '先让孩子相信：记忆是可以训练的' : item.key === 'reading' ? '先解决“读不完、说不清”的阅读卡点' : item.key === 'self' ? '先让孩子学会自己学数学' : '课程定位';
+    const firstText = item.key === 'focus' ? '很多孩子不是不想学，而是进入学习状态太慢、抗干扰弱、记忆方式单一、遇到困难容易情绪化。专注营不是简单让孩子“坐着别动”，而是通过身体、感官、心像、情绪和家庭陪跑五个层面，系统重建学习状态。' : copy.detailIntro;
+    main.innerHTML = `<div class="detail-block reveal show"><h2>${firstTitle}</h2><p>${firstText}</p></div>${extra}<div class="detail-block reveal show"><h2>核心训练内容</h2>${setList(copy.list)}</div><div class="detail-block reveal show"><h2>典型训练路径</h2><div class="course-flow">${pathItems.map((text, index) => `<div class="flow-item"><b>${index + 1}</b><span>${copy.paths[index] || text}</span><p>${text}</p></div>`).join('')}</div></div><div class="detail-block reveal show"><h2>适合对象</h2>${setList(copy.audience)}</div><div class="detail-block reveal show"><h2>家长能获得什么</h2>${setList(copy.effects)}</div>`;
+  }
+  const side = document.querySelector('.side-card');
+  if (side) side.innerHTML = `<h3>课程信息</h3><p>${copy.text}</p><div class="side-list"><div><b>课程</b><span>${item.name}</span></div><div><b>重点</b><span>${copy.list[0]}</span></div><div><b>方式</b><span>训练营 / 阶段反馈</span></div><div><b>价格</b><span>${item.price}</span></div></div><a class="btn btn-gold" href="${contactUrl()}">微信咨询</a><a class="btn btn-line" href="courses.html">返回课程产品</a>`;
+  const cta = document.querySelector('.detail-cta-wrap');
+  if (cta) cta.innerHTML = `<div><h2>${item.key === 'focus' ? '孩子专注力问题，不适合只靠催促解决' : '想进一步了解这门课程？'}</h2><p>可以通过微信或电话咨询课程，我们会根据孩子情况给出更具体的建议。</p></div><div class="detail-cta-actions"><a class="btn btn-gold" href="${contactUrl()}">微信咨询</a><a class="btn btn-line" href="${contactUrl()}">联系我们</a></div>`;
 }
-function setupHeroSlider() { const hero = document.querySelector('.hero'); if (!hero) return; const slides = [...hero.querySelectorAll('.slide')]; const dots = [...hero.querySelectorAll('.hero-dots button')]; if (!slides.length) return; let index = Math.max(0, slides.findIndex(slide => slide.classList.contains('active'))); const show = next => { index = (next + slides.length) % slides.length; slides.forEach((slide, i) => slide.classList.toggle('active', i === index)); dots.forEach((dot, i) => dot.classList.toggle('active', i === index)); }; dots.forEach((dot, i) => dot.addEventListener('click', () => show(i))); setInterval(() => show(index + 1), HERO_SLIDE_DURATION); }
-function setupReveals() { const reveals = [...document.querySelectorAll('.reveal')]; if (!reveals.length) return; if (!('IntersectionObserver' in window)) { reveals.forEach(el => el.classList.add('show')); return; } const observer = new IntersectionObserver(entries => { entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('show'); observer.unobserve(entry.target); } }); }, { threshold: 0.12 }); reveals.forEach(el => observer.observe(el)); }
-function setupTransition() { if (document.getElementById('pageTransitionStyle')) return; const style = document.createElement('style'); style.id = 'pageTransitionStyle'; style.textContent = `.zk-page-transition{position:fixed;inset:0;z-index:99999;pointer-events:none;display:grid;place-items:center}.zk-page-transition::before,.zk-page-transition::after{content:'';position:absolute;left:0;width:100%;height:50%;background:#063b2b;transition:transform .72s cubic-bezier(.76,0,.24,1)}.zk-page-transition::before{top:0;transform:translate3d(0,-100%,0)}.zk-page-transition::after{bottom:0;transform:translate3d(0,100%,0);background:#0e211b}.zk-page-transition .zk-mark{position:relative;z-index:2;width:74px;height:74px;border-radius:50%;display:grid;place-items:center;background:#fff;color:#045c39;border:1px solid rgba(199,175,130,.65);font-weight:700;letter-spacing:3px;opacity:0;transform:scale(.86);transition:.36s ease}.zk-page-transition.active::before,.zk-page-transition.active::after{transform:translate3d(0,0,0)}.zk-page-transition.active .zk-mark{opacity:1;transform:scale(1)}`; document.head.appendChild(style); const layer = document.createElement('div'); layer.className = 'zk-page-transition'; layer.innerHTML = '<div class="zk-mark">ZK</div>'; document.body.appendChild(layer); document.querySelectorAll('a[href]').forEach(a => { a.addEventListener('click', e => { const href = a.getAttribute('href'); if (!href || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:') || a.target === '_blank') return; const url = new URL(href, location.href); if (url.origin !== location.origin || (url.pathname === location.pathname && url.hash)) return; e.preventDefault(); layer.classList.add('active'); setTimeout(() => { location.href = url.href; }, 620); }); }); }
+function setupHeroSlider() {
+  const hero = document.querySelector('.hero'); if (!hero) return;
+  const slides = [...hero.querySelectorAll('.slide')]; const dots = [...hero.querySelectorAll('.hero-dots button')]; if (!slides.length) return;
+  let index = Math.max(0, slides.findIndex(slide => slide.classList.contains('active')));
+  const show = next => { index = (next + slides.length) % slides.length; slides.forEach((slide, i) => slide.classList.toggle('active', i === index)); dots.forEach((dot, i) => dot.classList.toggle('active', i === index)); };
+  dots.forEach((dot, i) => dot.addEventListener('click', () => show(i))); setInterval(() => show(index + 1), HERO_SLIDE_DURATION);
+}
+function setupReveals() {
+  const reveals = [...document.querySelectorAll('.reveal')]; if (!reveals.length) return;
+  if (!('IntersectionObserver' in window)) { reveals.forEach(el => el.classList.add('show')); return; }
+  const observer = new IntersectionObserver(entries => { entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('show'); observer.unobserve(entry.target); } }); }, { threshold: 0.12 }); reveals.forEach(el => observer.observe(el));
+}
+function setupTransition() {
+  if (document.getElementById('pageTransitionStyle')) return;
+  const style = document.createElement('style'); style.id = 'pageTransitionStyle';
+  style.textContent = `.zk-page-transition{position:fixed;inset:0;z-index:99999;pointer-events:none;display:grid;place-items:center}.zk-page-transition::before,.zk-page-transition::after{content:'';position:absolute;left:0;width:100%;height:50%;background:#063b2b;transition:transform .72s cubic-bezier(.76,0,.24,1)}.zk-page-transition::before{top:0;transform:translate3d(0,-100%,0)}.zk-page-transition::after{bottom:0;transform:translate3d(0,100%,0);background:#0e211b}.zk-page-transition .zk-mark{position:relative;z-index:2;width:74px;height:74px;border-radius:50%;display:grid;place-items:center;background:#fff;color:#045c39;border:1px solid rgba(199,175,130,.65);font-weight:700;letter-spacing:3px;opacity:0;transform:scale(.86);transition:.36s ease}.zk-page-transition.active::before,.zk-page-transition.active::after{transform:translate3d(0,0,0)}.zk-page-transition.active .zk-mark{opacity:1;transform:scale(1)}`;
+  document.head.appendChild(style);
+  const layer = document.createElement('div'); layer.className = 'zk-page-transition'; layer.innerHTML = '<div class="zk-mark">ZK</div>'; document.body.appendChild(layer);
+  document.querySelectorAll('a[href]').forEach(a => { a.addEventListener('click', e => { const href = a.getAttribute('href'); if (!href || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:') || a.target === '_blank') return; const url = new URL(href, location.href); if (url.origin !== location.origin || url.pathname === location.pathname && url.hash) return; e.preventDefault(); layer.classList.add('active'); setTimeout(() => { location.href = url.href; }, 620); }); });
+}
 function init() { setupViewportStability(); replaceGlobalTexts(); setupUnifiedLinks(); normalizeLegacyAnchors(); updateCourseCards(); setupDetailPage(); setupHeroSlider(); setupReveals(); setupTransition(); }
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
