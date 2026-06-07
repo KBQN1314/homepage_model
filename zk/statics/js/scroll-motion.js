@@ -68,27 +68,46 @@
       .scroll-motion.motion-in.reveal.show { opacity: 1 !important; transform: translate3d(0, 0, 0) !important; }
 
       @media (max-width: 1100px) {
-        header .hamb { display: inline-flex !important; cursor: pointer; position: relative; z-index: 1003; }
+        body.mobile-menu-open::before {
+          content: '';
+          position: fixed;
+          inset: 0;
+          background: rgba(3, 24, 18, .42);
+          z-index: 998;
+          pointer-events: none;
+        }
+        header .hamb {
+          display: inline-flex !important;
+          cursor: pointer;
+          position: relative;
+          z-index: 1005;
+          background: rgba(255,255,255,.92) !important;
+          border-color: rgba(4,92,57,.2) !important;
+          box-shadow: 0 8px 24px rgba(16,27,23,.12) !important;
+        }
+        header .hamb i { background: #045c39 !important; transition: transform .25s ease, opacity .25s ease; }
         header .nav-cta { display: none !important; }
         header nav,
         header .nav-dropdowns {
           position: fixed !important;
-          left: 0 !important;
-          right: 0 !important;
-          top: 68px !important;
+          left: 16px !important;
+          right: 16px !important;
+          top: 82px !important;
           display: grid !important;
           gap: 0 !important;
-          padding: 18px 24px 26px !important;
-          background: rgba(255,255,255,.98) !important;
-          color: #26332f !important;
-          box-shadow: 0 22px 55px rgba(16,27,23,.18) !important;
-          transform: translate3d(0,-18px,0) !important;
+          padding: 18px 22px 22px !important;
+          background: #ffffff !important;
+          color: #1e2b27 !important;
+          border: 1px solid rgba(4,92,57,.08) !important;
+          border-radius: 18px !important;
+          box-shadow: 0 22px 60px rgba(3,24,18,.26) !important;
+          transform: translate3d(0,-14px,0) !important;
           opacity: 0 !important;
           visibility: hidden !important;
           pointer-events: none !important;
           transition: opacity .28s ease, transform .28s ease, visibility .28s ease !important;
-          z-index: 1002 !important;
-          max-height: calc(100vh - 68px) !important;
+          z-index: 1004 !important;
+          max-height: calc(100vh - 108px) !important;
           overflow-y: auto !important;
         }
         body.mobile-menu-open header nav,
@@ -103,10 +122,28 @@
         header .nav-link,
         header .nav-direct {
           display: block !important;
-          padding: 13px 0 !important;
-          color: #26332f !important;
-          border-bottom: 1px solid rgba(4,92,57,.08) !important;
-          font-size: 16px !important;
+          padding: 15px 4px !important;
+          color: #1e2b27 !important;
+          border-bottom: 1px solid rgba(4,92,57,.1) !important;
+          font-size: 17px !important;
+          font-weight: 700 !important;
+          line-height: 1.35 !important;
+          opacity: 1 !important;
+          text-shadow: none !important;
+        }
+        header nav a:hover,
+        header nav a.nav-active,
+        header nav a.active,
+        header .nav-link:hover,
+        header .nav-direct:hover {
+          color: #045c39 !important;
+          background: rgba(199,175,130,.13) !important;
+          padding-left: 14px !important;
+        }
+        header nav a::after,
+        header .nav-link::after,
+        header .nav-direct::after {
+          display: none !important;
         }
         header .nav-item { width: 100% !important; }
         header .nav-panel {
@@ -118,12 +155,12 @@
           pointer-events: auto !important;
           box-shadow: none !important;
           border: 0 !important;
-          background: rgba(4,92,57,.04) !important;
-          padding: 4px 14px !important;
-          margin: 0 0 6px !important;
+          background: #f7f5ef !important;
+          padding: 6px 14px !important;
+          margin: 0 0 8px !important;
+          border-radius: 12px !important;
         }
         header .nav-item.open .nav-panel { display: block !important; }
-        header .hamb i { transition: transform .25s ease, opacity .25s ease; }
         body.mobile-menu-open header .hamb i:nth-child(1) { transform: translateY(7px) rotate(45deg); }
         body.mobile-menu-open header .hamb i:nth-child(2) { opacity: 0; }
         body.mobile-menu-open header .hamb i:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
