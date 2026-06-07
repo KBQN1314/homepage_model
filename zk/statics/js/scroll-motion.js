@@ -21,6 +21,11 @@
     '[class$="-step"]', '[class*="-step "]', '.flow-item', '.detail-block'
   ].join(',');
 
+  const STAGGER_PARENT_SELECTOR = [
+    '[class*="grid"]', '[class*="list"]', '[class*="steps"]', '[class*="cards"]',
+    '[class*="wrap"]', '.course-flow', '.detail-main', '.detail-layout'
+  ].join(',');
+
   function ensureStyle() {
     const oldStyle = document.getElementById('scrollMotionStyle');
     if (oldStyle) oldStyle.remove();
@@ -30,21 +35,21 @@
     style.textContent = `
       .scroll-motion {
         opacity: 0;
-        transform: translate3d(0, 30px, 0);
+        transform: translate3d(0, 26px, 0);
         transition-property: opacity, transform;
-        transition-duration: .82s, .92s;
+        transition-duration: .86s, .96s;
         transition-timing-function: cubic-bezier(.19, 1, .22, 1), cubic-bezier(.19, 1, .22, 1);
         transition-delay: var(--motion-delay, 0ms), var(--motion-delay, 0ms);
         will-change: opacity, transform;
       }
 
       .scroll-motion.motion-soft {
-        transform: translate3d(0, 20px, 0);
-        transition-duration: .88s, 1s;
+        transform: translate3d(0, 18px, 0);
+        transition-duration: .9s, 1.02s;
       }
 
       .scroll-motion.motion-card {
-        transform: translate3d(0, 34px, 0);
+        transform: translate3d(0, 30px, 0);
       }
 
       .scroll-motion.motion-in {
@@ -81,18 +86,43 @@
     return true;
   }
 
-  function getGroupIndex(el) {
+  function getVisibleChildren(parent) {
+    if (!parent) return [];
+    return Array.from(parent.children).filter(child => {
+      if (!child.matches || !child.matches(TARGET_SELECTOR)) return false;
+      return isVisibleContent(child) || child.classList.contains('scroll-motion');
+    });
+  }
+
+  function getStaggerGroup(el) {
     const parent = el.parentElement;
-    if (!parent) return 0;
-    const siblings = Array.from(parent.children).filter(child => child.matches && child.matches(TARGET_SELECTOR) && isVisibleContent(child));
-    return Math.max(0, siblings.indexOf(el));
+    if (!parent) return null;
+
+    if (parent.matches(STAGGER_PARENT_SELECTOR)) return parent;
+
+    const grand = parent.parentElement;
+    if (grand && grand.matches(STAGGER_PARENT_SELECTOR) && parent.children.length <= 1) return grand;
+
+    return parent;
+  }
+
+  function getGroupIndex(el) {
+    const group = getStaggerGroup(el);
+    if (!group) return 0;
+    const siblings = getVisibleChildren(group);
+    const index = siblings.indexOf(el);
+    return index < 0 ? 0 : index;
   }
 
   function getDelay(el) {
     const index = getGroupIndex(el);
     const isCard = el.matches(CARD_LIKE_SELECTOR);
-    const base = isCard ? 48 : 36;
-    return Math.min(240, (index % 6) * base);
+    const group = getStaggerGroup(el);
+    const isStaggerGroup = group && group.matches && group.matches(STAGGER_PARENT_SELECTOR);
+
+    if (isCard && isStaggerGroup) return Math.min(240, index * 62);
+    if (isCard) return Math.min(180, (index % 4) * 46);
+    return Math.min(120, (index % 3) * 34);
   }
 
   function shouldAnimateParentInstead(el, selected) {
