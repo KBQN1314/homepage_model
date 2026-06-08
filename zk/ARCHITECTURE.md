@@ -15,6 +15,7 @@
 7. 新增公共样式优先进入 `statics/style/core/` 或 `statics/style/components/`，不要再写入 JS 内联样式。
 8. 页面级样式统一进入 `statics/style/pages/`，不要重新新增旧式临时覆盖文件。
 9. `style.css` 仅作为兼容导入入口保留，不再承载实际样式规则；`effects.css` 仅作为动效层保留。
+10. 页面应显式加载对应 `pages/*.css`；运行时会做页面级样式兜底加载，已存在时不会重复插入。
 
 ## 重要文件
 
@@ -22,7 +23,7 @@
 | --- | --- |
 | `statics/js/main.js` | 入口加载器，根据当前页面层级加载 `site-data.js` 与 `site-runtime.js`。 |
 | `statics/js/site-data.js` | 全站品牌信息、课程列表、课程详情文案、课程挑战数据。 |
-| `statics/js/site-runtime.js` | 全站运行时：导航、页脚、课程渲染、详情页渲染、动效加载、链接修正、运行时样式兜底加载。 |
+| `statics/js/site-runtime.js` | 全站运行时：导航、页脚、课程渲染、详情页渲染、动效加载、链接修正、公共与页面级样式兜底加载。 |
 | `statics/js/scroll-motion.js` | 滚动入场动画与移动端菜单增强。由运行时统一加载。 |
 | `statics/js/course-challenges.js` | 兼容 shim。课程挑战模块已并入 `site-runtime.js`，此文件不再负责渲染。 |
 | `statics/style/core/tokens.css` | 全站设计变量。 |
@@ -81,6 +82,8 @@ pages/team.css
 pages/cases.css
 pages/utility.css
 ```
+
+`site-runtime.js` 同时会根据当前路由判断页面级 CSS 是否已经存在；若缺失，会补齐对应 `pages/*.css`，避免未来新增页面漏引页面样式。
 
 ## 修改规则
 
@@ -170,7 +173,7 @@ zk/statics/style/team-avatars.css
 
 1. 保留标准结构：`header.nav-wrap`、`main.main`、`footer.footer`、`script src="statics/js/main.js"`。
 2. 如果页面位于二级目录，根据相对路径引用 `../statics/js/main.js`；如果位于三级目录，根据相对路径引用 `../../statics/js/main.js`。
-3. 页面应显式加载 `statics/style/style.css`，运行时只把公共 CSS 注入作为兜底能力。
+3. 页面应显式加载 `statics/style/style.css` 和对应 `statics/style/pages/*.css`；运行时只把公共 CSS 和页面级 CSS 注入作为兜底能力。
 4. 不要手动重复引用 `scroll-motion.js`，运行时会自动加载。
 
 ## 当前保留的兼容策略
