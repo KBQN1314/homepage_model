@@ -1,4 +1,4 @@
-/* Shared site chrome: header, brand, footer and sticky actions. */
+/* Shared site chrome: header, brand, hamburger, footer and sticky actions. */
 header {
   position: fixed;
   top: 0;
@@ -107,60 +107,182 @@ body.nav-open .hamb i:nth-child(3) {
 .footer {
   position: relative;
   overflow: hidden;
-  color: #fff;
+  padding: 72px 0 28px !important;
+  color: rgba(255, 255, 255, .70) !important;
   background:
-    radial-gradient(circle at 9% 8%, rgba(4, 92, 57, .28), transparent 28%),
-    linear-gradient(90deg, #062f24 0%, #101b17 58%, #1c211d 100%) !important;
+    radial-gradient(circle at 12% 12%, rgba(4, 92, 57, .38), transparent 30%),
+    radial-gradient(circle at 85% 0%, rgba(199, 175, 130, .14), transparent 32%),
+    linear-gradient(135deg, #101b17 0%, #17221e 48%, #0d1412 100%) !important;
+}
+
+.footer::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, .045) 1px, transparent 1px),
+    linear-gradient(180deg, rgba(255, 255, 255, .035) 1px, transparent 1px);
+  background-size: 72px 72px;
+  opacity: .28;
+  pointer-events: none;
+}
+
+.footer::after {
+  content: '';
+  position: absolute;
+  left: 6vw;
+  right: 6vw;
+  top: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(199, 175, 130, .65), transparent);
+  pointer-events: none;
 }
 
 .footer .container {
   position: relative;
   z-index: 1;
+  width: min(1320px, 92vw) !important;
 }
 
 .footer-grid {
-  display: grid;
-  grid-template-columns: 1.35fr repeat(5, minmax(0, 1fr));
-  gap: 22px;
+  display: grid !important;
+  grid-template-columns: minmax(260px, 1.45fr) repeat(6, minmax(118px, 1fr)) !important;
+  gap: 18px !important;
+  align-items: stretch !important;
+  padding-bottom: 38px !important;
+  border-bottom: 1px solid rgba(255, 255, 255, .10) !important;
 }
 
 .footer-grid > div {
-  min-width: 0;
+  position: relative;
 }
 
-.footer h4 {
-  margin: 0 0 16px;
-  color: rgba(255, 255, 255, .95);
-  font-size: 16px;
+.footer-grid > div:first-child {
+  min-height: 188px !important;
+  padding: 30px 32px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  justify-content: center !important;
+  border: 1px solid rgba(199, 175, 130, .22);
+  background:
+    radial-gradient(circle at 82% 12%, rgba(199, 175, 130, .16), transparent 34%),
+    rgba(255, 255, 255, .045);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .06);
 }
 
-.footer a {
-  display: block;
-  margin: 9px 0;
-  color: rgba(255, 255, 255, .66);
-  font-size: 14px;
-  line-height: 1.45;
-  transition: color .25s ease, transform .25s ease;
+.footer-grid > div:first-child::before {
+  content: '';
+  width: 62px;
+  height: 62px;
+  margin-bottom: 18px;
+  background: url('../../images/logo.svg') center/contain no-repeat;
+  filter: drop-shadow(0 10px 24px rgba(0, 0, 0, .22));
 }
 
-.footer a:hover {
-  color: var(--zk-color-accent, #c7af82);
-  transform: translateX(3px);
+.footer-grid > div:first-child::after {
+  content: '青少年学习力成长 · 家庭教育支持 · 课程合作共创';
+  max-width: 260px;
+  margin-top: 14px;
+  color: rgba(255, 255, 255, .56);
+  font-size: 13px;
+  line-height: 1.9;
 }
 
-.brand-mini {
-  color: #fff;
-  font-size: 28px;
-  font-weight: 700;
+.footer .brand-mini {
+  margin: 0 !important;
+  color: #fff !important;
+  font-size: 26px !important;
+  line-height: 1.1 !important;
   letter-spacing: 1px;
 }
 
+.footer .brand-mini::after {
+  content: 'EDUCATION PLATFORM';
+  display: block;
+  margin-top: 9px;
+  color: var(--gold);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 3.5px;
+}
+
+.footer-grid > div:not(:first-child) {
+  padding: 26px 20px 24px;
+  border: 1px solid rgba(255, 255, 255, .08);
+  background: rgba(255, 255, 255, .025);
+  transition: transform .32s ease, border-color .32s ease, background .32s ease;
+}
+
+.footer-grid > div:not(:first-child):hover {
+  transform: translateY(-4px);
+  border-color: rgba(199, 175, 130, .36);
+  background: rgba(255, 255, 255, .045);
+}
+
+.footer h4 {
+  position: relative;
+  margin-bottom: 18px !important;
+  padding-bottom: 13px;
+  color: #fff !important;
+  font-size: 16px !important;
+  line-height: 1.2;
+  letter-spacing: .5px;
+}
+
+.footer h4::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 28px;
+  height: 2px;
+  background: var(--gold);
+}
+
+.footer a,
+.footer p {
+  display: block;
+  color: rgba(255, 255, 255, .62) !important;
+  font-size: 14px !important;
+  line-height: 1.65 !important;
+}
+
+.footer a {
+  position: relative;
+  width: fit-content;
+  margin: 10px 0;
+  padding-left: 0;
+  transition: color .25s ease, transform .25s ease, padding-left .25s ease;
+}
+
+.footer a::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 0;
+  height: 1px;
+  background: var(--gold);
+  transform: translateY(-50%);
+  transition: width .25s ease;
+}
+
+.footer a:hover {
+  padding-left: 14px;
+  color: var(--gold) !important;
+  transform: translateX(2px);
+}
+
+.footer a:hover::before {
+  width: 7px;
+}
+
 .copyright {
-  margin-top: 36px;
-  padding-top: 20px;
-  border-top: 1px solid rgba(255, 255, 255, .12);
-  color: rgba(255, 255, 255, .58);
-  font-size: 13px;
+  padding-top: 22px !important;
+  color: rgba(255, 255, 255, .42) !important;
+  font-size: 12px !important;
+  letter-spacing: .6px;
   text-align: center;
 }
 
@@ -193,6 +315,16 @@ body.nav-open .hamb i:nth-child(3) {
   transform: translateY(-2px);
 }
 
+@media (max-width: 1280px) {
+  .footer-grid {
+    grid-template-columns: minmax(240px, 1fr) repeat(3, minmax(150px, 1fr)) !important;
+  }
+
+  .footer-grid > div:first-child {
+    grid-row: span 2;
+  }
+}
+
 @media (max-width: 1100px) {
   .nav-cta {
     display: none;
@@ -204,12 +336,18 @@ body.nav-open .hamb i:nth-child(3) {
 }
 
 @media (max-width: 900px) {
+  .footer {
+    padding-top: 56px !important;
+  }
+
   .footer-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
   }
 
   .footer-grid > div:first-child {
     grid-column: 1 / -1;
+    grid-row: auto;
+    min-height: auto !important;
   }
 }
 
@@ -231,12 +369,18 @@ body.nav-open .hamb i:nth-child(3) {
     display: none;
   }
 
-  .footer-grid {
-    grid-template-columns: 1fr;
-  }
-
   .sticky {
     right: 12px;
     bottom: 12px;
+  }
+}
+
+@media (max-width: 560px) {
+  .footer-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .footer-grid > div:not(:first-child) {
+    padding: 22px 20px;
   }
 }
