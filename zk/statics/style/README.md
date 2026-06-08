@@ -21,6 +21,8 @@
 | `pages/courses.css` | 课程列表页面级样式入口，负责课程页 hero、课程体系、学习路径、能力维度、服务流程和 CTA。 |
 | `pages/contact.css` | 联系页面级样式入口，负责联系页 hero、联系信息、二维码、地图占位和 FAQ。 |
 | `pages/join.css` | 加盟合作页面级样式入口，负责加盟页 hero、合作对象、总部支持、合作流程和表单相关结构。 |
+| `pages/news.css` | 新闻活动页面级样式入口，负责新闻列表、分类页、文章详情、文章侧栏和新闻 CTA。 |
+| `news.css` | 新闻页兼容 shim，临时转发到 `pages/news.css`，用于仍未批量切换的三级文章页。 |
 | `style.css` | 历史基础样式，暂时保留，作为兼容层，后续逐步删除已迁移片段。 |
 | `effects.css` | 历史视觉增强和动效样式，暂时保留，后续逐步拆分。 |
 | 页面专属 CSS | 其他暂未迁移的页面局部样式。 |
@@ -41,7 +43,7 @@ components/runtime.css
 components/navigation.css
 ```
 
-首页、详情页、关于我们页、课程列表页、联系页和加盟合作页额外由对应 HTML 显式加载：
+首页、详情页、关于我们页、课程列表页、联系页、加盟合作页和一级新闻列表页额外由对应 HTML 显式加载：
 
 ```text
 pages/home.css
@@ -50,6 +52,7 @@ pages/about.css
 pages/courses.css
 pages/contact.css
 pages/join.css
+pages/news.css
 ```
 
 该顺序遵循“变量 → 基础 → 布局 → 组件 → 页面公共视觉 → 运行时组件 → 导航交互层 → 页面专属入口”的规则。
@@ -71,7 +74,8 @@ pages/join.css
 13. 修改课程列表页样式，优先放入 `pages/courses.css`。
 14. 修改联系页样式，优先放入 `pages/contact.css`。
 15. 修改加盟合作页样式，优先放入 `pages/join.css`。
-16. 其他页面级特殊样式可以暂时保留在原页面 CSS，但不要继续增加 HTML 内联样式。
+16. 修改新闻列表、分类页或文章详情页样式，优先放入 `pages/news.css`。
+17. 其他页面级特殊样式可以暂时保留在原页面 CSS，但不要继续增加 HTML 内联样式。
 
 ## 后续迁移建议
 
@@ -79,7 +83,7 @@ pages/join.css
 
 ```text
 legacy/style.compat.css       # 将 style.css 变成真正的兼容入口
-pages/news.css                # 逐步迁移新闻页面样式
+三级新闻文章页                # 逐步从 news.css shim 切换到 pages/news.css
 ```
 
 迁移时每次只处理一个组件族，确保页面视觉稳定后再删除旧样式片段。
