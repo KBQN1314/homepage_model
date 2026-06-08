@@ -22,7 +22,7 @@
 | --- | --- |
 | `statics/js/main.js` | 入口加载器，根据当前页面层级加载 `site-data.js` 与 `site-runtime.js`。 |
 | `statics/js/site-data.js` | 全站品牌信息、课程列表、课程详情文案、课程挑战数据。 |
-| `statics/js/site-runtime.js` | 全站运行时：导航、页脚、课程渲染、详情页渲染、动效加载、链接修正、运行时样式加载。 |
+| `statics/js/site-runtime.js` | 全站运行时：导航、页脚、课程渲染、详情页渲染、动效加载、链接修正、运行时样式兜底加载。 |
 | `statics/js/scroll-motion.js` | 滚动入场动画与移动端菜单增强。由运行时统一加载。 |
 | `statics/js/course-challenges.js` | 兼容 shim。课程挑战模块已并入 `site-runtime.js`，此文件不再负责渲染。 |
 | `statics/style/core/tokens.css` | 全站设计变量。 |
@@ -51,7 +51,7 @@
 
 ## 公共 CSS 加载顺序
 
-`style.css` 作为兼容入口导入以下公共层；`site-runtime.js` 也会按相同顺序注入，以兼容未显式加载 `style.css` 的旧页面或缓存页面：
+`style.css` 作为兼容入口导入以下公共层：
 
 ```text
 core/tokens.css
@@ -64,6 +64,8 @@ components/page-heroes.css
 components/runtime.css
 components/navigation.css
 ```
+
+`site-runtime.js` 会先检测页面是否已经加载 `statics/style/style.css`。正常页面已经加载时，运行时不会重复注入上述公共层；只有未来少数没有加载 `style.css` 的独立页面，才会按文件逐个兜底注入，并且会逐个检查是否已存在。
 
 页面级 CSS 由对应 HTML 显式加载，例如：
 
@@ -168,7 +170,8 @@ zk/statics/style/team-avatars.css
 
 1. 保留标准结构：`header.nav-wrap`、`main.main`、`footer.footer`、`script src="statics/js/main.js"`。
 2. 如果页面位于二级目录，根据相对路径引用 `../statics/js/main.js`；如果位于三级目录，根据相对路径引用 `../../statics/js/main.js`。
-3. 不要手动重复引用 `scroll-motion.js`，运行时会自动加载。
+3. 页面应显式加载 `statics/style/style.css`，运行时只把公共 CSS 注入作为兜底能力。
+4. 不要手动重复引用 `scroll-motion.js`，运行时会自动加载。
 
 ## 当前保留的兼容策略
 
@@ -180,4 +183,4 @@ zk/statics/style/team-avatars.css
 
 ## 后续建议
 
-下一轮可以检查是否仍有冗余 CSS 注入或旧路径引用，并考虑减少重复加载的公共 CSS。每次迁移一个页面族，确保页面视觉稳定后再删除旧样式片段。
+下一轮可以继续检查旧路径引用、压缩重复 HTML 结构，或将页面头部公共 `<link>` 规范整理成模板说明。每次迁移一个页面族，确保页面视觉稳定后再删除旧样式片段。
