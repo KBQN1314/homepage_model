@@ -76,7 +76,7 @@
   }
 
   function footerBrandHtml() {
-    return `<div class="footer-brand-card"><div class="brand-mini">${COMPANY_SHORT_NAME}</div><div class="footer-brand-en">EDUCATION PLATFORM</div><p class="footer-brand-summary">青少年学习力成长 · 家庭教育支持<br>· 课程合作共创</p></div>`;
+    return `<div class="footer-brand-card"><div class="brand-mini">${COMPANY_SHORT_NAME}</div><div class="footer-brand-en">EDUCATION PLATFORM</div></div>`;
   }
 
   function footerHtml(prefix) {
@@ -116,13 +116,12 @@
       .footer .footer-grid{border-bottom:0!important;}
       .footer .container>hr,.footer hr{display:none!important;}
       .footer .footer-grid>div:first-child>*:not(.footer-brand-card){display:none!important;}
+      .footer .footer-grid>div:first-child p,.footer .footer-brand-card p,.footer .footer-brand-summary{display:none!important;}
       .footer .footer-brand-card{position:relative!important;display:block!important;padding:0!important;color:#fff!important;}
       .footer .footer-brand-mark{display:none!important;}
       .footer .brand-mini{padding:0!important;position:static!important;margin:0!important;color:#fff!important;font-size:32px!important;line-height:1.2!important;font-weight:900!important;letter-spacing:1px!important;}
       .footer .brand-mini::before,.footer .brand-mini::after{display:none!important;content:none!important;background:none!important;}
       .footer .footer-brand-en{margin-top:12px!important;color:#c7af82!important;font-size:15px!important;line-height:1.4!important;letter-spacing:5px!important;text-transform:uppercase!important;}
-      .footer .footer-brand-card p:not(.footer-brand-summary),.footer .footer-grid>div:first-child>p{display:none!important;}
-      .footer .footer-brand-summary{margin-top:24px!important;color:rgba(255,255,255,.66)!important;font-size:15px!important;line-height:1.9!important;font-weight:400!important;letter-spacing:.3px!important;}
       .footer .footer-brand-card img,.footer .footer-brand-card svg,.footer .footer-brand-card .brand-logo,.footer .footer-brand-card .logo{display:none!important;}
       .footer .copyright{border-top:1px solid rgba(255,255,255,.12)!important;}
 
