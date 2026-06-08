@@ -8,30 +8,54 @@
 | --- | --- |
 | `core/tokens.css` | 全站设计变量，包括颜色、阴影、容器宽度、动画时长等。保留旧变量名并提供 `--zk-*` 新变量别名。 |
 | `core/base.css` | 运行时安全基础层，包括视口稳定、表单字号、hero 入场兜底、无障碍动效降级。 |
+| `core/layout.css` | 全站可复用布局原语，包括 `.container`、`.sec`、`.sec-head`、标题说明等。 |
+| `components/buttons.css` | 全站按钮体系，包括 `.btn`、`.btn-primary`、`.btn-gold`、`.btn-line`、焦点态和移动端适配。 |
+| `components/chrome.css` | 站点外壳，包括 header、brand、hamburger、footer、sticky 联系入口。 |
+| `components/cards.css` | 复用卡片体系，包括课程卡、新闻卡、痛点卡、案例卡、信任卡等。 |
 | `components/runtime.css` | 由 `site-runtime.js` 生成的组件样式，例如课程挑战模块、页面转场、二维码背景、运行时品牌 logo。 |
-| `nav-dropdown.css` | 统一导航、下拉菜单、移动端抽屉菜单、非首页 hero 背景。 |
-| `style.css` | 历史基础样式，暂时保留，后续逐步拆入 `core/`、`components/`、`pages/`。 |
+| `nav-dropdown.css` | 统一导航、下拉菜单、移动端抽屉菜单、非首页 hero 背景。后续可迁入 `components/navigation.css`。 |
+| `style.css` | 历史基础样式，暂时保留，作为兼容层，后续逐步删除已迁移片段。 |
 | `effects.css` | 历史视觉增强和动效样式，暂时保留，后续逐步拆分。 |
 | 页面专属 CSS | 如 `about.css`、`courses.css`、`contact.css` 等，暂时保留页面局部样式。 |
+
+## 加载顺序
+
+`site-runtime.js` 负责按以下顺序注入新 CSS 层：
+
+```text
+core/tokens.css
+core/base.css
+core/layout.css
+components/buttons.css
+components/chrome.css
+components/cards.css
+components/runtime.css
+nav-dropdown.css
+```
+
+该顺序遵循“变量 → 基础 → 布局 → 组件 → 运行时组件 → 导航特殊层”的规则。
 
 ## 修改规则
 
 1. 新增颜色、阴影、间距、动画变量时，优先放入 `core/tokens.css`。
 2. 新增全站基础约束时，优先放入 `core/base.css`。
-3. 由 JS 生成的 DOM 结构，其样式优先放入 `components/runtime.css`，不要再写进 JS 内联 `<style>`。
-4. 导航和移动端菜单继续放在 `nav-dropdown.css`，直到后续专门拆为 `components/navigation.css`。
-5. 页面级特殊样式可以暂时保留在原页面 CSS，但不要继续增加 HTML 内联样式。
+3. 新增全站布局原语时，优先放入 `core/layout.css`。
+4. 修改按钮样式，优先放入 `components/buttons.css`。
+5. 修改页眉、页脚、悬浮联系入口，优先放入 `components/chrome.css`。
+6. 修改复用卡片样式，优先放入 `components/cards.css`。
+7. 由 JS 生成的 DOM 结构，其样式优先放入 `components/runtime.css`，不要再写进 JS 内联 `<style>`。
+8. 导航和移动端菜单继续放在 `nav-dropdown.css`，直到后续专门拆为 `components/navigation.css`。
+9. 页面级特殊样式可以暂时保留在原页面 CSS，但不要继续增加 HTML 内联样式。
 
 ## 后续迁移建议
 
-下一轮可以把 `style.css` 中的基础组件继续拆分为：
+下一轮可以继续处理：
 
 ```text
-core/layout.css
-components/buttons.css
-components/cards.css
-components/footer.css
-pages/home.css
+components/navigation.css     # 从 nav-dropdown.css 迁出导航层
+pages/home.css                # 从 style.css 迁出首页专属 section
+pages/detail.css              # 统一课程详情页结构样式
+legacy/style.compat.css       # 将 style.css 变成真正的兼容入口
 ```
 
 迁移时每次只处理一个组件族，确保页面视觉稳定后再删除旧样式片段。
