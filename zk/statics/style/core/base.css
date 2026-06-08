@@ -1,0 +1,61 @@
+/*
+ * Runtime-safe base layer.
+ * This file intentionally avoids broad visual rewrites so legacy page styles remain stable.
+ */
+html {
+  font-size: 100%;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+html,
+body {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+}
+
+input,
+select,
+textarea,
+button {
+  font-size: 16px;
+}
+
+.hero .hero-inner,
+.hero .hero-inner .eyebrow,
+.hero .hero-inner h1,
+.hero .hero-inner h2,
+.hero .hero-inner p,
+.hero .hero-actions {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: translate3d(0, 0, 0) !important;
+}
+
+.zk-visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto !important;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: .01ms !important;
+  }
+}
