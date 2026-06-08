@@ -1,0 +1,37 @@
+/*
+ * Central design tokens for the static site.
+ * Keep legacy variable names for compatibility, and use the zk-* aliases for new CSS.
+ */
+:root {
+  --green: #045c39;
+  --green2: #0b7650;
+  --gold: #c7af82;
+  --gold2: #d8a450;
+  --dark: #101b17;
+  --ink: #2f3936;
+  --muted: #7b8580;
+  --bg: #f7f5ef;
+  --white: #fff;
+  --shadow: 0 18px 50px rgba(16, 27, 23, .14);
+  --soft: 0 10px 30px rgba(4, 92, 57, .12);
+
+  --zk-color-primary: var(--green);
+  --zk-color-primary-strong: var(--green2);
+  --zk-color-accent: var(--gold);
+  --zk-color-accent-strong: var(--gold2);
+  --zk-color-surface: var(--white);
+  --zk-color-surface-soft: var(--bg);
+  --zk-color-text: var(--ink);
+  --zk-color-muted: var(--muted);
+  --zk-color-dark: var(--dark);
+  --zk-shadow-card: var(--shadow);
+  --zk-shadow-soft: var(--soft);
+
+  --zk-container-wide: min(1320px, 92vw);
+  --zk-container: min(1180px, 90vw);
+  --zk-radius-pill: 999px;
+  --zk-duration-fast: .22s;
+  --zk-duration-base: .35s;
+  --zk-ease-standard: cubic-bezier(.22, .61, .36, 1);
+  --zk-qr-url: none;
+}
