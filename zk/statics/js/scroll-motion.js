@@ -198,24 +198,24 @@
       .scroll-motion.motion-in,.scroll-motion.motion-in.reveal,.scroll-motion.reveal.show.motion-in{opacity:1!important;transform:translate3d(0,0,0)!important;}
 
       @media(max-width:1100px){
-        body.mobile-menu-open::before{content:'';position:fixed;inset:0;background:rgba(10,20,17,.48)!important;z-index:998;backdrop-filter:blur(3px);}
+        body.mobile-menu-open::before,body.nav-open::before{display:none!important;content:none!important;}
+        body.mobile-menu-open .sticky,body.nav-open .sticky{display:none!important;}
         header .hamb{display:inline-flex!important;cursor:pointer;position:relative;z-index:1005;background:rgba(255,255,255,.96)!important;border-color:rgba(4,92,57,.2)!important;box-shadow:0 8px 24px rgba(16,27,23,.12)!important;}
         header .hamb i{background:#045c39!important;transition:transform .25s ease,opacity .25s ease;}
         header .nav-cta{display:none!important;}
-        header nav,header .nav-dropdowns{position:fixed!important;right:0!important;left:auto!important;top:0!important;width:min(380px,84vw)!important;height:100vh!important;display:block!important;padding:92px 24px 30px!important;background:#fff!important;color:#1e2b27!important;border:0!important;border-radius:24px 0 0 24px!important;box-shadow:-28px 0 70px rgba(3,24,18,.24)!important;transform:translateX(104%)!important;opacity:1!important;visibility:visible!important;pointer-events:auto!important;transition:transform .32s cubic-bezier(.19,1,.22,1)!important;z-index:1004!important;overflow-y:auto!important;}
-        body.mobile-menu-open header nav,body.mobile-menu-open header .nav-dropdowns{transform:translateX(0)!important;}
-        header nav::before,header .nav-dropdowns::before{content:'网站目录';position:absolute;left:24px;top:28px;color:#045c39;font-size:22px;font-weight:900;}
-        header nav::after,header .nav-dropdowns::after{content:'中科明心 · Education Platform';display:block;margin-top:22px;padding-top:22px;border-top:1px solid rgba(4,92,57,.1);color:#8d9893;font-size:12px;letter-spacing:1px;}
-        header nav a,header .nav-dropdowns a,header .nav-link,header .nav-direct{display:flex!important;align-items:center!important;justify-content:space-between!important;margin:0 0 10px!important;padding:16px 18px!important;color:#1e2b27!important;background:#f7f5ef!important;border:1px solid rgba(4,92,57,.08)!important;border-radius:16px!important;font-size:16px!important;font-weight:800!important;line-height:1.35!important;opacity:1!important;text-shadow:none!important;text-decoration:none!important;}
-        header nav a::after,header .nav-link::after,header .nav-direct::after{content:'›'!important;display:block!important;color:#c7af82!important;font-size:22px!important;line-height:1!important;}
-        header nav a:hover,header nav a.nav-active,header nav a.active,header .nav-link:hover,header .nav-direct:hover{color:#045c39!important;background:#f0eadf!important;}
+        header nav,header .nav-dropdowns{position:fixed!important;right:0!important;left:auto!important;top:0!important;width:min(360px,82vw)!important;height:100vh!important;display:block!important;padding:92px 24px 30px!important;background:#101b17!important;color:#1e2b27!important;border:0!important;border-radius:24px 0 0 24px!important;box-shadow:-28px 0 70px rgba(3,24,18,.24)!important;transform:translateX(104%)!important;opacity:1!important;visibility:visible!important;pointer-events:auto!important;transition:transform .32s cubic-bezier(.19,1,.22,1)!important;z-index:1004!important;overflow-y:auto!important;}
+        body.mobile-menu-open header nav,body.mobile-menu-open header .nav-dropdowns,body.nav-open header nav,body.nav-open header .nav-dropdowns{transform:translateX(0)!important;}
+        header nav::before,header .nav-dropdowns::before{content:'网站目录';position:absolute;left:24px;top:28px;color:#fff;font-size:22px;font-weight:900;letter-spacing:.08em;}
+        header nav::after,header .nav-dropdowns::after{content:'中科明心 · Education Platform';display:block;margin-top:22px;padding-top:22px;border-top:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.52);font-size:12px;letter-spacing:1px;}
+        header nav a,header .nav-dropdowns a,header .nav-link,header .nav-direct{display:flex!important;align-items:center!important;justify-content:space-between!important;margin:0 0 12px!important;padding:17px 20px!important;color:#1e2b27!important;background:#f7f5ef!important;border:1px solid rgba(199,175,130,.18)!important;border-radius:18px!important;font-size:17px!important;font-weight:800!important;line-height:1.35!important;opacity:1!important;text-shadow:none!important;text-decoration:none!important;}
+        header nav a::after,header .nav-link::after,header .nav-direct::after{content:'›'!important;display:block!important;color:#c7af82!important;font-size:24px!important;line-height:1!important;position:static!important;transform:none!important;width:auto!important;height:auto!important;background:transparent!important;}
+        header nav a:hover,header nav a.nav-active,header nav a.active,header .nav-link:hover,header .nav-direct:hover,header .nav-item.nav-active .nav-link{color:#045c39!important;background:#f0eadf!important;}
         header .nav-item{width:100%!important;}
-        header .nav-panel{position:static!important;display:none!important;transform:none!important;opacity:1!important;visibility:visible!important;pointer-events:auto!important;box-shadow:none!important;border:0!important;background:transparent!important;padding:0 0 4px 14px!important;margin:-2px 0 8px!important;border-radius:0!important;}
-        header .nav-item.open .nav-panel{display:block!important;}
-        body.mobile-menu-open header .hamb{position:fixed!important;right:22px!important;top:22px!important;width:48px!important;height:48px!important;border-radius:50%!important;background:#fff!important;}
-        body.mobile-menu-open header .hamb i:nth-child(1){transform:translateY(7px) rotate(45deg);}
-        body.mobile-menu-open header .hamb i:nth-child(2){opacity:0;}
-        body.mobile-menu-open header .hamb i:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+        header .nav-panel,header .nav-item.open .nav-panel,header.scrolled .nav-panel,header.scrolled .nav-item.open .nav-panel{display:none!important;max-height:0!important;opacity:0!important;visibility:hidden!important;pointer-events:none!important;padding:0!important;margin:0!important;border:0!important;overflow:hidden!important;}
+        body.mobile-menu-open header .hamb,body.nav-open header .hamb{position:fixed!important;right:22px!important;top:22px!important;width:48px!important;height:48px!important;border-radius:50%!important;background:#fff!important;}
+        body.mobile-menu-open header .hamb i:nth-child(1),body.nav-open header .hamb i:nth-child(1){transform:translateY(7px) rotate(45deg);}
+        body.mobile-menu-open header .hamb i:nth-child(2),body.nav-open header .hamb i:nth-child(2){opacity:0;}
+        body.mobile-menu-open header .hamb i:nth-child(3),body.nav-open header .hamb i:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
       }
       @media(prefers-reduced-motion:reduce){.scroll-motion{opacity:1!important;transform:none!important;transition:none!important;}}
     `;
@@ -228,11 +228,11 @@
       item.dataset.dropdownReady = 'true';
       const trigger = item.querySelector('.nav-link');
       if (!trigger) return;
-      trigger.addEventListener('click', function (event) {
+      trigger.addEventListener('click', function () {
         if (window.matchMedia('(max-width: 1100px)').matches) {
-          event.preventDefault();
-          item.classList.toggle('open');
-          trigger.setAttribute('aria-expanded', item.classList.contains('open') ? 'true' : 'false');
+          document.body.classList.remove('mobile-menu-open', 'nav-open');
+          const hamb = document.querySelector('.hamb');
+          if (hamb) hamb.setAttribute('aria-expanded', 'false');
         }
       });
     });
@@ -250,12 +250,13 @@
       event.stopPropagation();
       const open = !document.body.classList.contains('mobile-menu-open');
       document.body.classList.toggle('mobile-menu-open', open);
+      document.body.classList.toggle('nav-open', open);
       hamb.setAttribute('aria-expanded', open ? 'true' : 'false');
     });
     document.addEventListener('click', function (event) {
-      if (!document.body.classList.contains('mobile-menu-open')) return;
+      if (!document.body.classList.contains('mobile-menu-open') && !document.body.classList.contains('nav-open')) return;
       if (event.target.closest('header nav, header .nav-dropdowns, .hamb')) return;
-      document.body.classList.remove('mobile-menu-open');
+      document.body.classList.remove('mobile-menu-open', 'nav-open');
       hamb.setAttribute('aria-expanded', 'false');
     });
   }
