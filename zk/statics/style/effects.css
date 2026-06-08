@@ -197,5 +197,21 @@ body.nav-open{overflow:hidden}.hamb{transition:.35s ease}.hamb i{transition:.35s
 /* Hide the legacy page-loading mark; page transitions are handled by main.js. */
 .loading.hide{display:none!important;opacity:0!important;visibility:hidden!important;pointer-events:none!important}.loading.hide .mark,.loading.hide::before,.loading.hide::after{display:none!important;animation:none!important}
 
+/* Header logo safety fallback for generated runtime navigation. */
+header .brand > img,
+header .brand-logo img{
+  width:50px!important;
+  height:50px!important;
+  max-width:50px!important;
+  max-height:50px!important;
+  flex:0 0 50px!important;
+  object-fit:contain!important;
+  display:block!important;
+}
+header .brand > img{
+  border-radius:0!important;
+  filter:drop-shadow(0 8px 18px rgba(16,27,23,.18));
+}
+
 /* Accessibility */
 @media (prefers-reduced-motion: reduce){*,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.001ms!important}.reveal{opacity:1!important;transform:none!important}}
