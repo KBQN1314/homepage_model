@@ -186,6 +186,20 @@ zk/statics/style/pages/utility.css
 
 导航由 `site-runtime.js` 统一渲染；专家姓名、简介、履历、头像类名和上一篇/下一篇链接仍保留在对应 HTML 中。除非先新增专家数据模型和渲染函数，否则不要删除专家详情正文内容。
 
+### 修改案例详情页结构
+
+案例详情页目前采用“外壳运行时化、正文静态保留”的模式：
+
+```html
+<header id="header"></header>
+<section class="cases-hero">...</section>
+<main class="main">...</main>
+<footer class="footer"></footer>
+<div class="sticky"></div>
+```
+
+导航、页脚和右下角联系入口由 `site-runtime.js` 统一渲染；案例标题、正文、指标、上下篇链接仍保留在对应 HTML 中。除非先新增案例数据模型和渲染函数，否则不要删除案例详情正文内容。
+
 ### 修改动效
 
 优先修改：
@@ -230,3 +244,4 @@ zk/statics/style/team-avatars.css
 - 404、隐私政策和提交成功页已采用最小运行时 shell：页面只保留 header 占位，不再复制整段导航 HTML。
 - 四个课程详情页已采用最小运行时 shell：详情内容由 `site-runtime.js` 根据文件名统一渲染。
 - 八个专家详情页已采用外壳运行时化：导航由运行时统一渲染，专家正文内容仍静态保留在 HTML 中。
+- 八个案例详情页已采用外壳运行时化：导航、页脚和 sticky 由运行时统一渲染，案例正文内容仍静态保留在 HTML 中。
