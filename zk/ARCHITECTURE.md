@@ -29,6 +29,8 @@
 | `statics/js/site-cases-runtime.js` | 案例列表渲染器，根据 `ZKCaseList` 渲染 `cases.html` 的 `.cases-grid[data-case-list]`。 |
 | `statics/js/site-news-data.js` | 新闻列表数据。当前承接 `news.html` 与三个新闻分类页的新闻卡片字段，不承接新闻文章正文。 |
 | `statics/js/site-news-runtime.js` | 新闻列表渲染器，根据当前页面自动筛选 `ZKNewsList` 并渲染 `.news-page-grid[data-news-list]`。 |
+| `statics/js/site-team-data.js` | 团队列表数据。当前承接团队总览、核心专家、助教团队的成员卡片字段，不承接专家详情正文。 |
+| `statics/js/site-team-runtime.js` | 团队列表渲染器，根据当前页面筛选 `ZKTeamMembers` 并渲染 `.team-grid[data-team-list]`。 |
 | `statics/js/scroll-motion.js` | 滚动入场动画与移动端菜单增强，由运行时统一加载。 |
 | `statics/js/course-challenges.js` | 兼容 shim。课程挑战模块已并入 `site-runtime.js`，此文件不再负责渲染。 |
 | `statics/style/core/tokens.css` | 全站设计变量。 |
@@ -40,16 +42,7 @@
 | `statics/style/components/page-heroes.css` | 尚未迁入 `pages/` 的通用内页 hero 背景和遮罩。 |
 | `statics/style/components/runtime.css` | 运行时生成组件样式。 |
 | `statics/style/components/navigation.css` | 导航、下拉菜单和移动端菜单。 |
-| `statics/style/pages/home.css` | 首页页面级样式入口。 |
-| `statics/style/pages/detail.css` | 课程详情页页面级样式入口。 |
-| `statics/style/pages/about.css` | 关于我们页面级样式入口。 |
-| `statics/style/pages/courses.css` | 课程列表页面级样式入口。 |
-| `statics/style/pages/contact.css` | 联系页面级样式入口。 |
-| `statics/style/pages/join.css` | 加盟合作页面级样式入口。 |
-| `statics/style/pages/news.css` | 新闻活动页面级样式入口，包含新闻列表、分类页和三级文章详情页。 |
-| `statics/style/pages/team.css` | 团队/专家页面级样式入口，包含团队总览、专家列表、助教列表和专家详情页。 |
-| `statics/style/pages/cases.css` | 案例页面级样式入口，包含案例列表、案例详情、案例图片、案例指标和案例 CTA。 |
-| `statics/style/pages/utility.css` | 轻量独立页面样式入口，包含 404、隐私政策、提交成功等页面正文卡片和 CTA。 |
+| `statics/style/pages/*.css` | 页面级样式入口，如首页、课程详情、关于我们、课程列表、联系、加盟、新闻、团队、案例和 utility 页面。 |
 | `statics/style/team-avatars.css` | 团队头像资源层，仅维护专家/助教头像类和头像图片。 |
 | `statics/style/style.css` | 历史兼容入口，通过 `@import` 聚合 core/components 层，保留稳定 URL。 |
 | `statics/style/effects.css` | 全站动效入口，仅保留 hero 动效、reveal、滚动入场、页面转场和动效降级。 |
@@ -61,17 +54,21 @@
 
 `site-runtime.js` 会先检测页面是否已经加载 `statics/style/style.css`。正常页面已经加载时，运行时不会重复注入上述公共层；只有未来少数没有加载 `style.css` 的独立页面，才会按文件逐个兜底注入，并且会逐个检查是否已存在。
 
-页面级 CSS 由对应 HTML 显式加载，例如 `pages/home.css`、`pages/detail.css`、`pages/about.css`、`pages/courses.css`、`pages/contact.css`、`pages/join.css`、`pages/news.css`、`pages/team.css`、`pages/cases.css`、`pages/utility.css`。`site-runtime.js` 会根据当前路由判断页面级 CSS 是否已经存在；若缺失，会补齐对应 `pages/*.css`，避免未来新增页面漏引页面样式。
+页面级 CSS 由对应 HTML 显式加载，例如 `pages/home.css`、`pages/detail.css`、`pages/about.css`、`pages/courses.css`、`pages/contact.css`、`pages/join.css`、`pages/news.css`、`pages/team.css`、`pages/cases.css`、`pages/utility.css`。`site-runtime.js` 会根据当前路由判断页面级 CSS 是否已经存在；若缺失，会补齐对应 `pages/*.css`。
 
 ## 结构模式
 
 ### 首页结构
 
-`index.html` 目前采用“外壳运行时化、首页正文静态保留”的模式。导航、页脚和右下角联系入口由 `site-runtime.js` 统一渲染；首页 hero、痛点、课程、测评、团队、合作伙伴、新闻、加盟和联系区块仍保留在 HTML 中。除非先新增首页数据模型和渲染函数，否则不要删除首页正文区块。
+`index.html` 采用“外壳运行时化、首页正文静态保留”的模式。导航、页脚和 sticky 由 `site-runtime.js` 统一渲染；首页 hero、痛点、课程、测评、团队、合作伙伴、新闻、加盟和联系区块仍保留在 HTML 中。
 
 ### 一级内容页结构
 
-`about.html`、`courses.html`、`contact.html`、`join.html`、`team.html`、`team-page-2.html`、`experts.html`、`assistants.html` 目前采用“外壳运行时化、正文静态保留”的模式。导航、页脚和右下角联系入口由 `site-runtime.js` 统一渲染；页面 hero、正文模块、列表卡片、表单和 CTA 等内容仍保留在 HTML 中。
+`about.html`、`courses.html`、`contact.html`、`join.html` 采用“外壳运行时化、正文静态保留”的模式。导航、页脚和 sticky 由 `site-runtime.js` 统一渲染；页面 hero、正文模块、表单和 CTA 等内容仍保留在 HTML 中。
+
+### 团队列表页结构
+
+`team.html`、`team-page-2.html`、`experts.html`、`assistants.html` 已采用“外壳运行时化、列表数据化”的模式。页面保留 hero、筛选标签、分页和 `.team-grid[data-team-list]` 挂载点；成员卡片数据来自 `statics/js/site-team-data.js`，渲染逻辑来自 `statics/js/site-team-runtime.js`。专家详情正文仍保留在 `expert/*.html` 中。
 
 ### 案例列表页结构
 
@@ -87,15 +84,15 @@
 
 ### 专家详情页结构
 
-专家详情页目前采用“外壳运行时化、正文静态保留”的模式。导航由 `site-runtime.js` 统一渲染；专家姓名、简介、履历、头像类名和上一篇/下一篇链接仍保留在对应 HTML 中。除非先新增专家数据模型和渲染函数，否则不要删除专家详情正文内容。
+专家详情页目前采用“外壳运行时化、正文静态保留”的模式。导航由 `site-runtime.js` 统一渲染；专家姓名、简介、履历、头像类名和上一篇/下一篇链接仍保留在对应 HTML 中。除非先新增专家详情数据模型和渲染函数，否则不要删除专家详情正文内容。
 
 ### 案例详情页结构
 
-案例详情页目前采用“外壳运行时化、正文静态保留”的模式。导航、页脚和右下角联系入口由 `site-runtime.js` 统一渲染；案例标题、正文、指标、上下篇链接仍保留在对应 HTML 中。除非先新增案例详情数据模型和渲染函数，否则不要删除案例详情正文内容。
+案例详情页目前采用“外壳运行时化、正文静态保留”的模式。导航、页脚和 sticky 由 `site-runtime.js` 统一渲染；案例标题、正文、指标、上下篇链接仍保留在对应 HTML 中。除非先新增案例详情数据模型和渲染函数，否则不要删除案例详情正文内容。
 
 ### 新闻文章详情页结构
 
-新闻文章详情页目前采用“外壳运行时化、正文静态保留”的模式。导航、页脚和右下角联系入口由 `site-runtime.js` 统一渲染；新闻标题、正文、分类侧栏、上下篇链接、图片和图注仍保留在对应 HTML 中。除非先新增新闻文章详情数据模型和渲染函数，否则不要删除新闻文章正文内容。
+新闻文章详情页目前采用“外壳运行时化、正文静态保留”的模式。导航、页脚和 sticky 由 `site-runtime.js` 统一渲染；新闻标题、正文、分类侧栏、上下篇链接、图片和图注仍保留在对应 HTML 中。除非先新增新闻文章详情数据模型和渲染函数，否则不要删除新闻文章正文内容。
 
 ## 修改规则
 
@@ -107,7 +104,7 @@
 zk/statics/js/site-data.js
 ```
 
-不要在每个详情页里重复修改。详情页会被运行时覆盖。
+详情页会被运行时覆盖，不要逐页重复修改。
 
 ### 修改案例列表卡片
 
@@ -128,6 +125,16 @@ zk/statics/js/site-news-data.js
 ```
 
 `news.html`、`company-news.html`、`growth-news.html`、`limited-activity.html` 的新闻卡片由该数据文件和 `site-news-runtime.js` 渲染，不要重新把新闻卡片硬编码回 HTML。
+
+### 修改团队成员列表卡片
+
+优先修改：
+
+```text
+zk/statics/js/site-team-data.js
+```
+
+`team.html`、`team-page-2.html`、`experts.html`、`assistants.html` 的成员卡片由该数据文件和 `site-team-runtime.js` 渲染，不要重新把成员卡片硬编码回 HTML。专家详情正文暂不由该数据文件渲染。
 
 ### 修改导航、页脚或 sticky 内容
 
@@ -175,49 +182,14 @@ zk/statics/style/pages/utility.css
 
 已迁移页面不要重新新增或引用旧的 `home.css`、`home-polish.css`、`course-detail.css`、`about.css`、`courses.css`、`contact.css`、`join.css`、`news.css`、`team.css`、`cases.css`。
 
-### 修改动效
-
-优先修改：
-
-```text
-zk/statics/style/effects.css
-```
-
-该文件只维护 hero 动效、reveal、滚动入场、页面转场和动效降级；不要把 footer、导航或页面布局样式放回这里。
-
-### 修改团队头像资源
-
-优先修改：
-
-```text
-zk/statics/style/team-avatars.css
-```
-
-该文件仅维护专家/助教头像类和头像图片，不承载页面布局。
-
-### 新增课程
-
-1. 在 `site-data.js` 的 `courses` 中新增课程。
-2. 在 `courseCopy` 中新增对应 `key` 的文案。
-3. 如有详情页，在 `site-runtime.js` 的 `DETAIL_MAP` 中配置页面文件名到课程 key 的映射。
-
-### 新增页面
-
-1. 保留基础结构：`header#header`、`main.main`、按需保留 `footer.footer`、按需保留 `div.sticky`、`script src="statics/js/main.js"`。
-2. 不要复制整段导航、页脚、sticky 联系入口 HTML；这些由 `site-runtime.js` 统一渲染。
-3. 如果页面位于二级目录，根据相对路径引用 `../statics/js/main.js`；如果位于三级目录，根据相对路径引用 `../../statics/js/main.js`。
-4. 页面应显式加载 `statics/style/style.css` 和对应 `statics/style/pages/*.css`；运行时只把公共 CSS 和页面级 CSS 注入作为兜底能力。
-5. 不要手动重复引用 `scroll-motion.js`，运行时会自动加载。
-
 ## 当前保留的兼容策略
 
 - 现有 HTML 路径不变，避免旧链接失效。
 - `course-challenges.js` 保留为 shim，避免旧缓存或旧页面引用时报错。
 - `main.js` 保留原文件名，避免所有页面大规模改 script 路径。
-- `style.css` 保留为兼容导入入口；`effects.css` 保留为动效入口。
-- 首页、一级内容页、课程详情页、新闻列表页、新闻文章详情页、团队/专家页、案例页、轻量独立页均已完成外壳运行时化。
-- 案例列表、新闻列表已经数据化；多数其他正文内容仍静态保留在 HTML 中；课程详情页内容主要由 `site-runtime.js` 根据文件名渲染。
+- `style.css`、`effects.css` 保留稳定 URL，但职责已经收敛。
+- 专家详情、案例详情、新闻文章正文仍静态保留，避免一次性数据化导致内容丢失。
 
 ## 后续建议
 
-下一轮可以继续新增专家列表数据模型，或把案例详情/新闻文章详情正文进一步抽离到数据层。每次迁移一个页面族，确保页面视觉稳定后再删除旧结构。
+下一步可以继续把首页区块、专家详情、案例详情或新闻文章详情逐步抽入数据层。每次只处理一个内容族，确保页面视觉和内容稳定后再删除旧静态正文。
