@@ -41,6 +41,8 @@
 | `statics/style/pages/contact.css` | 联系页面级样式入口。 |
 | `statics/style/pages/join.css` | 加盟合作页面级样式入口。 |
 | `statics/style/pages/news.css` | 新闻活动页面级样式入口，包含新闻列表、分类页和三级文章详情页。 |
+| `statics/style/pages/team.css` | 团队/专家页面级样式入口，包含团队总览、专家列表、助教列表和专家详情页。 |
+| `statics/style/team-avatars.css` | 团队头像资源层，仅维护专家/助教头像类和头像图片。 |
 | `statics/style/style.css` | 历史基础样式，暂时保留为兼容层。 |
 | `statics/style/effects.css` | 历史视觉增强和动效样式，暂时保留为兼容层。 |
 | `statics/style/README.md` | CSS 分层与迁移规则。 |
@@ -71,6 +73,7 @@ pages/courses.css
 pages/contact.css
 pages/join.css
 pages/news.css
+pages/team.css
 ```
 
 ## 修改规则
@@ -124,9 +127,20 @@ zk/statics/style/pages/courses.css
 zk/statics/style/pages/contact.css
 zk/statics/style/pages/join.css
 zk/statics/style/pages/news.css
+zk/statics/style/pages/team.css
 ```
 
-已迁移页面不要重新新增或引用旧的 `home.css`、`home-polish.css`、`course-detail.css`、`about.css`、`courses.css`、`contact.css`、`join.css`、`news.css`。
+已迁移页面不要重新新增或引用旧的 `home.css`、`home-polish.css`、`course-detail.css`、`about.css`、`courses.css`、`contact.css`、`join.css`、`news.css`、`team.css`。
+
+### 修改团队头像资源
+
+优先修改：
+
+```text
+zk/statics/style/team-avatars.css
+```
+
+该文件仅维护专家/助教头像类和头像图片，不承载页面布局。
 
 ### 新增课程
 
@@ -146,8 +160,8 @@ zk/statics/style/pages/news.css
 - `course-challenges.js` 保留为 shim，避免旧缓存或旧页面引用时报错。
 - `main.js` 保留原文件名，避免所有页面大规模改 script 路径。
 - `style.css`、`effects.css` 与其他尚未迁移的页面专属 CSS 暂时保留。
-- 首页、课程详情页、关于我们页、课程列表页、联系页、加盟合作页、新闻活动页样式迁移已完成，对应旧 CSS 入口已删除。
+- 首页、课程详情页、关于我们页、课程列表页、联系页、加盟合作页、新闻活动页、团队/专家页样式迁移已完成，对应旧 CSS 入口已删除。
 
 ## 后续建议
 
-下一轮可以继续迁移专家团队、案例、隐私政策、成功页等剩余页面样式，或开始把 `style.css` 拆成真正的兼容入口。每次迁移一个页面族，确保页面视觉稳定后再删除旧样式片段。
+下一轮可以继续迁移案例、隐私政策、成功页等剩余页面样式，或开始把 `style.css` 拆成真正的兼容入口。每次迁移一个页面族，确保页面视觉稳定后再删除旧样式片段。
