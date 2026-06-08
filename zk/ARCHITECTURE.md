@@ -117,6 +117,10 @@ zk/statics/style/pages/utility.css
 
 已迁移页面不要重新新增或引用旧的 `home.css`、`home-polish.css`、`course-detail.css`、`about.css`、`courses.css`、`contact.css`、`join.css`、`news.css`、`team.css`、`cases.css`。
 
+### 修改一级内容页结构
+
+`about.html`、`courses.html`、`team.html`、`team-page-2.html`、`experts.html`、`assistants.html`、`cases.html` 目前采用“外壳运行时化、正文静态保留”的模式。导航、页脚和右下角联系入口由 `site-runtime.js` 统一渲染；页面 hero、正文模块、列表卡片和 CTA 等内容仍保留在 HTML 中。除非先新增对应页面数据模型和渲染函数，否则不要删除这些正文结构。
+
 ### 修改课程详情页结构
 
 四个课程详情页已经采用最小运行时 shell。HTML 只需要保留 `header#header`、`detail-hero`、`detail-main`、`side-card`、`detail-cta-wrap`、`footer.footer`、`div.sticky` 等运行时挂载点。课程标题、简介、标签、面包屑、课程介绍、训练路径、挑战模块、侧栏和 CTA 都由 `site-runtime.js` 根据当前文件名自动渲染。
@@ -184,7 +188,8 @@ zk/statics/style/team-avatars.css
 - 八个案例详情页已采用外壳运行时化：导航、页脚和 sticky 由运行时统一渲染，案例正文内容仍静态保留在 HTML 中。
 - 九个新闻文章详情页已采用外壳运行时化：导航、页脚和 sticky 由运行时统一渲染，新闻正文内容仍静态保留在 HTML 中。
 - 四个新闻列表页已采用外壳运行时化：导航、页脚和 sticky 由运行时统一渲染，新闻列表内容仍静态保留在 HTML 中。
+- 关于我们页、课程列表页、团队/专家列表页、案例列表页已采用外壳运行时化：导航、页脚和 sticky 由运行时统一渲染，页面正文内容仍静态保留在 HTML 中。
 
 ## 后续建议
 
-下一轮可以继续压缩关于我们页、课程列表页、团队列表页、案例列表页等一级页面的重复外壳，或者新增专家/案例/新闻数据模型，把静态正文进一步抽离到数据层。每次迁移一个页面族，确保页面视觉稳定后再删除旧结构。
+下一轮可以继续处理首页外壳、联系页和加盟页的重复结构，或者新增专家/案例/新闻数据模型，把静态正文进一步抽离到数据层。每次迁移一个页面族，确保页面视觉稳定后再删除旧结构。
