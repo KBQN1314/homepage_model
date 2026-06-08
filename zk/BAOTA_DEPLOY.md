@@ -87,7 +87,7 @@
 /cases/case-02.html
 ```
 
-`case-03.html` 到 `case-08.html` 已改为下线跳转页，访问时会跳回 `cases.html`，不再展示旧示例案例内容。
+`case-03.html` 到 `case-08.html` 已物理删除，不应再在页面、导航、文档或外链中引用。如历史缓存或外部链接访问这些旧地址，服务器会返回 404。
 
 ### 移动端目录
 
@@ -218,10 +218,7 @@ Ctrl + F5
 后续新增页面时，应遵守：
 
 1. 页面路径尽量保持静态 HTML 结构。
-2. 一级页面引用 `statics/js/main.js`。
-3. 二级页面引用 `../statics/js/main.js`。
-4. 三级页面引用 `../../statics/js/main.js`。
-5. 不新增 `/zk/` 作为路径判断条件。
-6. 不在每个页面复制复杂导航逻辑，导航和补丁逻辑优先交给 `main.js` 与 `scroll-motion.js`。
-7. 不要直接引用 `scroll-motion.js`；由 `main.js` 统一加载。
-8. 不要为了单个小改动重写整个 `index.html`。首页需要单独做结构整理专项时再处理。
+2. 一级页面引用 `statics/js/main.js`，二级页面引用 `../statics/js/main.js`，三级页面引用 `../../statics/js/main.js`。
+3. 不要直接写死 `/zk/`、`/expert/`、`/cases/` 等绝对路径。
+4. 不要复制旧版 header/footer；优先使用运行时外壳。
+5. 不要重新引入“中科心智能”“自主营（数学）”等旧文案。
