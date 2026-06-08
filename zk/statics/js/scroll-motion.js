@@ -73,7 +73,7 @@
   }
 
   function footerBrandHtml() {
-    return `<div class="footer-brand-card"><div class="footer-brand-mark">明</div><div class="brand-mini">${COMPANY_SHORT_NAME}</div><div class="footer-brand-en">EDUCATION PLATFORM</div><p>青少年学习力成长 · 家庭教育支持<br>· 课程合作共创</p></div>`;
+    return `<div class="footer-brand-card"><div class="footer-brand-mark">明</div><div class="brand-mini">${COMPANY_SHORT_NAME}</div><div class="footer-brand-en">EDUCATION PLATFORM</div><p>青少年学习力成长 · 家庭教育支持 · 课程合作共创</p></div>`;
   }
 
   function footerHtml(prefix) {
