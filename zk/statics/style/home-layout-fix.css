@@ -174,7 +174,8 @@
   line-height: 1.8;
 }
 
-/* Static homepage hero: background rotation and progress UI are intentionally disabled. */
+/* Static homepage hero: background rotation and progress UI are intentionally disabled.
+   Keep this override after home.css so old multi-slide declarations cannot re-enable rotation. */
 .hero .progress-line,
 .hero .hero-dots {
   display: none !important;
@@ -193,7 +194,8 @@
 }
 
 .hero > .progress-line + .slide + .slide,
-.hero > .progress-line + .slide + .slide + .slide {
+.hero > .progress-line + .slide + .slide + .slide,
+.hero .slide:not(:first-of-type) {
   opacity: 0 !important;
   visibility: hidden !important;
   animation: none !important;
@@ -321,29 +323,16 @@
     justify-self: stretch;
   }
 
-  .contact-wrap {
-    gap: 22px;
-  }
-
-  .contact-info,
-  .contact-map {
-    min-height: auto;
-  }
-
   .contact-info {
-    padding: 34px 26px;
+    padding: 36px 26px;
   }
 
   .info-list > div {
     grid-template-columns: 1fr;
-    gap: 4px;
+    gap: 2px;
   }
 
   .contact-map {
-    padding: 34px 24px;
-  }
-
-  .contact-map h3 {
-    font-size: 28px;
+    padding: 36px 24px;
   }
 }
