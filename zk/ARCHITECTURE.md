@@ -9,7 +9,7 @@
 1. 页面 HTML 只负责提供语义结构、正文内容和必要挂载点。
 2. `statics/js/main.js` 只作为兼容入口和加载器，不直接承载业务逻辑。
 3. 全站公共数据优先放入 `statics/js/site-data.js`；已独立拆出的列表数据放入对应 `site-*-data.js`。
-4. 全站公共渲染逻辑集中放在 `statics/js/site-runtime.js`；已独立拆出的列表渲染放入对应 `site-*-runtime.js`。
+4. 全站公共渲染逻辑集中放在 `statics/js/site-runtime.js`；已独立拆出的区块/列表渲染放入对应 `site-*-runtime.js`。
 5. 导航、页脚、sticky 联系入口、课程卡片、课程详情页主体内容、课程挑战模块和旧文案修正由统一运行时管理。
 6. 页面不要手动重复引入 `scroll-motion.js` 或 `course-challenges.js`。
 7. 新增公共样式优先进入 `statics/style/core/` 或 `statics/style/components/`，不要写入 JS 内联样式。
@@ -22,12 +22,13 @@
 
 | 文件 | 作用 |
 | --- | --- |
-| `statics/js/main.js` | 入口加载器，根据当前页面层级加载 `site-data.js` 与 `site-runtime.js`。 |
+| `statics/js/main.js` | 入口加载器，根据当前页面层级加载 `site-data.js` 与 `site-runtime.js`；首页会额外加载新闻数据和首页渲染器。 |
 | `statics/js/site-data.js` | 全站品牌信息、课程列表、课程详情文案、课程挑战数据。 |
 | `statics/js/site-runtime.js` | 全站运行时：导航、页脚、sticky、课程渲染、详情页渲染、动效加载、链接修正、公共与页面级样式兜底加载。 |
+| `statics/js/site-home-runtime.js` | 首页区块渲染器，复用课程数据和新闻数据渲染首页课程区、首页新闻区。 |
 | `statics/js/site-cases-data.js` | 案例列表数据。当前只承接 `cases.html` 的案例卡片字段，不承接案例详情正文。 |
 | `statics/js/site-cases-runtime.js` | 案例列表渲染器，根据 `ZKCaseList` 渲染 `cases.html` 的 `.cases-grid[data-case-list]`。 |
-| `statics/js/site-news-data.js` | 新闻列表数据。当前承接 `news.html` 与三个新闻分类页的新闻卡片字段，不承接新闻文章正文。 |
+| `statics/js/site-news-data.js` | 新闻列表数据。当前承接 `news.html`、三个新闻分类页和首页新闻摘要所需字段，不承接新闻文章正文。 |
 | `statics/js/site-news-runtime.js` | 新闻列表渲染器，根据当前页面自动筛选 `ZKNewsList` 并渲染 `.news-page-grid[data-news-list]`。 |
 | `statics/js/site-team-data.js` | 团队列表数据。当前承接团队总览、核心专家、助教团队的成员卡片字段，不承接专家详情正文。 |
 | `statics/js/site-team-runtime.js` | 团队列表渲染器，根据当前页面筛选 `ZKTeamMembers` 并渲染 `.team-grid[data-team-list]`。 |
@@ -60,7 +61,7 @@
 
 ### 首页结构
 
-`index.html` 采用“外壳运行时化、首页正文静态保留”的模式。导航、页脚和 sticky 由 `site-runtime.js` 统一渲染；首页 hero、痛点、课程、测评、团队、合作伙伴、新闻、加盟和联系区块仍保留在 HTML 中。
+`index.html` 采用“外壳运行时化、部分区块数据化、其他正文静态保留”的模式。导航、页脚和 sticky 由 `site-runtime.js` 统一渲染；首页课程区和首页新闻区由 `site-home-runtime.js` 渲染，其中课程区复用 `site-data.js` 的课程数据，新闻区复用 `site-news-data.js` 的新闻数据。首页 hero、痛点、测评、团队/案例摘要、合作伙伴、加盟和联系区块仍保留在 HTML 中。
 
 ### 一级内容页结构
 
@@ -104,7 +105,17 @@
 zk/statics/js/site-data.js
 ```
 
-详情页会被运行时覆盖，不要逐页重复修改。
+详情页和首页课程区会被运行时覆盖，不要逐页重复修改。
+
+### 修改首页新闻摘要或新闻列表卡片
+
+优先修改：
+
+```text
+zk/statics/js/site-news-data.js
+```
+
+`index.html` 的首页新闻区，以及 `news.html`、`company-news.html`、`growth-news.html`、`limited-activity.html` 的新闻卡片由该数据文件和对应运行时渲染，不要重新把新闻卡片硬编码回 HTML。
 
 ### 修改案例列表卡片
 
@@ -115,16 +126,6 @@ zk/statics/js/site-cases-data.js
 ```
 
 `cases.html` 的案例卡片由该数据文件和 `site-cases-runtime.js` 渲染，不要重新把 8 个案例卡片硬编码回 HTML。
-
-### 修改新闻列表卡片
-
-优先修改：
-
-```text
-zk/statics/js/site-news-data.js
-```
-
-`news.html`、`company-news.html`、`growth-news.html`、`limited-activity.html` 的新闻卡片由该数据文件和 `site-news-runtime.js` 渲染，不要重新把新闻卡片硬编码回 HTML。
 
 ### 修改团队成员列表卡片
 
@@ -188,8 +189,8 @@ zk/statics/style/pages/utility.css
 - `course-challenges.js` 保留为 shim，避免旧缓存或旧页面引用时报错。
 - `main.js` 保留原文件名，避免所有页面大规模改 script 路径。
 - `style.css`、`effects.css` 保留稳定 URL，但职责已经收敛。
-- 专家详情、案例详情、新闻文章正文仍静态保留，避免一次性数据化导致内容丢失。
+- 首页部分区块、专家详情、案例详情、新闻文章正文仍静态保留，避免一次性数据化导致内容丢失。
 
 ## 后续建议
 
-下一步可以继续把首页区块、专家详情、案例详情或新闻文章详情逐步抽入数据层。每次只处理一个内容族，确保页面视觉和内容稳定后再删除旧静态正文。
+下一步可以继续把首页痛点、测评、合作伙伴、加盟流程，或专家详情、案例详情、新闻文章详情逐步抽入数据层。每次只处理一个内容族，确保页面视觉和内容稳定后再删除旧静态正文。
