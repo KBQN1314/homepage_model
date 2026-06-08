@@ -1,8 +1,0 @@
-/*
- * Compatibility shim for legacy news pages.
- *
- * Canonical news page styles now live in pages/news.css.
- * Keep this file temporarily so older/deep article pages that still reference
- * statics/style/news.css continue to render while they are migrated in batches.
- */
-@import url('pages/news.css');
