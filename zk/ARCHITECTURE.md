@@ -16,6 +16,7 @@
 8. 页面级样式统一进入 `statics/style/pages/`，不要重新新增旧式临时覆盖文件。
 9. `style.css` 仅作为兼容导入入口保留，不再承载实际样式规则；`effects.css` 仅作为动效层保留。
 10. 页面应显式加载对应 `pages/*.css`；运行时会做页面级样式兜底加载，已存在时不会重复插入。
+11. 新增或轻量页面可以只保留 `<header id="header"></header>`、`<footer class="footer"></footer>`、`<div class="sticky"></div>` 这类运行时占位，不要复制整段导航或页脚 HTML。
 
 ## 重要文件
 
@@ -171,10 +172,11 @@ zk/statics/style/team-avatars.css
 
 ### 新增页面
 
-1. 保留标准结构：`header.nav-wrap`、`main.main`、`footer.footer`、`script src="statics/js/main.js"`。
-2. 如果页面位于二级目录，根据相对路径引用 `../statics/js/main.js`；如果位于三级目录，根据相对路径引用 `../../statics/js/main.js`。
-3. 页面应显式加载 `statics/style/style.css` 和对应 `statics/style/pages/*.css`；运行时只把公共 CSS 和页面级 CSS 注入作为兜底能力。
-4. 不要手动重复引用 `scroll-motion.js`，运行时会自动加载。
+1. 保留基础结构：`header#header`、`main.main`、按需保留 `footer.footer`、按需保留 `div.sticky`、`script src="statics/js/main.js"`。
+2. 不要复制整段导航、页脚、sticky 联系入口 HTML；这些由 `site-runtime.js` 统一渲染。
+3. 如果页面位于二级目录，根据相对路径引用 `../statics/js/main.js`；如果位于三级目录，根据相对路径引用 `../../statics/js/main.js`。
+4. 页面应显式加载 `statics/style/style.css` 和对应 `statics/style/pages/*.css`；运行时只把公共 CSS 和页面级 CSS 注入作为兜底能力。
+5. 不要手动重复引用 `scroll-motion.js`，运行时会自动加载。
 
 ## 当前保留的兼容策略
 
@@ -183,7 +185,8 @@ zk/statics/style/team-avatars.css
 - `main.js` 保留原文件名，避免所有页面大规模改 script 路径。
 - `style.css` 保留为兼容导入入口；`effects.css` 保留为动效入口。
 - 首页、课程详情页、关于我们页、课程列表页、联系页、加盟合作页、新闻活动页、团队/专家页、案例页、轻量独立页样式迁移已完成，对应旧 CSS 入口已删除或替换。
+- 404、隐私政策和提交成功页已采用最小运行时 shell：页面只保留 header 占位，不再复制整段导航 HTML。
 
 ## 后续建议
 
-下一轮可以继续检查旧路径引用、压缩重复 HTML 结构，或将页面头部公共 `<link>` 规范整理成模板说明。每次迁移一个页面族，确保页面视觉稳定后再删除旧样式片段。
+下一轮可以继续把更多页面改成最小运行时 shell，优先处理课程详情页、案例详情页、专家详情页这类强依赖运行时统一内容的页面。每次迁移一个页面族，确保页面视觉稳定后再删除重复 HTML 片段。
