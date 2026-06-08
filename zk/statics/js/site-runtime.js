@@ -32,6 +32,12 @@
     ['五四学习法数学实训营', '心脑学习力自主营（数学）'], ['心脑学习力公开课', '心脑学习力自主营（数学）'],
     ['心脑学习力自主营（数学）（数学）', '心脑学习力自主营（数学）'], ['心脑学习力自主营（数学） （数学）', '心脑学习力自主营（数学）'], ['心脑学习力自主营', '心脑学习力自主营（数学）']
   ];
+  const RUNTIME_STYLESHEETS = [
+    ['tokens', 'statics/style/core/tokens.css'],
+    ['base', 'statics/style/core/base.css'],
+    ['runtime-components', 'statics/style/components/runtime.css'],
+    ['nav-dropdown', 'statics/style/nav-dropdown.css']
+  ];
 
   const q = (selector, root = document) => root.querySelector(selector);
   const qa = (selector, root = document) => Array.from(root.querySelectorAll(selector));
@@ -56,19 +62,16 @@
     return '';
   }
 
-  function injectStyleOnce() {
-    if (!q('link[data-zk-style="nav-dropdown"]')) {
+  function injectStylesheets() {
+    document.documentElement.style.setProperty('--zk-qr-url', `url("${buildUrl('statics/images/QR.png')}")`);
+    RUNTIME_STYLESHEETS.forEach(([key, href]) => {
+      if (q(`link[data-zk-style="${key}"]`)) return;
       const link = document.createElement('link');
       link.rel = 'stylesheet';
-      link.href = buildUrl('statics/style/nav-dropdown.css');
-      link.dataset.zkStyle = 'nav-dropdown';
+      link.href = buildUrl(href);
+      link.dataset.zkStyle = key;
       document.head.appendChild(link);
-    }
-    if (q('#zkRuntimeStyle')) return;
-    const style = document.createElement('style');
-    style.id = 'zkRuntimeStyle';
-    style.textContent = `html{font-size:100%;-webkit-text-size-adjust:100%;text-size-adjust:100%}html,body{width:100%;max-width:100%;min-width:0}input,select,textarea,button{font-size:16px}.hero .hero-inner,.hero .hero-inner .eyebrow,.hero .hero-inner h1,.hero .hero-inner h2,.hero .hero-inner p,.hero .hero-actions{opacity:1!important;visibility:visible!important;transform:translate3d(0,0,0)!important}.contact-map::before{background:#fff url('${buildUrl('statics/images/QR.png')}') center/82% no-repeat!important}.course-challenge-block{background:linear-gradient(135deg,#fff 0%,#fbfaf6 100%);border:1px solid rgba(199,175,130,.28);box-shadow:0 20px 52px rgba(16,27,23,.09)}.course-challenge-block h2{letter-spacing:-.5px}.course-challenge-intro{font-size:17px;line-height:1.95;color:#5f6b66;margin:0 0 24px}.course-challenge-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:20px}.course-challenge-item{position:relative;padding:24px 24px 22px 26px;background:#fff;border-left:4px solid var(--gold,#c7af82);box-shadow:0 12px 30px rgba(16,27,23,.07);overflow:hidden}.course-challenge-item::after{content:'';position:absolute;right:-34px;top:-34px;width:82px;height:82px;border-radius:50%;background:rgba(199,175,130,.08)}.course-challenge-item b{display:block;color:var(--green,#045c39);font-size:21px;line-height:1.35;margin-bottom:9px}.course-challenge-item span{display:block;color:#65716c;line-height:1.85;font-size:15px}.course-challenge-note{margin-top:22px;padding:15px 18px;background:#f7f5ef;color:#7b6b4f;font-size:14px;line-height:1.85;border-left:3px solid var(--gold,#c7af82)}@media(max-width:760px){.course-challenge-grid{grid-template-columns:1fr}.course-challenge-item{padding:21px}}`;
-    document.head.appendChild(style);
+    });
   }
 
   function normalizeText(root = document.body) {
@@ -112,7 +115,7 @@
     const brand = q('.brand');
     if (brand) {
       brand.href = buildUrl('index.html');
-      brand.innerHTML = `<img src="${buildUrl(DATA.brand.logo)}" alt="${DATA.brand.short} Logo" style="width:50px;height:50px;display:block;flex:none;object-fit:contain;filter:drop-shadow(0 8px 18px rgba(16,27,23,.18));"><span><strong>${DATA.brand.short}</strong><span>${DATA.brand.english}</span></span>`;
+      brand.innerHTML = `<img class="brand-logo-img" src="${buildUrl(DATA.brand.logo)}" alt="${DATA.brand.short} Logo"><span><strong>${DATA.brand.short}</strong><span>${DATA.brand.english}</span></span>`;
     }
     const nav = q('header nav');
     if (nav) {
@@ -202,11 +205,7 @@
     reveals.forEach(el => observer.observe(el));
   }
   function setupTransition() {
-    if (q('#pageTransitionStyle') || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    const style = document.createElement('style');
-    style.id = 'pageTransitionStyle';
-    style.textContent = `.zk-page-transition{position:fixed;inset:0;z-index:99999;pointer-events:none;display:grid;place-items:center}.zk-page-transition::before,.zk-page-transition::after{content:'';position:absolute;left:0;width:100%;height:50%;background:#063b2b;transition:transform .72s cubic-bezier(.76,0,.24,1)}.zk-page-transition::before{top:0;transform:translate3d(0,-100%,0)}.zk-page-transition::after{bottom:0;transform:translate3d(0,100%,0);background:#0e211b}.zk-page-transition .zk-mark{position:relative;z-index:2;width:74px;height:74px;border-radius:50%;display:grid;place-items:center;background:#fff;color:#045c39;border:1px solid rgba(199,175,130,.65);font-weight:700;letter-spacing:3px;opacity:0;transform:scale(.86);transition:.36s ease}.zk-page-transition.active::before,.zk-page-transition.active::after{transform:translate3d(0,0,0)}.zk-page-transition.active .zk-mark{opacity:1;transform:scale(1)}`;
-    document.head.appendChild(style);
+    if (q('.zk-page-transition') || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     const layer = document.createElement('div');
     layer.className = 'zk-page-transition';
     layer.innerHTML = '<div class="zk-mark">ZK</div>';
@@ -230,8 +229,8 @@
     document.body.appendChild(script);
   }
   function init() {
-    window.ZKSite = Object.freeze({ version: DATA.version, brand: DATA.brand, courses: DATA.courses, courseChallengesManaged: true, pathPrefix, buildUrl });
-    injectStyleOnce();
+    window.ZKSite = Object.freeze({ version: DATA.version, brand: DATA.brand, courses: DATA.courses, courseChallengesManaged: true, stylesManaged: true, pathPrefix, buildUrl });
+    injectStylesheets();
     normalizeText();
     renderChrome();
     normalizeLinks();
