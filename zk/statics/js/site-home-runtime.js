@@ -24,13 +24,14 @@
   }
 
   function renderHomeCourses() {
-    var grid = document.querySelector('.product-grid[data-home-courses]');
+    var grid = document.querySelector('.product-grid[data-home-courses]') || document.querySelector('.products .product-grid');
     var data = window.ZKSiteData;
     if (!grid || !data || !Array.isArray(data.courses) || !data.courseCopy) return;
 
     grid.innerHTML = data.courses.map(function (course) {
       return courseCard(course, data.courseCopy[course.key] || {});
     }).join('');
+    grid.setAttribute('data-home-courses', '');
   }
 
   function newsSummaryMap(newsItems) {
@@ -81,12 +82,13 @@
   }
 
   function renderHomeNews() {
-    var grid = document.querySelector('.news-grid[data-home-news]');
+    var grid = document.querySelector('.news-grid[data-home-news]') || document.querySelector('.news .news-grid');
     if (!grid) return;
 
     var map = newsSummaryMap(window.ZKNewsList || []);
     var order = ['company', 'growth', 'limited'];
     grid.innerHTML = order.map(function (key) { return newsCard(map[key]); }).join('');
+    grid.setAttribute('data-home-news', '');
   }
 
   function renderHomeSections() {
