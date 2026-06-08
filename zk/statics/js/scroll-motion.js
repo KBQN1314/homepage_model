@@ -75,13 +75,21 @@
     nodes.forEach(node => { node.nodeValue = normalizeTextValue(node.nodeValue); });
   }
 
+  function normalizeTeamNavLinks() {
+    const target = `${pathPrefix()}team.html`;
+    document.querySelectorAll('header a, footer a, .footer a, .nav-dropdowns a').forEach(function (link) {
+      const label = (link.textContent || '').replace(/\s+/g, ' ').trim();
+      if (label === '专家团队') link.setAttribute('href', target);
+    });
+  }
+
   function footerBrandHtml() {
     return `<div class="footer-brand-card"><div class="brand-mini">${COMPANY_SHORT_NAME}</div><div class="footer-brand-en">EDUCATION PLATFORM</div></div>`;
   }
 
   function footerHtml(prefix) {
     const link = file => `${prefix}${file}`;
-    return `<div class="container"><div class="footer-grid"><div>${footerBrandHtml()}</div><div><h4>关于我们</h4><a href="${link('about.html')}">公司简介</a><a href="${link('about.html')}">服务方向</a><a href="${link('about.html')}">发展愿景</a></div><div><h4>课程产品</h4><a href="${link('course-detail.html')}">心脑学习力专注营</a><a href="${link('photo-memory-detail.html')}">心脑学习力记忆营</a><a href="${link('camp-detail.html')}">心脑学习力阅读营</a><a href="${link('public-class-detail.html')}">心脑学习力自主营</a></div><div><h4>团队案例</h4><a href="${link('experts.html')}">专家团队</a><a href="${link('assistants.html')}">助教团队</a><a href="${link('cases.html')}">成功案例</a></div><div><h4>新闻活动</h4><a href="${link('company-news.html')}">公司动态</a><a href="${link('growth-news.html')}">成长资讯</a><a href="${link('limited-activity.html')}">限时活动</a></div><div><h4>加盟合作</h4><a href="${link('join.html')}">合作对象</a><a href="${link('join.html')}">合作流程</a><a href="${link('contact.html')}">联系我们</a></div></div><div class="copyright">© 2026 ${COMPANY_FULL_NAME}</div></div>`;
+    return `<div class="container"><div class="footer-grid"><div>${footerBrandHtml()}</div><div><h4>关于我们</h4><a href="${link('about.html')}">公司简介</a><a href="${link('about.html')}">服务方向</a><a href="${link('about.html')}">发展愿景</a></div><div><h4>课程产品</h4><a href="${link('course-detail.html')}">心脑学习力专注营</a><a href="${link('photo-memory-detail.html')}">心脑学习力记忆营</a><a href="${link('camp-detail.html')}">心脑学习力阅读营</a><a href="${link('public-class-detail.html')}">心脑学习力自主营</a></div><div><h4>团队案例</h4><a href="${link('team.html')}">专家团队</a><a href="${link('assistants.html')}">助教团队</a><a href="${link('cases.html')}">成功案例</a></div><div><h4>新闻活动</h4><a href="${link('company-news.html')}">公司动态</a><a href="${link('growth-news.html')}">成长资讯</a><a href="${link('limited-activity.html')}">限时活动</a></div><div><h4>加盟合作</h4><a href="${link('join.html')}">合作对象</a><a href="${link('join.html')}">合作流程</a><a href="${link('contact.html')}">联系我们</a></div></div><div class="copyright">© 2026 ${COMPANY_FULL_NAME}</div></div>`;
   }
 
   function ensureFooterModule() {
@@ -251,11 +259,12 @@
   function init() {
     ensureFooterModule();
     injectStyle();
+    normalizeTeamNavLinks();
     setupMobileMenu();
     normalizeSelfCourseTexts();
     setupScrollMotion();
-    setTimeout(function () { ensureFooterModule(); normalizeSelfCourseTexts(); setupMobileMenu(); }, 180);
-    setTimeout(function () { ensureFooterModule(); normalizeSelfCourseTexts(); }, 520);
+    setTimeout(function () { ensureFooterModule(); normalizeTeamNavLinks(); normalizeSelfCourseTexts(); setupMobileMenu(); }, 180);
+    setTimeout(function () { ensureFooterModule(); normalizeTeamNavLinks(); normalizeSelfCourseTexts(); }, 520);
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
