@@ -53,6 +53,12 @@
   const escapeHtml = value => String(value).replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll("'", '&#39;');
   const listHtml = items => `<ul>${items.map(item => `<li>${escapeHtml(item)}</li>`).join('')}</ul>`;
   const cleanCourseName = value => value ? value.replaceAll('心脑学习力自主营（数学）（数学）', '心脑学习力自主营（数学）').replaceAll('心脑学习力自主营（数学） （数学）', '心脑学习力自主营（数学）') : value;
+  const stylesheetLinks = () => qa('link[rel~="stylesheet"]');
+  const stylesheetPath = href => new URL(href, location.href).pathname.replace(/\/+/g, '/');
+  const stylesheetLoaded = href => {
+    const target = stylesheetPath(buildUrl(href));
+    return stylesheetLinks().some(link => stylesheetPath(link.getAttribute('href') || '') === target);
+  };
 
   function activePage() {
     const file = pageFile(), path = location.pathname;
@@ -69,8 +75,14 @@
 
   function injectStylesheets() {
     document.documentElement.style.setProperty('--zk-qr-url', `url("${buildUrl('statics/images/QR.png')}")`);
+
+    // Most pages load statics/style/style.css, which imports the public core/component layers.
+    // In that normal path, do not inject the same CSS files again. The fallback below is
+    // kept only for future standalone pages that intentionally omit the compatibility entry.
+    if (stylesheetLoaded('statics/style/style.css')) return;
+
     RUNTIME_STYLESHEETS.forEach(([key, href]) => {
-      if (q(`link[data-zk-style="${key}"]`)) return;
+      if (q(`link[data-zk-style="${key}"]`) || stylesheetLoaded(href)) return;
       const link = document.createElement('link');
       link.rel = 'stylesheet';
       link.href = buildUrl(href);
