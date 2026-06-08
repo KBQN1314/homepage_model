@@ -62,6 +62,8 @@ pages/cases.css
 pages/utility.css
 ```
 
+同时，`site-runtime.js` 也会根据当前路由判断应加载的页面级 CSS；如果 HTML 已经显式加载，则不会重复插入；如果未来新增页面遗漏对应 `pages/*.css`，运行时会兜底补齐。
+
 ## 修改规则
 
 1. 新增颜色、阴影、间距、动画变量时，优先放入 `core/tokens.css`。
