@@ -1,25 +1,108 @@
 /*
  * Runtime-safe base layer.
- * This file intentionally avoids broad visual rewrites so legacy page styles remain stable.
+ * Holds reset, document defaults, loading screen, media defaults and
+ * accessibility safeguards shared by all static pages.
  */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 html {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
   font-size: 100%;
+  scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
 }
 
-html,
 body {
   width: 100%;
   max-width: 100%;
   min-width: 0;
+  overflow-x: hidden;
+  background: #fff;
+  color: var(--ink);
+  font-family: LatoLight, 'Microsoft YaHei', Arial, sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
 }
 
 input,
 select,
 textarea,
 button {
+  font: inherit;
   font-size: 16px;
+}
+
+button {
+  cursor: pointer;
+}
+
+section {
+  position: relative;
+}
+
+.main {
+  position: relative;
+  z-index: 2;
+  background: #fff;
+}
+
+.loading {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: grid;
+  place-items: center;
+  background: #fff;
+  transition: opacity .7s ease, visibility .7s ease;
+}
+
+.loading.hide {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.loading .mark {
+  position: relative;
+  display: grid;
+  width: 76px;
+  height: 76px;
+  place-items: center;
+  border: 1px solid rgba(199, 175, 130, .45);
+  border-radius: 50%;
+  color: var(--green);
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.loading .mark::before {
+  content: '';
+  position: absolute;
+  inset: -8px;
+  border: 2px solid transparent;
+  border-top-color: var(--gold2);
+  border-radius: 50%;
+  animation: zk-spin 1s linear infinite;
+}
+
+@keyframes zk-spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .hero .hero-inner,
