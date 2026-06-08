@@ -15,6 +15,7 @@
 | `components/page-heroes.css` | 非首页 hero 背景和遮罩层，统一管理内页顶部视觉。 |
 | `components/runtime.css` | 由 `site-runtime.js` 生成的组件样式，例如课程挑战模块、页面转场、二维码背景、运行时品牌 logo。 |
 | `components/navigation.css` | 统一导航、下拉菜单、移动端抽屉菜单。 |
+| `pages/home.css` | 首页页面级样式入口，负责聚合首页 section 样式和首页专属 polish。 |
 | `style.css` | 历史基础样式，暂时保留，作为兼容层，后续逐步删除已迁移片段。 |
 | `effects.css` | 历史视觉增强和动效样式，暂时保留，后续逐步拆分。 |
 | 页面专属 CSS | 如 `about.css`、`courses.css`、`contact.css` 等，暂时保留页面局部样式。 |
@@ -35,7 +36,13 @@ components/runtime.css
 components/navigation.css
 ```
 
-该顺序遵循“变量 → 基础 → 布局 → 组件 → 页面公共视觉 → 运行时组件 → 导航交互层”的规则。
+首页额外由 `index.html` 显式加载：
+
+```text
+pages/home.css
+```
+
+该顺序遵循“变量 → 基础 → 布局 → 组件 → 页面公共视觉 → 运行时组件 → 导航交互层 → 页面专属入口”的规则。
 
 ## 修改规则
 
@@ -48,14 +55,15 @@ components/navigation.css
 7. 修改内页 hero 背景和遮罩，优先放入 `components/page-heroes.css`。
 8. 由 JS 生成的 DOM 结构，其样式优先放入 `components/runtime.css`，不要再写进 JS 内联 `<style>`。
 9. 修改导航、下拉菜单或移动端抽屉菜单，优先放入 `components/navigation.css`。
-10. 页面级特殊样式可以暂时保留在原页面 CSS，但不要继续增加 HTML 内联样式。
+10. 修改首页 section、首页特殊布局或首页 polish，优先放入 `pages/home.css`。
+11. 其他页面级特殊样式可以暂时保留在原页面 CSS，但不要继续增加 HTML 内联样式。
 
 ## 后续迁移建议
 
 下一轮可以继续处理：
 
 ```text
-pages/home.css                # 从 style.css 迁出首页专属 section
+pages/home.css                # 继续把 ../home.css 中的首页 section 规则内联迁入
 pages/detail.css              # 统一课程详情页结构样式
 legacy/style.compat.css       # 将 style.css 变成真正的兼容入口
 ```
