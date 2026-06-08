@@ -36,23 +36,8 @@
   <main class="main">
     <section class="sec news-list-section">
       <div class="container">
-        <div class="news-page-grid">
-          <article class="news-page-card reveal show">
-            <div class="news-page-thumb has-image memory-competition"></div>
-            <div class="news-page-body">
-              <span class="category">Growth Insights</span>
-              <h3>世界记忆锦标赛：记忆训练背后的方法启发</h3>
-              <p>从国际记忆竞技看专注、编码、复述和心理耐力对学习成长的启发。</p>
-              <div class="meta"><span>2026-05-20</span><a class="more" href="news/growth/growth-03.html">MORE &gt;</a></div>
-            </div>
-          </article>
-        </div>
-
-        <div class="news-pager">
-          <span class="disabled">首页</span>
-          <span class="active">1</span>
-          <span class="disabled">下一页</span>
-        </div>
+        <div class="news-page-grid" data-news-list></div>
+        <div class="news-pager"><span class="disabled">首页</span><span class="active">1</span><span class="disabled">下一页</span></div>
       </div>
     </section>
   </main>
@@ -60,5 +45,7 @@
   <footer class="footer"></footer>
   <div class="sticky"></div>
   <script src="statics/js/main.js"></script>
+  <script src="statics/js/site-news-data.js"></script>
+  <script src="statics/js/site-news-runtime.js"></script>
 </body>
 </html>
