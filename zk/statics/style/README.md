@@ -22,7 +22,6 @@
 | `pages/contact.css` | 联系页面级样式入口，负责联系页 hero、联系信息、二维码、地图占位和 FAQ。 |
 | `pages/join.css` | 加盟合作页面级样式入口，负责加盟页 hero、合作对象、总部支持、合作流程和表单相关结构。 |
 | `pages/news.css` | 新闻活动页面级样式入口，负责新闻列表、分类页、文章详情、文章侧栏和新闻 CTA。 |
-| `news.css` | 新闻页兼容 shim，临时转发到 `pages/news.css`，用于仍未批量切换的三级文章页。 |
 | `style.css` | 历史基础样式，暂时保留，作为兼容层，后续逐步删除已迁移片段。 |
 | `effects.css` | 历史视觉增强和动效样式，暂时保留，后续逐步拆分。 |
 | 页面专属 CSS | 其他暂未迁移的页面局部样式。 |
@@ -43,7 +42,7 @@ components/runtime.css
 components/navigation.css
 ```
 
-首页、详情页、关于我们页、课程列表页、联系页、加盟合作页和一级新闻列表页额外由对应 HTML 显式加载：
+首页、详情页、关于我们页、课程列表页、联系页、加盟合作页和新闻活动页额外由对应 HTML 显式加载：
 
 ```text
 pages/home.css
@@ -83,7 +82,8 @@ pages/news.css
 
 ```text
 legacy/style.compat.css       # 将 style.css 变成真正的兼容入口
-三级新闻文章页                # 逐步从 news.css shim 切换到 pages/news.css
+pages/team.css                # 迁移专家团队相关页面样式
+pages/cases.css               # 迁移案例相关页面样式
 ```
 
 迁移时每次只处理一个组件族，确保页面视觉稳定后再删除旧样式片段。
