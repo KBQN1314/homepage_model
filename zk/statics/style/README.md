@@ -1,13 +1,13 @@
 # CSS 架构说明
 
-本目录采用“兼容保留 + 渐进迁移”的方式重构。现有页面仍然可以继续引用旧 CSS 文件，运行时会额外加载新的核心样式层。
+本目录已经完成主要样式分层重构。公共样式进入 `core/` 与 `components/`，页面级样式进入 `pages/`，历史入口 `style.css` 与 `effects.css` 仅作为稳定 URL 和动效入口保留。
 
 ## 当前分层
 
 | 路径 | 作用 |
 | --- | --- |
 | `core/tokens.css` | 全站设计变量，包括颜色、阴影、容器宽度、动画时长等。保留旧变量名并提供 `--zk-*` 新变量别名。 |
-| `core/base.css` | 运行时安全基础层，包括视口稳定、表单字号、hero 入场兜底、无障碍动效降级。 |
+| `core/base.css` | 全站基础层，包括 reset、body、链接、图片、loading、表单字号、hero 入场兜底、无障碍动效降级。 |
 | `core/layout.css` | 全站可复用布局原语，包括 `.container`、`.sec`、`.sec-head`、标题说明等。 |
 | `components/buttons.css` | 全站按钮体系，包括 `.btn`、`.btn-primary`、`.btn-gold`、`.btn-line`、焦点态和移动端适配。 |
 | `components/chrome.css` | 站点外壳，包括 header、brand、hamburger、footer、sticky 联系入口。 |
@@ -26,13 +26,12 @@
 | `pages/cases.css` | 案例页面级样式入口，负责案例列表、案例详情、案例图片、案例指标、案例 CTA 等结构。 |
 | `pages/utility.css` | 轻量独立页面样式入口，负责 404、提交成功、隐私政策等页面的正文卡片和 CTA。 |
 | `team-avatars.css` | 团队头像资源层，专门维护专家/助教头像类和头像图片，不承载页面布局。 |
-| `style.css` | 历史基础样式，暂时保留，作为兼容层，后续逐步删除已迁移片段。 |
-| `effects.css` | 历史视觉增强和动效样式，暂时保留，后续逐步拆分。 |
-| 页面专属 CSS | 其他暂未迁移的页面局部样式。 |
+| `style.css` | 历史兼容入口，仅通过 `@import` 聚合 core/components 层，保留该文件名以兼容现有 HTML。 |
+| `effects.css` | 全站动效入口，仅保留 hero 动效、reveal、滚动入场、页面转场和动效降级。 |
 
 ## 加载顺序
 
-`site-runtime.js` 负责按以下顺序注入新 CSS 层：
+`style.css` 作为兼容入口会同步导入以下公共层：
 
 ```text
 core/tokens.css
@@ -46,7 +45,9 @@ components/runtime.css
 components/navigation.css
 ```
 
-首页、详情页、关于我们页、课程列表页、联系页、加盟合作页、新闻活动页、团队/专家页、案例页和轻量独立页额外由对应 HTML 显式加载：
+`site-runtime.js` 也会按相同顺序注入公共 CSS，以兼容未显式加载 `style.css` 的旧页面或缓存页面。
+
+页面级 CSS 由对应 HTML 显式加载：
 
 ```text
 pages/home.css
@@ -61,12 +62,10 @@ pages/cases.css
 pages/utility.css
 ```
 
-该顺序遵循“变量 → 基础 → 布局 → 组件 → 页面公共视觉 → 运行时组件 → 导航交互层 → 页面专属入口”的规则。
-
 ## 修改规则
 
 1. 新增颜色、阴影、间距、动画变量时，优先放入 `core/tokens.css`。
-2. 新增全站基础约束时，优先放入 `core/base.css`。
+2. 新增全站 reset、body、loading、基础元素约束时，优先放入 `core/base.css`。
 3. 新增全站布局原语时，优先放入 `core/layout.css`。
 4. 修改按钮样式，优先放入 `components/buttons.css`。
 5. 修改页眉、页脚、悬浮联系入口，优先放入 `components/chrome.css`。
@@ -74,25 +73,27 @@ pages/utility.css
 7. 修改内页 hero 背景和遮罩，优先放入 `components/page-heroes.css`。
 8. 由 JS 生成的 DOM 结构，其样式优先放入 `components/runtime.css`，不要再写进 JS 内联 `<style>`。
 9. 修改导航、下拉菜单或移动端抽屉菜单，优先放入 `components/navigation.css`。
-10. 修改首页 section、首页特殊布局或首页 polish，优先放入 `pages/home.css`。
-11. 修改课程详情页结构样式，优先放入 `pages/detail.css`。
-12. 修改关于我们页样式，优先放入 `pages/about.css`。
-13. 修改课程列表页样式，优先放入 `pages/courses.css`。
-14. 修改联系页样式，优先放入 `pages/contact.css`。
-15. 修改加盟合作页样式，优先放入 `pages/join.css`。
-16. 修改新闻列表、分类页或文章详情页样式，优先放入 `pages/news.css`。
-17. 修改团队/专家页面结构样式，优先放入 `pages/team.css`。
-18. 修改案例列表、案例详情或案例图片样式，优先放入 `pages/cases.css`。
-19. 修改 404、隐私政策、提交成功等轻量独立页样式，优先放入 `pages/utility.css`。
-20. 修改专家或助教头像资源，优先放入 `team-avatars.css`。
-21. 其他页面级特殊样式可以暂时保留在原页面 CSS，但不要继续增加 HTML 内联样式。
+10. 修改页面级特殊样式，优先放入对应的 `pages/*.css`。
+11. 修改专家或助教头像资源，优先放入 `team-avatars.css`。
+12. 修改纯动效、滚动入场或页面转场动画时，优先放入 `effects.css`。
+13. 不要继续向 `style.css` 增加实际样式规则；它只保留兼容导入职责。
 
-## 后续迁移建议
+## 已迁移的旧入口
 
-下一轮可以继续处理：
+以下旧 CSS 入口已迁移并删除，后续不要重新引用：
 
 ```text
-legacy/style.compat.css       # 将 style.css 变成真正的兼容入口
+home.css
+home-polish.css
+course-detail.css
+about.css
+courses.css
+contact.css
+join.css
+news.css
+team.css
+cases.css
+nav-dropdown.css
 ```
 
-迁移时每次只处理一个组件族，确保页面视觉稳定后再删除旧样式片段。
+迁移新页面时，每次只处理一个页面族，确保页面视觉稳定后再删除旧样式片段。
