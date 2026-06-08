@@ -15,7 +15,7 @@
 | `components/page-heroes.css` | 非首页 hero 背景和遮罩层，统一管理内页顶部视觉。 |
 | `components/runtime.css` | 由 `site-runtime.js` 生成的组件样式，例如课程挑战模块、页面转场、二维码背景、运行时品牌 logo。 |
 | `components/navigation.css` | 统一导航、下拉菜单、移动端抽屉菜单。 |
-| `pages/home.css` | 首页页面级样式入口，负责聚合首页 section 样式和首页专属 polish。 |
+| `pages/home.css` | 首页页面级样式入口，负责首页 section 样式、首页媒体资源路径和首页专属 polish。 |
 | `style.css` | 历史基础样式，暂时保留，作为兼容层，后续逐步删除已迁移片段。 |
 | `effects.css` | 历史视觉增强和动效样式，暂时保留，后续逐步拆分。 |
 | 页面专属 CSS | 如 `about.css`、`courses.css`、`contact.css` 等，暂时保留页面局部样式。 |
@@ -63,7 +63,6 @@ pages/home.css
 下一轮可以继续处理：
 
 ```text
-pages/home.css                # 继续把 ../home.css 中的首页 section 规则内联迁入
 pages/detail.css              # 统一课程详情页结构样式
 legacy/style.compat.css       # 将 style.css 变成真正的兼容入口
 ```
