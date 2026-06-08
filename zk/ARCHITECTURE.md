@@ -14,6 +14,7 @@
 6. 页面不要再手动重复引入 `scroll-motion.js` 或 `course-challenges.js`。
 7. 新增公共样式优先进入 `statics/style/core/` 或 `statics/style/components/`，不要再写入 JS 内联样式。
 8. 旧 `style.css`、`effects.css` 当前仅作为兼容层保留；新的公共样式应按分层文件新增或修改。
+9. 首页页面级样式统一从 `statics/style/pages/home.css` 进入，不再额外拆散引用首页 polish 文件。
 
 ## 重要文件
 
@@ -33,6 +34,7 @@
 | `statics/style/components/page-heroes.css` | 非首页 hero 背景、遮罩和内页顶部视觉统一。 |
 | `statics/style/components/runtime.css` | 运行时生成组件的样式：课程挑战、二维码背景、品牌 logo、页面转场。 |
 | `statics/style/components/navigation.css` | 下拉导航、移动端菜单和导航交互状态。 |
+| `statics/style/pages/home.css` | 首页页面级样式入口，聚合首页 section 与首页 polish。 |
 | `statics/style/style.css` | 历史基础样式，暂时保留为兼容层，后续逐步删除已迁移片段。 |
 | `statics/style/effects.css` | 历史视觉增强、动画与页脚样式，暂时保留，后续逐步拆分。 |
 | `statics/style/README.md` | CSS 分层与后续迁移规则。 |
@@ -53,7 +55,13 @@ components/runtime.css
 components/navigation.css
 ```
 
-该顺序保证变量先加载，基础和布局其次，组件随后，页面公共视觉、运行时生成组件和导航交互样式最后接管。
+首页额外由 `index.html` 显式加载：
+
+```text
+pages/home.css
+```
+
+该顺序保证变量先加载，基础和布局其次，组件随后，页面公共视觉、运行时生成组件和导航交互样式最后接管；首页专属样式作为页面入口在 HTML 中声明。
 
 ## 修改规则
 
@@ -110,6 +118,16 @@ zk/statics/style/components/navigation.css
 
 不要继续把这些通用样式堆回 `style.css`。
 
+### 修改首页样式
+
+优先修改：
+
+```text
+zk/statics/style/pages/home.css
+```
+
+首页 section、首页特殊布局、首页 polish 都从这里进入；不要重新新增 `home-polish.css` 这类临时覆盖文件。
+
 ### 修改内页顶部 hero 背景
 
 优先修改：
@@ -147,8 +165,9 @@ zk/statics/style/components/runtime.css
 - 现有 HTML 路径不变，避免旧链接失效。
 - `course-challenges.js` 保留为 shim，避免旧缓存或旧页面引用时报错。
 - `main.js` 保留原文件名，避免所有页面大规模改 script 路径。
-- `style.css`、`effects.css` 与页面专属 CSS 暂时保留；新公共样式已逐步进入 `core/` 与 `components/`。
+- `style.css`、`effects.css` 与页面专属 CSS 暂时保留；新公共样式已逐步进入 `core/`、`components/` 与 `pages/`。
+- `pages/home.css` 暂时通过 `@import` 聚合旧 `home.css`，后续会逐步把旧首页 section 规则迁入该文件。
 
 ## 后续建议
 
-下一轮可以继续把 `style.css` 中首页专属 section 迁入 `pages/home.css`，并把课程详情页结构统一到 `pages/detail.css`。每次迁移一个组件族，确保页面视觉稳定后再删除旧样式片段。
+下一轮可以继续把 `statics/style/home.css` 中的首页 section 规则完整迁入 `pages/home.css`，并把课程详情页结构统一到 `pages/detail.css`。每次迁移一个组件族，确保页面视觉稳定后再删除旧样式片段。
