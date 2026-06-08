@@ -7,12 +7,12 @@
 ## 核心原则
 
 1. 页面 HTML 只负责提供语义结构、正文内容和必要挂载点。
-2. 全站公共数据集中放在 `statics/js/site-data.js`；案例列表数据目前独立放在 `statics/js/site-cases-data.js`。
-3. 全站公共渲染逻辑集中放在 `statics/js/site-runtime.js`；案例列表渲染目前独立放在 `statics/js/site-cases-runtime.js`。
-4. `statics/js/main.js` 只作为兼容入口和加载器，不再直接承载业务逻辑。
-5. 导航、页脚、sticky 联系入口、课程卡片、课程详情页主体内容、课程挑战模块和旧文案修正都由统一运行时管理。
-6. 页面不要再手动重复引入 `scroll-motion.js` 或 `course-challenges.js`。
-7. 新增公共样式优先进入 `statics/style/core/` 或 `statics/style/components/`，不要再写入 JS 内联样式。
+2. `statics/js/main.js` 只作为兼容入口和加载器，不直接承载业务逻辑。
+3. 全站公共数据优先放入 `statics/js/site-data.js`；已独立拆出的列表数据放入对应 `site-*-data.js`。
+4. 全站公共渲染逻辑集中放在 `statics/js/site-runtime.js`；已独立拆出的列表渲染放入对应 `site-*-runtime.js`。
+5. 导航、页脚、sticky 联系入口、课程卡片、课程详情页主体内容、课程挑战模块和旧文案修正由统一运行时管理。
+6. 页面不要手动重复引入 `scroll-motion.js` 或 `course-challenges.js`。
+7. 新增公共样式优先进入 `statics/style/core/` 或 `statics/style/components/`，不要写入 JS 内联样式。
 8. 页面级样式统一进入 `statics/style/pages/`，不要重新新增旧式临时覆盖文件。
 9. `style.css` 仅作为兼容导入入口保留，不再承载实际样式规则；`effects.css` 仅作为动效层保留。
 10. 页面应显式加载对应 `pages/*.css`；运行时会做页面级样式兜底加载，已存在时不会重复插入。
@@ -27,6 +27,8 @@
 | `statics/js/site-runtime.js` | 全站运行时：导航、页脚、sticky、课程渲染、详情页渲染、动效加载、链接修正、公共与页面级样式兜底加载。 |
 | `statics/js/site-cases-data.js` | 案例列表数据。当前只承接 `cases.html` 的案例卡片字段，不承接案例详情正文。 |
 | `statics/js/site-cases-runtime.js` | 案例列表渲染器，根据 `ZKCaseList` 渲染 `cases.html` 的 `.cases-grid[data-case-list]`。 |
+| `statics/js/site-news-data.js` | 新闻列表数据。当前承接 `news.html` 与三个新闻分类页的新闻卡片字段，不承接新闻文章正文。 |
+| `statics/js/site-news-runtime.js` | 新闻列表渲染器，根据当前页面自动筛选 `ZKNewsList` 并渲染 `.news-page-grid[data-news-list]`。 |
 | `statics/js/scroll-motion.js` | 滚动入场动画与移动端菜单增强，由运行时统一加载。 |
 | `statics/js/course-challenges.js` | 兼容 shim。课程挑战模块已并入 `site-runtime.js`，此文件不再负责渲染。 |
 | `statics/style/core/tokens.css` | 全站设计变量。 |
@@ -75,6 +77,10 @@
 
 `cases.html` 已采用“外壳运行时化、列表数据化”的模式。页面只保留 hero、说明文案和 `.cases-grid[data-case-list]` 挂载点；案例卡片数据来自 `statics/js/site-cases-data.js`，渲染逻辑来自 `statics/js/site-cases-runtime.js`。
 
+### 新闻列表页结构
+
+`news.html`、`company-news.html`、`growth-news.html`、`limited-activity.html` 已采用“外壳运行时化、列表数据化”的模式。页面只保留 hero、筛选标签、分页/CTA 和 `.news-page-grid[data-news-list]` 挂载点；新闻卡片数据来自 `statics/js/site-news-data.js`，渲染逻辑来自 `statics/js/site-news-runtime.js`。新闻文章正文仍保留在三级文章 HTML 中。
+
 ### 课程详情页结构
 
 四个课程详情页已经采用最小运行时 shell。HTML 只需要保留 `header#header`、`detail-hero`、`detail-main`、`side-card`、`detail-cta-wrap`、`footer.footer`、`div.sticky` 等运行时挂载点。课程标题、简介、标签、面包屑、课程介绍、训练路径、挑战模块、侧栏和 CTA 都由 `site-runtime.js` 根据当前文件名自动渲染。
@@ -89,11 +95,7 @@
 
 ### 新闻文章详情页结构
 
-新闻文章详情页目前采用“外壳运行时化、正文静态保留”的模式。导航、页脚和右下角联系入口由 `site-runtime.js` 统一渲染；新闻标题、正文、分类侧栏、上下篇链接、图片和图注仍保留在对应 HTML 中。除非先新增新闻数据模型和渲染函数，否则不要删除新闻文章正文内容。
-
-### 新闻列表页结构
-
-`news.html`、`company-news.html`、`growth-news.html`、`limited-activity.html` 目前采用“外壳运行时化、列表静态保留”的模式。导航、页脚和右下角联系入口由 `site-runtime.js` 统一渲染；hero、筛选标签、新闻列表卡片和分页仍保留在对应 HTML 中。除非先新增新闻列表数据模型和渲染函数，否则不要删除新闻列表正文内容。
+新闻文章详情页目前采用“外壳运行时化、正文静态保留”的模式。导航、页脚和右下角联系入口由 `site-runtime.js` 统一渲染；新闻标题、正文、分类侧栏、上下篇链接、图片和图注仍保留在对应 HTML 中。除非先新增新闻文章详情数据模型和渲染函数，否则不要删除新闻文章正文内容。
 
 ## 修改规则
 
@@ -116,6 +118,16 @@ zk/statics/js/site-cases-data.js
 ```
 
 `cases.html` 的案例卡片由该数据文件和 `site-cases-runtime.js` 渲染，不要重新把 8 个案例卡片硬编码回 HTML。
+
+### 修改新闻列表卡片
+
+优先修改：
+
+```text
+zk/statics/js/site-news-data.js
+```
+
+`news.html`、`company-news.html`、`growth-news.html`、`limited-activity.html` 的新闻卡片由该数据文件和 `site-news-runtime.js` 渲染，不要重新把新闻卡片硬编码回 HTML。
 
 ### 修改导航、页脚或 sticky 内容
 
@@ -204,8 +216,8 @@ zk/statics/style/team-avatars.css
 - `main.js` 保留原文件名，避免所有页面大规模改 script 路径。
 - `style.css` 保留为兼容导入入口；`effects.css` 保留为动效入口。
 - 首页、一级内容页、课程详情页、新闻列表页、新闻文章详情页、团队/专家页、案例页、轻量独立页均已完成外壳运行时化。
-- 案例列表已经数据化；多数其他正文内容仍静态保留在 HTML 中；课程详情页内容主要由 `site-runtime.js` 根据文件名渲染。
+- 案例列表、新闻列表已经数据化；多数其他正文内容仍静态保留在 HTML 中；课程详情页内容主要由 `site-runtime.js` 根据文件名渲染。
 
 ## 后续建议
 
-下一轮可以继续新增新闻列表数据模型、专家列表数据模型，或把案例详情正文进一步抽离到数据层。每次迁移一个页面族，确保页面视觉稳定后再删除旧结构。
+下一轮可以继续新增专家列表数据模型，或把案例详情/新闻文章详情正文进一步抽离到数据层。每次迁移一个页面族，确保页面视觉稳定后再删除旧结构。
