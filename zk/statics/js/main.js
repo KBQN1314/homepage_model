@@ -11,6 +11,11 @@
     return '';
   }
 
+  function isHomePage() {
+    const file = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
+    return file === '' || file === 'index.html';
+  }
+
   function loadScript(src) {
     return new Promise(function (resolve, reject) {
       if (document.querySelector('script[src="' + src + '"]')) {
@@ -31,6 +36,11 @@
 
   loadScript(prefix + 'statics/js/site-data.js?' + cache)
     .then(function () { return loadScript(prefix + 'statics/js/site-runtime.js?' + cache); })
+    .then(function () {
+      if (!isHomePage()) return null;
+      return loadScript(prefix + 'statics/js/site-news-data.js?' + cache)
+        .then(function () { return loadScript(prefix + 'statics/js/site-home-runtime.js?' + cache); });
+    })
     .catch(function (error) {
       console.error('[ZKSite] failed to initialize site runtime:', error);
     });
