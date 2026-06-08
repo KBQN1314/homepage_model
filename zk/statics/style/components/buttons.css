@@ -1,0 +1,100 @@
+/* Shared button system. */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 1px solid transparent;
+  border-radius: var(--zk-radius-pill, 999px);
+  padding: 12px 22px;
+  color: inherit;
+  background: transparent;
+  font: inherit;
+  font-size: 14px;
+  line-height: 1.2;
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    transform var(--zk-duration-base, .35s) var(--zk-ease-standard, ease),
+    color var(--zk-duration-base, .35s) var(--zk-ease-standard, ease),
+    background-color var(--zk-duration-base, .35s) var(--zk-ease-standard, ease),
+    border-color var(--zk-duration-base, .35s) var(--zk-ease-standard, ease),
+    box-shadow var(--zk-duration-base, .35s) var(--zk-ease-standard, ease);
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+.btn:focus-visible {
+  outline: 3px solid rgba(216, 164, 80, .38);
+  outline-offset: 3px;
+}
+
+.btn-primary {
+  color: #fff;
+  background: var(--zk-color-primary, #045c39);
+  box-shadow: 0 12px 25px rgba(4, 92, 57, .22);
+}
+
+.btn-primary:hover {
+  background: var(--zk-color-primary-strong, #0b7650);
+}
+
+.btn-gold {
+  color: #fff;
+  background: var(--zk-color-accent, #c7af82);
+}
+
+.btn-gold:hover {
+  background: var(--zk-color-accent-strong, #d8a450);
+}
+
+.btn-line {
+  color: #fff;
+  border-color: rgba(255, 255, 255, .85);
+  background: rgba(255, 255, 255, .08);
+  backdrop-filter: blur(8px);
+}
+
+.btn-line:hover {
+  color: var(--zk-color-primary, #045c39);
+  background: #fff;
+}
+
+header.scrolled .btn-line,
+.page-hero ~ .main .btn-line,
+.detail-main .btn-line,
+.side-card .btn-line {
+  color: var(--zk-color-primary, #045c39);
+  border-color: rgba(4, 92, 57, .18);
+  background: transparent;
+}
+
+header.scrolled .btn-line:hover,
+.page-hero ~ .main .btn-line:hover,
+.detail-main .btn-line:hover,
+.side-card .btn-line:hover {
+  color: #fff;
+  background: var(--zk-color-primary, #045c39);
+}
+
+.assess-form .btn,
+.side-card .btn {
+  width: 100%;
+}
+
+@media (max-width: 520px) {
+  .btn {
+    width: 100%;
+    padding-inline: 18px;
+  }
+
+  .hero-actions .btn,
+  .detail-cta-actions .btn,
+  .contact-actions .btn {
+    width: auto;
+  }
+}
