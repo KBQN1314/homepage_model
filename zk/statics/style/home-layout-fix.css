@@ -200,18 +200,26 @@
   pointer-events: none !important;
 }
 
-/* Homepage hero staggered entrance. Uses properties that do not conflict with legacy inline opacity/transform fallbacks. */
+/* Homepage hero staggered entrance. Keep the floating info card static to avoid repeated animation conflicts. */
 .hero .eyebrow,
 .hero .hero-inner h1,
 .hero .hero-inner h2,
 .hero .hero-inner p,
-.hero .hero-actions,
-.hero .floating-card {
+.hero .hero-actions {
   animation-name: heroStaggerIn;
   animation-duration: .96s;
   animation-fill-mode: both;
   animation-timing-function: cubic-bezier(.18, .9, .22, 1);
   will-change: clip-path, filter, translate;
+}
+
+.hero .floating-card {
+  animation: none !important;
+  clip-path: none !important;
+  filter: none !important;
+  translate: 0 0 !important;
+  opacity: 1 !important;
+  visibility: visible !important;
 }
 
 .hero .eyebrow {
@@ -234,10 +242,6 @@
   animation-delay: .72s;
 }
 
-.hero .floating-card {
-  animation-delay: .92s;
-}
-
 @keyframes heroStaggerIn {
   0% {
     clip-path: inset(0 0 100% 0);
@@ -256,8 +260,7 @@
   .hero .hero-inner h1,
   .hero .hero-inner h2,
   .hero .hero-inner p,
-  .hero .hero-actions,
-  .hero .floating-card {
+  .hero .hero-actions {
     animation: none !important;
     clip-path: none !important;
     filter: none !important;
@@ -283,7 +286,7 @@
   }
 
   .join-wrap {
-    gap: 36px;
+    padding: 48px 42px;
   }
 
   .join-wrap > .btn,
@@ -300,21 +303,15 @@
 
   .join .container,
   .contact .container {
-    width: min(100% - 32px, 560px);
+    width: min(100% - 36px, 100%);
   }
 
-  .join-wrap,
-  .contact-info {
-    padding: 36px 26px;
+  .join-wrap {
+    padding: 34px 26px;
+    gap: 28px;
   }
 
-  .join-wrap .sec-kicker,
-  .contact-info .sec-kicker {
-    letter-spacing: 4px;
-  }
-
-  .join-wrap h2,
-  .contact-info h2 {
+  .join-wrap h2 {
     font-size: 28px;
   }
 
@@ -325,7 +322,7 @@
   }
 
   .contact-wrap {
-    gap: 24px;
+    gap: 22px;
   }
 
   .contact-info,
@@ -333,16 +330,20 @@
     min-height: auto;
   }
 
+  .contact-info {
+    padding: 34px 26px;
+  }
+
   .info-list > div {
     grid-template-columns: 1fr;
-    gap: 2px;
+    gap: 4px;
   }
 
   .contact-map {
-    padding: 36px 24px;
+    padding: 34px 24px;
   }
 
   .contact-map h3 {
-    font-size: 26px;
+    font-size: 28px;
   }
 }
