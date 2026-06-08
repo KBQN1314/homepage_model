@@ -200,6 +200,71 @@
   pointer-events: none !important;
 }
 
+/* Homepage hero staggered entrance. Uses properties that do not conflict with legacy inline opacity/transform fallbacks. */
+.hero .eyebrow,
+.hero .hero-inner h1,
+.hero .hero-inner h2,
+.hero .hero-inner p,
+.hero .hero-actions,
+.hero .floating-card {
+  animation-name: heroStaggerIn;
+  animation-duration: .96s;
+  animation-fill-mode: both;
+  animation-timing-function: cubic-bezier(.18, .9, .22, 1);
+  will-change: clip-path, filter, translate;
+}
+
+.hero .eyebrow {
+  animation-delay: .08s;
+}
+
+.hero .hero-inner h1 {
+  animation-delay: .22s;
+}
+
+.hero .hero-inner h2 {
+  animation-delay: .38s;
+}
+
+.hero .hero-inner p {
+  animation-delay: .54s;
+}
+
+.hero .hero-actions {
+  animation-delay: .72s;
+}
+
+.hero .floating-card {
+  animation-delay: .92s;
+}
+
+@keyframes heroStaggerIn {
+  0% {
+    clip-path: inset(0 0 100% 0);
+    filter: blur(8px);
+    translate: 0 28px;
+  }
+  100% {
+    clip-path: inset(0 0 0 0);
+    filter: blur(0);
+    translate: 0 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero .eyebrow,
+  .hero .hero-inner h1,
+  .hero .hero-inner h2,
+  .hero .hero-inner p,
+  .hero .hero-actions,
+  .hero .floating-card {
+    animation: none !important;
+    clip-path: none !important;
+    filter: none !important;
+    translate: 0 0 !important;
+  }
+}
+
 /* Homepage news button spacing. */
 .news-more {
   margin-top: 46px !important;
@@ -240,7 +305,12 @@
 
   .join-wrap,
   .contact-info {
-    padding: 34px 24px;
+    padding: 36px 26px;
+  }
+
+  .join-wrap .sec-kicker,
+  .contact-info .sec-kicker {
+    letter-spacing: 4px;
   }
 
   .join-wrap h2,
@@ -251,10 +321,11 @@
   .join-wrap > .btn,
   .join-wrap > a.btn {
     width: 100%;
+    justify-self: stretch;
   }
 
   .contact-wrap {
-    gap: 22px;
+    gap: 24px;
   }
 
   .contact-info,
@@ -269,5 +340,9 @@
 
   .contact-map {
     padding: 36px 24px;
+  }
+
+  .contact-map h3 {
+    font-size: 26px;
   }
 }
