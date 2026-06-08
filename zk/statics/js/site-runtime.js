@@ -39,8 +39,9 @@
     ['buttons', 'statics/style/components/buttons.css'],
     ['chrome', 'statics/style/components/chrome.css'],
     ['cards', 'statics/style/components/cards.css'],
+    ['page-heroes', 'statics/style/components/page-heroes.css'],
     ['runtime-components', 'statics/style/components/runtime.css'],
-    ['nav-dropdown', 'statics/style/nav-dropdown.css']
+    ['navigation', 'statics/style/components/navigation.css']
   ];
 
   const q = (selector, root = document) => root.querySelector(selector);
