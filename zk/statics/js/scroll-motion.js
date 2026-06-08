@@ -73,17 +73,12 @@
   }
 
   function footerBrandHtml() {
-    return `<div class="footer-brand-card"><div class="brand-mini">${COMPANY_SHORT_NAME}</div><div class="footer-brand-en">EDUCATION PLATFORM</div><p>青少年学习力成长 · 家庭教育支持 · 课程合作共创</p></div>`;
+    return `<div class="footer-brand-card"><div class="footer-brand-mark">明</div><div class="brand-mini">${COMPANY_SHORT_NAME}</div><div class="footer-brand-en">EDUCATION PLATFORM</div><p>青少年学习力成长 · 家庭教育支持<br>· 课程合作共创</p></div>`;
   }
 
   function footerHtml(prefix) {
     const link = file => `${prefix}${file}`;
     return `<div class="container"><div class="footer-grid"><div>${footerBrandHtml()}</div><div><h4>关于我们</h4><a href="${link('about.html')}">公司简介</a><a href="${link('about.html')}">服务方向</a><a href="${link('about.html')}">发展愿景</a></div><div><h4>课程产品</h4><a href="${link('course-detail.html')}">心脑学习力专注营</a><a href="${link('photo-memory-detail.html')}">心脑学习力记忆营</a><a href="${link('camp-detail.html')}">心脑学习力阅读营</a><a href="${link('public-class-detail.html')}">心脑学习力自主营</a></div><div><h4>团队案例</h4><a href="${link('experts.html')}">专家团队</a><a href="${link('assistants.html')}">助教团队</a><a href="${link('cases.html')}">成功案例</a></div><div><h4>新闻活动</h4><a href="${link('company-news.html')}">公司动态</a><a href="${link('growth-news.html')}">成长资讯</a><a href="${link('limited-activity.html')}">限时活动</a></div><div><h4>加盟合作</h4><a href="${link('join.html')}">合作对象</a><a href="${link('join.html')}">合作流程</a><a href="${link('contact.html')}">联系我们</a></div></div><div class="copyright">© 2026 ${COMPANY_FULL_NAME}</div></div>`;
-  }
-
-  function normalizeFooterBrand(footer) {
-    const first = footer && footer.querySelector('.footer-grid > div:first-child');
-    if (first) first.innerHTML = footerBrandHtml();
   }
 
   function ensureFooterModule() {
@@ -95,10 +90,8 @@
       const main = document.querySelector('main.main, main') || document.body;
       main.insertAdjacentElement('afterend', footer);
     }
-    if (!footer.innerHTML.trim() || !footer.querySelector('.footer-grid')) {
-      footer.innerHTML = footerHtml(prefix);
-    }
-    normalizeFooterBrand(footer);
+    footer.classList.add('footer');
+    footer.innerHTML = footerHtml(prefix);
 
     let sticky = document.querySelector('.sticky');
     if (!sticky) {
@@ -119,6 +112,7 @@
     style.textContent = `
       .footer .footer-grid{border-bottom:0!important;}
       .footer .container>hr,.footer hr{display:none!important;}
+      .footer .footer-grid>div:first-child>*:not(.footer-brand-card){display:none!important;}
       .footer .footer-brand-card{position:relative!important;display:block!important;padding:0!important;color:#fff!important;}
       .footer .footer-brand-mark{width:58px!important;height:58px!important;border-radius:18px!important;display:grid!important;place-items:center!important;margin:0 0 26px!important;background:linear-gradient(135deg,#057a55,#00a77a)!important;color:#f3d28d!important;font-size:30px!important;font-weight:900!important;line-height:1!important;box-shadow:0 16px 34px rgba(0,0,0,.18)!important;}
       .footer .brand-mini{padding:0!important;position:static!important;margin:0!important;color:#fff!important;font-size:32px!important;line-height:1.2!important;font-weight:900!important;letter-spacing:1px!important;}
