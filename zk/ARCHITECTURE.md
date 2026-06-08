@@ -13,6 +13,7 @@
 5. 导航、页脚、课程卡片、课程详情页主体内容、课程挑战模块、旧文案修正都由统一运行时管理。
 6. 页面不要再手动重复引入 `scroll-motion.js` 或 `course-challenges.js`。
 7. 新增公共样式优先进入 `statics/style/core/` 或 `statics/style/components/`，不要再写入 JS 内联样式。
+8. 旧 `style.css`、`effects.css` 当前仅作为兼容层保留；新的公共样式应按分层文件新增或修改。
 
 ## 重要文件
 
@@ -25,11 +26,32 @@
 | `statics/js/course-challenges.js` | 兼容 shim。课程挑战模块已并入 `site-runtime.js`，此文件不再负责渲染。 |
 | `statics/style/core/tokens.css` | 全站设计变量，保留旧变量名并提供 `--zk-*` 新变量别名。 |
 | `statics/style/core/base.css` | 运行时安全基础层：视口稳定、表单字号、动效降级等。 |
+| `statics/style/core/layout.css` | 全站布局原语：`.container`、`.sec`、标题区、通用栅格/堆叠辅助类。 |
+| `statics/style/components/buttons.css` | 全站按钮体系：主按钮、金色按钮、线框按钮、焦点态、移动端按钮适配。 |
+| `statics/style/components/chrome.css` | 站点外壳：header、brand、hamburger、footer、sticky 联系入口。 |
+| `statics/style/components/cards.css` | 复用卡片体系：课程卡、新闻卡、痛点卡、案例卡、信任卡等。 |
 | `statics/style/components/runtime.css` | 运行时生成组件的样式：课程挑战、二维码背景、品牌 logo、页面转场。 |
-| `statics/style/nav-dropdown.css` | 下拉导航、移动端菜单、非首页 hero 背景，由运行时统一注入。 |
-| `statics/style/style.css` | 历史基础样式，暂时保留，后续逐步拆分。 |
+| `statics/style/nav-dropdown.css` | 下拉导航、移动端菜单、非首页 hero 背景，由运行时统一注入。后续可迁入 `components/navigation.css`。 |
+| `statics/style/style.css` | 历史基础样式，暂时保留为兼容层，后续逐步删除已迁移片段。 |
 | `statics/style/effects.css` | 历史视觉增强、动画与页脚样式，暂时保留，后续逐步拆分。 |
 | `statics/style/README.md` | CSS 分层与后续迁移规则。 |
+
+## 运行时 CSS 加载顺序
+
+`site-runtime.js` 按如下顺序注入公共 CSS：
+
+```text
+core/tokens.css
+core/base.css
+core/layout.css
+components/buttons.css
+components/chrome.css
+components/cards.css
+components/runtime.css
+nav-dropdown.css
+```
+
+该顺序保证变量先加载，基础和布局其次，组件随后，运行时生成组件和导航特殊样式最后接管。
 
 ## 修改规则
 
@@ -43,7 +65,7 @@ zk/statics/js/site-data.js
 
 不要在每个详情页里重复修改。详情页会被运行时覆盖。
 
-### 修改导航或页脚
+### 修改导航或页脚内容
 
 优先修改：
 
@@ -62,6 +84,28 @@ zk/statics/style/core/tokens.css
 ```
 
 颜色、阴影、容器宽度、动画时长等基础变量应集中管理。
+
+### 修改全站布局
+
+优先修改：
+
+```text
+zk/statics/style/core/layout.css
+```
+
+例如容器宽度、section 上下间距、标题区排版等。
+
+### 修改按钮、站点外壳、卡片
+
+优先修改：
+
+```text
+zk/statics/style/components/buttons.css
+zk/statics/style/components/chrome.css
+zk/statics/style/components/cards.css
+```
+
+不要继续把这些通用样式堆回 `style.css`。
 
 ### 修改运行时生成组件样式
 
@@ -91,8 +135,8 @@ zk/statics/style/components/runtime.css
 - 现有 CSS 文件名不变，避免全站一次性破坏样式引用。
 - `course-challenges.js` 保留为 shim，避免旧缓存或旧页面引用时报错。
 - `main.js` 保留原文件名，避免所有页面大规模改 script 路径。
-- `style.css`、`effects.css` 与页面专属 CSS 暂时保留；新公共样式逐步进入 `core/` 与 `components/`。
+- `style.css`、`effects.css` 与页面专属 CSS 暂时保留；新公共样式已逐步进入 `core/` 与 `components/`。
 
 ## 后续建议
 
-下一轮可以继续把 `style.css` 与 `effects.css` 拆为 `core/layout.css`、`components/buttons.css`、`components/cards.css`、`components/footer.css`、`pages/home.css` 等，并逐步删除页面内联 `<style>`。每次迁移一个组件族，避免一次性改动导致页面视觉回归风险。
+下一轮可以继续把 `nav-dropdown.css` 拆为 `components/navigation.css`，并将 `style.css` 中首页专属 section 迁入 `pages/home.css`。每次迁移一个组件族，确保页面视觉稳定后再删除旧样式片段。
