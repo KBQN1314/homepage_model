@@ -45,7 +45,7 @@ components/runtime.css
 components/navigation.css
 ```
 
-`site-runtime.js` 也会按相同顺序注入公共 CSS，以兼容未显式加载 `style.css` 的旧页面或缓存页面。
+`site-runtime.js` 会先检测页面是否已经加载 `statics/style/style.css`。正常页面已经加载时，运行时不会重复注入上述公共层；只有未来少数没有加载 `style.css` 的独立页面，才会按文件逐个兜底注入，并且会逐个检查是否已存在。
 
 页面级 CSS 由对应 HTML 显式加载：
 
