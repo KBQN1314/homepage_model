@@ -14,7 +14,7 @@
 6. 页面不要再手动重复引入 `scroll-motion.js` 或 `course-challenges.js`。
 7. 新增公共样式优先进入 `statics/style/core/` 或 `statics/style/components/`，不要再写入 JS 内联样式。
 8. 页面级样式统一进入 `statics/style/pages/`，不要重新新增旧式临时覆盖文件。
-9. `style.css`、`effects.css` 当前仅作为兼容层保留；新的公共样式应按分层文件新增或修改。
+9. `style.css` 仅作为兼容导入入口保留，不再承载实际样式规则；`effects.css` 仅作为动效层保留。
 
 ## 重要文件
 
@@ -26,7 +26,7 @@
 | `statics/js/scroll-motion.js` | 滚动入场动画与移动端菜单增强。由运行时统一加载。 |
 | `statics/js/course-challenges.js` | 兼容 shim。课程挑战模块已并入 `site-runtime.js`，此文件不再负责渲染。 |
 | `statics/style/core/tokens.css` | 全站设计变量。 |
-| `statics/style/core/base.css` | 运行时安全基础层。 |
+| `statics/style/core/base.css` | reset、基础元素、loading、body、无障碍动效降级等基础层。 |
 | `statics/style/core/layout.css` | 全站布局原语。 |
 | `statics/style/components/buttons.css` | 全站按钮体系。 |
 | `statics/style/components/chrome.css` | 站点外壳：header、brand、hamburger、footer、sticky 联系入口。 |
@@ -45,13 +45,13 @@
 | `statics/style/pages/cases.css` | 案例页面级样式入口，包含案例列表、案例详情、案例图片、案例指标和案例 CTA。 |
 | `statics/style/pages/utility.css` | 轻量独立页面样式入口，包含 404、隐私政策、提交成功等页面正文卡片和 CTA。 |
 | `statics/style/team-avatars.css` | 团队头像资源层，仅维护专家/助教头像类和头像图片。 |
-| `statics/style/style.css` | 历史基础样式，暂时保留为兼容层。 |
-| `statics/style/effects.css` | 历史视觉增强和动效样式，暂时保留为兼容层。 |
+| `statics/style/style.css` | 历史兼容入口，通过 `@import` 聚合 core/components 层，保留稳定 URL。 |
+| `statics/style/effects.css` | 全站动效入口，仅保留 hero 动效、reveal、滚动入场、页面转场和动效降级。 |
 | `statics/style/README.md` | CSS 分层与迁移规则。 |
 
 ## 公共 CSS 加载顺序
 
-`site-runtime.js` 按如下顺序注入公共 CSS：
+`style.css` 作为兼容入口导入以下公共层；`site-runtime.js` 也会按相同顺序注入，以兼容未显式加载 `style.css` 的旧页面或缓存页面：
 
 ```text
 core/tokens.css
@@ -138,6 +138,16 @@ zk/statics/style/pages/utility.css
 
 已迁移页面不要重新新增或引用旧的 `home.css`、`home-polish.css`、`course-detail.css`、`about.css`、`courses.css`、`contact.css`、`join.css`、`news.css`、`team.css`、`cases.css`。
 
+### 修改动效
+
+优先修改：
+
+```text
+zk/statics/style/effects.css
+```
+
+该文件只维护 hero 动效、reveal、滚动入场、页面转场和动效降级；不要把 footer、导航或页面布局样式放回这里。
+
 ### 修改团队头像资源
 
 优先修改：
@@ -165,9 +175,9 @@ zk/statics/style/team-avatars.css
 - 现有 HTML 路径不变，避免旧链接失效。
 - `course-challenges.js` 保留为 shim，避免旧缓存或旧页面引用时报错。
 - `main.js` 保留原文件名，避免所有页面大规模改 script 路径。
-- `style.css`、`effects.css` 暂时保留为历史兼容层。
+- `style.css` 保留为兼容导入入口；`effects.css` 保留为动效入口。
 - 首页、课程详情页、关于我们页、课程列表页、联系页、加盟合作页、新闻活动页、团队/专家页、案例页、轻量独立页样式迁移已完成，对应旧 CSS 入口已删除或替换。
 
 ## 后续建议
 
-下一轮可以开始把 `style.css` 拆成真正的兼容入口，并逐步清理 `effects.css` 中已经被组件层接管的样式。每次迁移一个组件族，确保页面视觉稳定后再删除旧样式片段。
+下一轮可以检查是否仍有冗余 CSS 注入或旧路径引用，并考虑减少重复加载的公共 CSS。每次迁移一个页面族，确保页面视觉稳定后再删除旧样式片段。
