@@ -45,11 +45,17 @@
     ['绘制跨章节数学知识全景图，观察孩子能否形成整体结构。', '绘制知识全景图，观察孩子能否形成整体结构。']
   ];
 
-  function pathPrefix() {
-    const p = location.pathname;
-    if (p.includes('/zk/news/company/') || p.includes('/zk/news/growth/') || p.includes('/zk/news/limited/')) return '../../';
-    if (p.includes('/zk/expert/') || p.includes('/zk/cases/')) return '../';
+  function scriptPrefix(fileName) {
+    const scripts = Array.from(document.scripts || []);
+    const script = document.currentScript || scripts.find(s => (s.getAttribute('src') || '').includes(fileName));
+    const src = script ? (script.getAttribute('src') || '') : '';
+    const index = src.indexOf(fileName);
+    if (index >= 0) return src.slice(0, index);
     return '';
+  }
+
+  function pathPrefix() {
+    return scriptPrefix('statics/js/scroll-motion.js');
   }
 
   function normalizeTextValue(value) {
@@ -121,6 +127,14 @@
     const style = document.createElement('style');
     style.id = 'siteMotionAndMobileStyle';
     style.textContent = `
+      header .nav-dropdowns{display:flex;align-items:center;gap:30px;}
+      header .nav-item{position:relative;display:flex;align-items:center;}
+      header .nav-link,header .nav-direct{color:inherit;text-decoration:none;}
+      header .nav-panel{position:absolute;left:50%;top:calc(100% + 14px);min-width:190px;padding:14px;background:#fff;border:1px solid rgba(4,92,57,.12);border-radius:16px;box-shadow:0 18px 48px rgba(3,24,18,.14);opacity:0;visibility:hidden;pointer-events:none;transform:translate(-50%,-8px);transition:.24s ease;z-index:1002;display:grid;gap:6px;}
+      header .nav-item.open .nav-panel,header .nav-item:hover .nav-panel{opacity:1;visibility:visible;pointer-events:auto;transform:translate(-50%,0);}
+      header .nav-panel a{display:block;padding:9px 10px;border-radius:10px;color:#1e2b27;text-decoration:none;white-space:nowrap;font-weight:600;}
+      header .nav-panel a:hover{background:rgba(199,175,130,.16);color:#045c39;}
+
       .footer .footer-grid{border-bottom:0!important;}
       .footer .container>hr,.footer hr{display:none!important;}
       .footer .footer-grid>div:first-child>*:not(.footer-brand-card){display:none!important;}
@@ -259,8 +273,8 @@
   function init() {
     ensureFooterModule();
     injectStyle();
-    normalizeTeamNavLinks();
     setupMobileMenu();
+    normalizeTeamNavLinks();
     normalizeSelfCourseTexts();
     setupScrollMotion();
     setTimeout(function () { ensureFooterModule(); normalizeTeamNavLinks(); normalizeSelfCourseTexts(); setupMobileMenu(); }, 180);
