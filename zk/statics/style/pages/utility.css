@@ -1,0 +1,88 @@
+/*
+ * Utility page-level stylesheet.
+ *
+ * Used by lightweight standalone pages such as 404, privacy policy,
+ * and form-success pages.
+ */
+
+.utility-section {
+  background: #fff;
+}
+
+.utility-card {
+  background: #fff;
+  border: 1px solid #eee;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, .04);
+  padding: 38px 42px;
+}
+
+.utility-card h2 {
+  color: var(--green);
+  font-size: 30px;
+  margin-bottom: 18px;
+}
+
+.utility-card h3 {
+  color: #1e2b27;
+  font-size: 20px;
+  margin: 24px 0 10px;
+}
+
+.utility-card p {
+  color: #68736e;
+  line-height: 1.95;
+  margin-bottom: 16px;
+}
+
+.utility-card p:last-child {
+  margin-bottom: 0;
+}
+
+.utility-cta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 28px;
+  background: #fff;
+  padding: 42px 48px;
+  box-shadow: var(--shadow);
+}
+
+.utility-cta h2 {
+  color: var(--green);
+  font-size: 30px;
+  margin-bottom: 10px;
+}
+
+.utility-cta p {
+  color: #6d7873;
+  line-height: 1.8;
+}
+
+.utility-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  flex: none;
+}
+
+.utility-actions .btn-line {
+  border-color: rgba(4, 92, 57, .18);
+  color: var(--green);
+  background: transparent;
+}
+
+@media (max-width: 760px) {
+  .utility-card,
+  .utility-cta {
+    padding: 28px;
+  }
+
+  .utility-cta {
+    display: block;
+  }
+
+  .utility-actions {
+    margin-top: 24px;
+  }
+}
