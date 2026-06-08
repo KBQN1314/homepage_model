@@ -17,6 +17,7 @@
 9. 首页页面级样式统一从 `statics/style/pages/home.css` 进入，不再额外拆散引用首页 polish 文件或旧首页兼容文件。
 10. 课程详情页样式统一从 `statics/style/pages/detail.css` 进入，不再引用旧 `course-detail.css`。
 11. 关于我们页样式统一从 `statics/style/pages/about.css` 进入，不再引用旧 `about.css`。
+12. 课程列表页样式统一从 `statics/style/pages/courses.css` 进入，不再引用旧 `courses.css`。
 
 ## 重要文件
 
@@ -39,6 +40,7 @@
 | `statics/style/pages/home.css` | 首页页面级样式入口，管理首页 section、首页媒体资源路径与首页 polish。 |
 | `statics/style/pages/detail.css` | 课程详情页页面级样式入口，管理详情 hero、详情布局、侧栏、CTA、关联课程等。 |
 | `statics/style/pages/about.css` | 关于我们页面级样式入口，管理关于我们页 hero、概览、价值卡、服务对象、愿景和 CTA。 |
+| `statics/style/pages/courses.css` | 课程列表页面级样式入口，管理课程页 hero、课程体系、学习路径、能力维度、服务流程和 CTA。 |
 | `statics/style/style.css` | 历史基础样式，暂时保留为兼容层，后续逐步删除已迁移片段。 |
 | `statics/style/effects.css` | 历史视觉增强、动画与页脚样式，暂时保留，后续逐步拆分。 |
 | `statics/style/README.md` | CSS 分层与后续迁移规则。 |
@@ -59,12 +61,13 @@ components/runtime.css
 components/navigation.css
 ```
 
-首页、课程详情页和关于我们页额外由对应 HTML 显式加载：
+首页、课程详情页、关于我们页和课程列表页额外由对应 HTML 显式加载：
 
 ```text
 pages/home.css
 pages/detail.css
 pages/about.css
+pages/courses.css
 ```
 
 该顺序保证变量先加载，基础和布局其次，组件随后，页面公共视觉、运行时生成组件和导航交互样式最后接管；页面专属样式作为页面入口在 HTML 中声明。
@@ -154,6 +157,16 @@ zk/statics/style/pages/about.css
 
 关于我们页 hero、概览、价值卡、服务对象、愿景和 CTA 等页面级样式都从这里进入；不要重新新增或引用旧 `about.css`。
 
+### 修改课程列表页样式
+
+优先修改：
+
+```text
+zk/statics/style/pages/courses.css
+```
+
+课程列表页 hero、课程体系、学习路径、能力维度、服务流程和 CTA 都从这里进入；不要重新新增或引用旧 `courses.css`。
+
 ### 修改内页顶部 hero 背景
 
 优先修改：
@@ -162,7 +175,7 @@ zk/statics/style/pages/about.css
 zk/statics/style/components/page-heroes.css
 ```
 
-非课程详情页、非关于我们页的通用顶部背景、遮罩和层级统一放在这里。课程详情页专属 hero 放在 `pages/detail.css`，关于我们页专属 hero 放在 `pages/about.css`。
+非课程详情页、非关于我们页、非课程列表页的通用顶部背景、遮罩和层级统一放在这里。课程详情页专属 hero 放在 `pages/detail.css`，关于我们页专属 hero 放在 `pages/about.css`，课程列表页专属 hero 放在 `pages/courses.css`。
 
 ### 修改运行时生成组件样式
 
@@ -195,7 +208,8 @@ zk/statics/style/components/runtime.css
 - 首页样式迁移已完成：`home.css` 与 `home-polish.css` 已删除，首页样式统一由 `pages/home.css` 管理。
 - 课程详情页样式迁移已完成：`course-detail.css` 已删除，四个课程详情页统一引用 `pages/detail.css`。
 - 关于我们页样式迁移已完成：`about.css` 已删除，关于我们页统一引用 `pages/about.css`。
+- 课程列表页样式迁移已完成：`courses.css` 已删除，课程列表页统一引用 `pages/courses.css`。
 
 ## 后续建议
 
-下一轮可以继续整理课程列表页、联系页、加盟合作页等页面专属 CSS。每次迁移一个页面族，确保页面视觉稳定后再删除旧样式片段。
+下一轮可以继续整理联系页、加盟合作页等页面专属 CSS。每次迁移一个页面族，确保页面视觉稳定后再删除旧样式片段。
