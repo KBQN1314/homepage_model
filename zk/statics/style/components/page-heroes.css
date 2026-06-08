@@ -1,0 +1,47 @@
+/* Shared non-home page hero background treatment. */
+.page-hero,
+.course-hero,
+.detail-hero,
+.team-hero,
+.cases-hero,
+.news-hero,
+.join-hero,
+.contact-hero {
+  background:
+    linear-gradient(90deg, rgba(4, 42, 29, .78), rgba(16, 27, 23, .48)),
+    url('../../images/standard.svg') center/cover no-repeat !important;
+}
+
+.page-hero::before,
+.course-hero::before,
+.detail-hero::before,
+.team-hero::before,
+.cases-hero::before,
+.news-hero::before,
+.join-hero::before,
+.contact-hero::before {
+  display: none !important;
+}
+
+.page-hero::after,
+.course-hero::after,
+.detail-hero::after,
+.team-hero::after,
+.cases-hero::after,
+.news-hero::after,
+.join-hero::after,
+.contact-hero::after {
+  background: radial-gradient(circle at 72% 38%, rgba(199, 175, 130, .22), transparent 34%) !important;
+}
+
+.page-hero .container,
+.course-hero .container,
+.detail-hero .container,
+.team-hero .container,
+.cases-hero .container,
+.news-hero .container,
+.join-hero .container,
+.contact-hero .container {
+  position: relative;
+  z-index: 2;
+}
