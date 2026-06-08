@@ -51,40 +51,13 @@
 | `statics/style/effects.css` | 全站动效入口，仅保留 hero 动效、reveal、滚动入场、页面转场和动效降级。 |
 | `statics/style/README.md` | CSS 分层与迁移规则。 |
 
-## 公共 CSS 加载顺序
+## 样式加载规则
 
-`style.css` 作为兼容入口导入以下公共层：
-
-```text
-core/tokens.css
-core/base.css
-core/layout.css
-components/buttons.css
-components/chrome.css
-components/cards.css
-components/page-heroes.css
-components/runtime.css
-components/navigation.css
-```
+`style.css` 作为兼容入口导入公共层：`core/tokens.css`、`core/base.css`、`core/layout.css`、`components/buttons.css`、`components/chrome.css`、`components/cards.css`、`components/page-heroes.css`、`components/runtime.css`、`components/navigation.css`。
 
 `site-runtime.js` 会先检测页面是否已经加载 `statics/style/style.css`。正常页面已经加载时，运行时不会重复注入上述公共层；只有未来少数没有加载 `style.css` 的独立页面，才会按文件逐个兜底注入，并且会逐个检查是否已存在。
 
-页面级 CSS 由对应 HTML 显式加载，例如：
-
-```text
-pages/home.css
-pages/detail.css
-pages/about.css
-pages/courses.css
-pages/contact.css
-pages/join.css
-pages/news.css
-pages/team.css
-pages/cases.css
-pages/utility.css
-```
-
-`site-runtime.js` 同时会根据当前路由判断页面级 CSS 是否已经存在；若缺失，会补齐对应 `pages/*.css`，避免未来新增页面漏引页面样式。
+页面级 CSS 由对应 HTML 显式加载，例如 `pages/home.css`、`pages/detail.css`、`pages/about.css`、`pages/courses.css`、`pages/contact.css`、`pages/join.css`、`pages/news.css`、`pages/team.css`、`pages/cases.css`、`pages/utility.css`。`site-runtime.js` 会根据当前路由判断页面级 CSS 是否已经存在；若缺失，会补齐对应 `pages/*.css`，避免未来新增页面漏引页面样式。
 
 ## 修改规则
 
@@ -146,59 +119,19 @@ zk/statics/style/pages/utility.css
 
 ### 修改课程详情页结构
 
-四个课程详情页已经采用最小运行时 shell。HTML 只需要保留以下运行时挂载点：
-
-```html
-<header id="header"></header>
-<section class="detail-hero">
-  <div class="container reveal show">
-    <div class="page-kicker">Course Detail</div>
-    <h1></h1>
-    <p></p>
-    <div class="detail-tags"></div>
-    <div class="breadcrumb"></div>
-  </div>
-</section>
-<main class="main">
-  <section class="sec detail-overview">
-    <div class="container detail-layout">
-      <div class="detail-main"></div>
-      <aside class="side-card reveal show"></aside>
-    </div>
-  </section>
-  <section class="sec detail-cta"><div class="container"><div class="detail-cta-wrap reveal show"></div></div></section>
-</main>
-<footer class="footer"></footer>
-<div class="sticky"></div>
-```
-
-课程标题、简介、标签、面包屑、课程介绍、训练路径、挑战模块、侧栏和 CTA 都由 `site-runtime.js` 根据当前文件名自动渲染。
+四个课程详情页已经采用最小运行时 shell。HTML 只需要保留 `header#header`、`detail-hero`、`detail-main`、`side-card`、`detail-cta-wrap`、`footer.footer`、`div.sticky` 等运行时挂载点。课程标题、简介、标签、面包屑、课程介绍、训练路径、挑战模块、侧栏和 CTA 都由 `site-runtime.js` 根据当前文件名自动渲染。
 
 ### 修改专家详情页结构
 
-专家详情页目前采用“外壳运行时化、正文静态保留”的模式：
-
-```html
-<header id="header"></header>
-<section class="team-hero">...</section>
-<main class="main">...</main>
-```
-
-导航由 `site-runtime.js` 统一渲染；专家姓名、简介、履历、头像类名和上一篇/下一篇链接仍保留在对应 HTML 中。除非先新增专家数据模型和渲染函数，否则不要删除专家详情正文内容。
+专家详情页目前采用“外壳运行时化、正文静态保留”的模式。导航由 `site-runtime.js` 统一渲染；专家姓名、简介、履历、头像类名和上一篇/下一篇链接仍保留在对应 HTML 中。除非先新增专家数据模型和渲染函数，否则不要删除专家详情正文内容。
 
 ### 修改案例详情页结构
 
-案例详情页目前采用“外壳运行时化、正文静态保留”的模式：
+案例详情页目前采用“外壳运行时化、正文静态保留”的模式。导航、页脚和右下角联系入口由 `site-runtime.js` 统一渲染；案例标题、正文、指标、上下篇链接仍保留在对应 HTML 中。除非先新增案例数据模型和渲染函数，否则不要删除案例详情正文内容。
 
-```html
-<header id="header"></header>
-<section class="cases-hero">...</section>
-<main class="main">...</main>
-<footer class="footer"></footer>
-<div class="sticky"></div>
-```
+### 修改新闻文章详情页结构
 
-导航、页脚和右下角联系入口由 `site-runtime.js` 统一渲染；案例标题、正文、指标、上下篇链接仍保留在对应 HTML 中。除非先新增案例数据模型和渲染函数，否则不要删除案例详情正文内容。
+新闻文章详情页目前采用“外壳运行时化、正文静态保留”的模式。导航、页脚和右下角联系入口由 `site-runtime.js` 统一渲染；新闻标题、正文、分类侧栏、上下篇链接、图片和图注仍保留在对应 HTML 中。除非先新增新闻数据模型和渲染函数，否则不要删除新闻文章正文内容。
 
 ### 修改动效
 
@@ -245,3 +178,8 @@ zk/statics/style/team-avatars.css
 - 四个课程详情页已采用最小运行时 shell：详情内容由 `site-runtime.js` 根据文件名统一渲染。
 - 八个专家详情页已采用外壳运行时化：导航由运行时统一渲染，专家正文内容仍静态保留在 HTML 中。
 - 八个案例详情页已采用外壳运行时化：导航、页脚和 sticky 由运行时统一渲染，案例正文内容仍静态保留在 HTML 中。
+- 九个新闻文章详情页已采用外壳运行时化：导航、页脚和 sticky 由运行时统一渲染，新闻正文内容仍静态保留在 HTML 中。
+
+## 后续建议
+
+下一轮可以继续压缩新闻列表页、关于我们页、课程列表页等一级页面的重复外壳，或者新增专家/案例/新闻数据模型，把静态正文进一步抽离到数据层。每次迁移一个页面族，确保页面视觉稳定后再删除旧结构。
