@@ -60,7 +60,54 @@
 
 `main.js` 和 `scroll-motion.js` 会根据脚本实际引用路径自动计算当前页面层级，因此后续不要再用 `/zk/` 判断部署环境。
 
-## 三、宝塔 Nginx 配置建议
+## 三、页面外壳规则
+
+除首页外，大多数页面已经采用运行时统一外壳：
+
+```html
+<header id="header"></header>
+...
+<footer class="footer"></footer>
+<div class="sticky"></div>
+<script src="statics/js/main.js"></script>
+```
+
+二级、三级页面只需要根据层级调整 `main.js` 的相对路径。不要在新页面中复制整段旧导航、旧页脚或移动端菜单代码。顶部导航、底部 footer、右侧联系入口均由运行时统一生成。
+
+首页 `index.html` 仍保留静态 header/footer 作为首屏兜底，不建议为了小改动重写整个首页。
+
+## 四、当前内容状态
+
+### 案例页
+
+当前只保留 2 个真实案例：
+
+```text
+/cases/case-01.html
+/cases/case-02.html
+```
+
+`case-03.html` 到 `case-08.html` 已改为下线跳转页，访问时会跳回 `cases.html`，不再展示旧示例案例内容。
+
+### 移动端目录
+
+移动端目录当前规则为：
+
+```text
+只显示一级菜单
+点击一级菜单直接跳转
+不展开二级菜单
+不显示灰色遮罩
+打开目录时隐藏右侧微信/联系悬浮按钮
+```
+
+如未来要恢复二级菜单，需要同时修改 `main.js`、`scroll-motion.js` 和 `nav-dropdown.css`，不要只改其中一个文件。
+
+### 旧文案兼容
+
+`main.js` 和 `scroll-motion.js` 中保留了旧品牌和旧“自主营（数学）”相关替换表，主要用于旧缓存或未清理页面的兜底兼容。新页面正文中不应继续写入旧品牌或旧课程名称。
+
+## 五、宝塔 Nginx 配置建议
 
 普通静态站点一般不需要额外反向代理。宝塔中站点根目录应指向上传后的目录，例如：
 
@@ -76,7 +123,7 @@ index.html
 
 如果启用了缓存、CDN 或浏览器强缓存，修改 CSS/JS 后可能需要等待或清理缓存。
 
-## 四、部署后检查清单
+## 六、部署后检查清单
 
 部署后建议依次检查以下页面：
 
@@ -86,7 +133,9 @@ index.html
 /courses.html
 /team.html
 /expert/expert-02.html
+/cases.html
 /cases/case-01.html
+/cases/case-02.html
 /news.html
 /news/company/company-03.html
 /news/limited/limited-03.html
@@ -95,25 +144,28 @@ index.html
 
 重点检查：
 
-1. 左上角 logo 是否正常显示。
+1. 左上角 logo 是否正常显示，不应放大覆盖页面。
 2. 顶部导航是否横向整齐显示。
-3. 课程产品、专家团队、新闻活动下拉菜单是否默认隐藏，鼠标悬停或移动端点击后才显示。
-4. 二级页面和三级页面是否能正常加载样式。
-5. 点击“专家团队”是否跳转到 `team.html`。
-6. 自主营页面和导航中是否不再出现“自主营（数学）”。
-7. 手机端点击目录按钮后，是否显示清晰的右侧抽屉菜单。
+3. 课程产品、专家团队、新闻活动下拉菜单在桌面端是否默认隐藏，鼠标悬停后才显示。
+4. 手机端点击目录按钮后，是否显示清晰的右侧抽屉菜单，且只显示一级菜单。
+5. 二级页面和三级页面是否能正常加载样式。
+6. 点击“专家团队”是否跳转到 `team.html`。
+7. 自主营页面和导航中是否不再出现“自主营（数学）”。
+8. 右侧微信/联系悬浮按钮是否不遮挡手机端目录。
 
-## 五、常见问题
+## 七、常见问题
 
-### 1. logo 破图
+### 1. logo 破图或放大
 
-通常是 `statics/images/logo.svg` 路径错误。请确认页面中 `main.js` 的引用层级正确：
+通常是 `statics/images/logo.svg` 路径错误，或 header logo 样式没有加载。请确认页面中 `main.js` 的引用层级正确：
 
 ```text
 一级页面：statics/js/main.js
 二级页面：../statics/js/main.js
 三级页面：../../statics/js/main.js
 ```
+
+当前 `effects.css` 中有 logo 尺寸兜底，正常情况下 logo 不应超过 50px。
 
 ### 2. 顶部菜单全部摊开
 
@@ -125,7 +177,17 @@ statics/style/nav-dropdown.css
 ../../statics/style/nav-dropdown.css
 ```
 
-### 3. 宝塔正常，GitHub Pages 不正常，或反过来
+### 3. 内页没有顶部导航
+
+如果页面写的是：
+
+```html
+<header id="header"></header>
+```
+
+则需要确认 `main.js` 和运行时补丁是否正常加载。空 header 会由 `scroll-motion.js` 自动补全。
+
+### 4. 宝塔正常，GitHub Pages 不正常，或反过来
 
 说明代码中可能仍有绝对路径或固定环境判断。后续修改时不要写：
 
@@ -138,7 +200,7 @@ statics/style/nav-dropdown.css
 
 应使用相对路径，或通过 `main.js` / `scroll-motion.js` 的路径工具生成。
 
-### 4. 修改后浏览器仍显示旧内容
+### 5. 修改后浏览器仍显示旧内容
 
 可尝试：
 
@@ -151,7 +213,7 @@ Ctrl + F5
 
 移动端微信、Safari 等浏览器缓存可能更顽固，必要时可给 CSS/JS 增加版本号。
 
-## 六、后续修改约束
+## 八、后续修改约束
 
 后续新增页面时，应遵守：
 
@@ -161,4 +223,5 @@ Ctrl + F5
 4. 三级页面引用 `../../statics/js/main.js`。
 5. 不新增 `/zk/` 作为路径判断条件。
 6. 不在每个页面复制复杂导航逻辑，导航和补丁逻辑优先交给 `main.js` 与 `scroll-motion.js`。
-
+7. 不要直接引用 `scroll-motion.js`；由 `main.js` 统一加载。
+8. 不要为了单个小改动重写整个 `index.html`。首页需要单独做结构整理专项时再处理。
