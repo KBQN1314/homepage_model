@@ -6,7 +6,7 @@ const COURSE_ITEMS = [
   { key: 'focus', name: '心脑学习力专注营', href: 'course-detail.html', price: '9800元 / 期（7天6夜）' },
   { key: 'memory', name: '心脑学习力记忆营', href: 'photo-memory-detail.html', price: '9800元 / 期（7天6夜）' },
   { key: 'reading', name: '心脑学习力阅读营', href: 'camp-detail.html', price: '9800元 / 期（7天6夜）' },
-  { key: 'self', name: '心脑学习力自主营（数学）', href: 'public-class-detail.html', price: '9800元 / 期（7天6夜）' }
+  { key: 'self', name: '心脑学习力自主营', href: 'public-class-detail.html', price: '9800元 / 期（7天6夜）' }
 ];
 
 const COURSE_COPY = {
@@ -38,64 +38,46 @@ const COURSE_COPY = {
     effects: ['阅读速度和信息摄入效率提升', '读完后更容易复述核心结构和关键细节', '面对大篇幅材料更从容，减少“读不完”的焦虑', '逐步把阅读从苦差事转化为更沉浸的学习体验']
   },
   self: {
-    tag: '数学自学', systemTag: '数学自主营',
-    text: '面向小学三年级至初中三年级，围绕数学教材自学训练，帮助孩子从“等老师讲”转向“自己读懂、自己提问、自己验证”。',
-    list: ['格定义五步法', '格定理四步法', 'AI辅助提问与答案验证'],
-    detailIntro: '很多孩子数学学不好，并不只是知识点不会，而是没有形成独立学习新知识的路径。心脑学习力自主营（数学）通过格定义五步法、格定理四步法和AI辅助提问验证，训练孩子自己读懂教材、讲清概念、整理错题、建立知识全景图。',
-    paths: ['格物入门', '攻坚深化', '知识联网', '自证结营'],
-    audience: ['小学三年级至初中三年级学生', '希望减少补习依赖、提升数学自学能力的孩子', '拿到新课本不知道怎么学，遇到定义和定理就卡住的学生', '愿意尝试把AI当作学习助教，而不是抄答案工具的孩子'],
-    effects: ['拿到新数学教材知道怎么开始学', '能用大白话讲清定义和定理', '能用错题本和问天录定位自己的知识漏洞', '能绘制跨章节知识全景图，形成可迁移到其他学科的自学方法']
+    tag: 'AI自主', systemTag: '自主学习',
+    text: '面向适龄青少年，围绕课本与学习任务进行自主学习训练，帮助孩子从“等老师讲”转向“自己读懂、自己提问、自己验证”。',
+    list: ['自主阅读方法', '核心概念梳理', 'AI辅助提问与答案验证'],
+    detailIntro: '很多孩子学习不好，并不只是知识点不会，而是没有形成独立学习新知识的路径。心脑学习力自主营通过方法规则梳理、学习任务拆解和AI辅助提问验证，训练孩子自己读懂材料、讲清概念、整理错题、建立知识全景图。',
+    paths: ['方法入门', '攻坚深化', '知识联网', '自证结营'],
+    audience: ['适龄青少年', '希望减少补习依赖、提升自主学习能力的孩子', '拿到新材料不知道怎么学，遇到核心概念就卡住的学生', '愿意尝试把AI当作学习助教，而不是抄答案工具的孩子'],
+    effects: ['拿到新学习材料知道怎么开始学', '能用大白话讲清核心概念和方法规则', '能用错题本和问天录定位自己的知识漏洞', '能绘制知识全景图，形成可复用的自主学习方法']
   }
 };
 
 const COURSE_CHALLENGES = {
-  focus: {
-    title: '看得见的阶段挑战',
-    intro: '专注力训练不只看孩子“听不听话”，而是通过可观察的任务，帮助家长看到孩子进入学习状态、保持专注和自我调节的过程变化。',
-    items: [['15→30分钟静坐专注观察','通过静坐、呼吸和身体锚定任务，观察孩子从安静坐下到稳定投入的阶段变化。'],['10秒整页摄入体验','通过短时视觉摄入和复述任务，观察孩子是否更容易锁定信息重点。'],['抗干扰任务挑战','通过听指令、视觉追踪和抗干扰小游戏，观察孩子是否更容易锁定任务。'],['21天家庭陪跑','营期后配合家庭练习和反馈记录，帮助家长把课堂训练延伸到日常学习场景。']],
-    note: '以上为专注力训练中的阶段观察项目，不作为统一承诺结果；具体表现会因孩子基础、参与状态和课后练习情况有所差异。'
-  },
-  memory: {
-    title: '结营挑战：让记忆变化看得见',
-    intro: '记忆营设置阶段性挑战项目，观察孩子在静定专注、脑内成像、整页摄入和信息提取方面的训练变化。',
-    items: [['5秒单词成像挑战','观察孩子是否能快速把英语单词转化为更清晰的脑内图像。'],['1分钟古诗图像记忆挑战','通过古诗文图像化处理，观察孩子的快速记忆和语言提取能力。'],['5分钟短文摄入挑战','围绕约300字短文进行整体摄入、复述或默写反馈，观察信息提取质量。'],['10秒整页摄入挑战','通过整页材料摄入与信息提取任务，观察脑内页面保持和提取情况。'],['陌生材料限时反馈','通过陌生材料阅读、笔试或口述反馈，观察记忆方法是否具备迁移可能。']],
-    note: '以上为课程训练中的阶段挑战项目，不作为统一承诺结果；实际表现会受孩子基础、专注状态、年龄阶段和练习完成度影响。'
-  },
-  reading: {
-    title: '阅读突破挑战：速度、理解和复述一起看',
-    intro: '阅读训练不只是追求“读得快”，而是同时观察阅读速度、理解率、结构复述和大篇幅材料处理能力。',
-    items: [['300→3000字/分钟速度挑战','以阶段训练目标形式观察阅读速度变化，同时结合理解反馈综合判断。'],['75%理解率反馈','通过限时阅读后的问题回答、复述和结构提取，观察理解质量。'],['整页摄入挑战','训练孩子从局部字词阅读转向整体页面摄入，观察信息捕捉效率。'],['核心结构复述挑战','读完后用自己的话复述人物、事件、观点、结构和关键细节。'],['大篇幅限时阅读反馈','通过较长材料限时阅读，观察孩子面对考试阅读量时的稳定性。']],
-    note: '以上为阅读训练中的阶段观察项目，训练目标是综合提升速度、理解和复述质量；具体表现会因孩子基础和练习情况有所差异。'
-  },
-  self: {
-    title: '4天自学挑战：让孩子体验“我能自己学”',
-    intro: '自主营（数学）围绕一本数学教材展开训练，通过格定义五步法、格定理四步法、问天录、错题本和AI辅助验证，帮助孩子体验从读懂教材到测评反馈的完整闭环。',
-    items: [['4天一本书核心挑战','围绕一本数学教材完成核心学习任务，观察孩子自主学习路径是否建立。'],['90分闭卷测评挑战','以闭卷测评作为阶段反馈方式，观察孩子对核心内容的掌握情况。'],['定义定理大白话表达','训练孩子用自己的语言讲清数学定义、定理和解题逻辑。'],['AI 24小时助教使用','训练孩子向AI提出精准问题，并验证答案是否可靠。'],['知识全景图挑战','绘制跨章节数学知识全景图，观察孩子能否形成整体结构。']],
-    note: '以上为课程训练中的阶段挑战项目，不作为统一承诺结果；实际表现会受孩子基础、年级阶段、参与状态和练习完成度影响。'
-  }
+  focus: { title: '看得见的阶段挑战', intro: '专注力训练不只看孩子“听不听话”，而是通过可观察的任务，帮助家长看到孩子进入学习状态、保持专注和自我调节的过程变化。', items: [['15→30分钟静坐专注观察','通过静坐、呼吸和身体锚定任务，观察孩子从安静坐下到稳定投入的阶段变化。'],['10秒整页摄入体验','通过短时视觉摄入和复述任务，观察孩子是否更容易锁定信息重点。'],['抗干扰任务挑战','通过听指令、视觉追踪和抗干扰小游戏，观察孩子是否更容易锁定任务。'],['21天家庭陪跑','营期后配合家庭练习和反馈记录，帮助家长把课堂训练延伸到日常学习场景。']], note: '以上为专注力训练中的阶段观察项目，不作为统一承诺结果；具体表现会因孩子基础、参与状态和课后练习情况有所差异。' },
+  memory: { title: '结营挑战：让记忆变化看得见', intro: '记忆营设置阶段性挑战项目，观察孩子在静定专注、脑内成像、整页摄入和信息提取方面的训练变化。', items: [['5秒单词成像挑战','观察孩子是否能快速把英语单词转化为更清晰的脑内图像。'],['1分钟古诗图像记忆挑战','通过古诗文图像化处理，观察孩子的快速记忆和语言提取能力。'],['5分钟短文摄入挑战','围绕短文进行整体摄入、复述或默写反馈，观察信息提取质量。'],['10秒整页摄入挑战','通过整页材料摄入与信息提取任务，观察脑内页面保持和提取情况。'],['陌生材料限时反馈','通过陌生材料阅读、笔试或口述反馈，观察记忆方法是否具备迁移可能。']], note: '以上为课程训练中的阶段挑战项目，不作为统一承诺结果；实际表现会受孩子基础、专注状态、年龄阶段和练习完成度影响。' },
+  reading: { title: '阅读突破挑战：速度、理解和复述一起看', intro: '阅读训练不只是追求“读得快”，而是同时观察阅读速度、理解率、结构复述和大篇幅材料处理能力。', items: [['300→3000字/分钟速度挑战','以阶段训练目标形式观察阅读速度变化，同时结合理解反馈综合判断。'],['75%理解率反馈','通过限时阅读后的问题回答、复述和结构提取，观察理解质量。'],['整页摄入挑战','训练孩子从局部字词阅读转向整体页面摄入，观察信息捕捉效率。'],['核心结构复述挑战','读完后用自己的话复述人物、事件、观点、结构和关键细节。'],['大篇幅限时阅读反馈','通过较长材料限时阅读，观察孩子面对考试阅读量时的稳定性。']], note: '以上为阅读训练中的阶段观察项目，训练目标是综合提升速度、理解和复述质量；具体表现会因孩子基础和练习情况有所差异。' },
+  self: { title: '4天自主学习挑战：让孩子体验“我能自己学”', intro: '自主营围绕一套学习材料展开训练，通过方法规则梳理、问天录、错题本和AI辅助验证，帮助孩子体验从读懂材料到测评反馈的完整闭环。', items: [['4天学习材料核心挑战','围绕一套学习材料完成核心学习任务，观察孩子自主学习路径是否建立。'],['阶段反馈挑战','以阶段测评作为反馈方式，观察孩子对核心内容的掌握情况。'],['核心概念大白话表达','训练孩子用自己的语言讲清核心概念、方法规则和思考过程。'],['AI 24小时助教使用','训练孩子向AI提出精准问题，并验证答案是否可靠。'],['知识全景图挑战','绘制知识全景图，观察孩子能否形成整体结构。']], note: '以上为课程训练中的阶段挑战项目，不作为统一承诺结果；实际表现会受孩子基础、年龄阶段、参与状态和练习完成度影响。' }
 };
 
-function cleanCourseName(text) {
-  return text ? text.replaceAll('心脑学习力自主营（数学）（数学）', '心脑学习力自主营（数学）').replaceAll('心脑学习力自主营（数学） （数学）', '心脑学习力自主营（数学）') : text;
-}
-function getPathPrefix() {
-  const p = location.pathname;
-  if (p.includes('/zk/news/company/') || p.includes('/zk/news/growth/') || p.includes('/zk/news/limited/')) return '../../';
-  if (p.includes('/zk/expert/') || p.includes('/zk/cases/')) return '../';
+function scriptPrefix(fileName) {
+  const scripts = Array.from(document.scripts || []);
+  const script = document.currentScript || scripts.find(s => (s.getAttribute('src') || '').includes(fileName));
+  const src = script ? (script.getAttribute('src') || '') : '';
+  const index = src.indexOf(fileName);
+  if (index >= 0) return src.slice(0, index);
   return '';
 }
+function getPathPrefix() { return scriptPrefix('statics/js/main.js'); }
 function buildUrl(file) { return `${getPathPrefix()}${file}`; }
 function contactUrl() { return buildUrl('contact.html'); }
 function setList(items) { return `<ul>${items.map(item => `<li>${item}</li>`).join('')}</ul>`; }
+function cleanCourseName(text) { return text ? text.replaceAll('心脑学习力自主营（数学）（数学）', '心脑学习力自主营').replaceAll('心脑学习力自主营（数学）', '心脑学习力自主营').replaceAll('自主营（数学）', '自主营') : text; }
+function currentFile() { return location.pathname.split('/').pop() || 'index.html'; }
 function getActivePage() {
   const p = location.pathname;
-  const f = p.split('/').pop() || 'index.html';
-  if (f === 'index.html' || p.endsWith('/zk/')) return 'home';
+  const f = currentFile();
+  if (f === 'index.html' || p.endsWith('/')) return 'home';
   if (f === 'about.html') return 'about';
   if (['courses.html', 'course-detail.html', 'camp-detail.html', 'public-class-detail.html', 'photo-memory-detail.html'].includes(f)) return 'courses';
-  if (['team.html', 'team-page-2.html', 'experts.html', 'assistants.html'].includes(f) || p.includes('/zk/expert/')) return 'team';
-  if (f === 'cases.html' || p.includes('/zk/cases/')) return 'cases';
-  if (['news.html', 'company-news.html', 'growth-news.html', 'limited-activity.html'].includes(f) || p.includes('/zk/news/')) return 'news';
+  if (['team.html', 'team-page-2.html', 'experts.html', 'assistants.html'].includes(f) || p.includes('/expert/')) return 'team';
+  if (f === 'cases.html' || p.includes('/cases/')) return 'cases';
+  if (['news.html', 'company-news.html', 'growth-news.html', 'limited-activity.html'].includes(f) || p.includes('/news/')) return 'news';
   if (f === 'join.html') return 'join';
   if (f === 'contact.html') return 'contact';
   return '';
@@ -122,19 +104,14 @@ function replaceTextInNode(root, replacements) {
   });
   const nodes = [];
   while (walker.nextNode()) nodes.push(walker.currentNode);
-  nodes.forEach(node => {
-    let value = node.nodeValue;
-    replacements.forEach(([from, to]) => { value = value.replaceAll(from, to); });
-    node.nodeValue = cleanCourseName(value);
-  });
+  nodes.forEach(node => { let value = node.nodeValue; replacements.forEach(([from, to]) => { value = value.replaceAll(from, to); }); node.nodeValue = cleanCourseName(value); });
 }
 function replaceGlobalTexts() {
   const replacements = [
-    ['中科心智能教育科技服务平台', COMPANY_FULL_NAME], ['中科心智能', COMPANY_SHORT_NAME],
+    ['中科心智能教育科技服务平台', '中科明心教育科技服务平台'], ['中科心智能科技发展有限公司', COMPANY_FULL_NAME], ['中科心智能', COMPANY_SHORT_NAME],
     ['照相记忆', '心脑学习力记忆营'], ['身心脑一体化专注力课程', '心脑学习力专注营'], ['心脑学习力成长课', '心脑学习力专注营'], ['学习力成长体系', '心脑学习力专注营'], ['心脑学习力体验课', '心脑学习力专注营'],
-    ['潜意识阅读', '心脑学习力阅读营'], ['心脑学习力强化营', '心脑学习力阅读营'],
-    ['五四学习法数学实训营', '心脑学习力自主营（数学）'], ['心脑学习力公开课', '心脑学习力自主营（数学）'],
-    ['心脑学习力自主营（数学）（数学）', '心脑学习力自主营（数学）'], ['心脑学习力自主营', '心脑学习力自主营（数学）']
+    ['潜意识阅读', '心脑学习力阅读营'], ['心脑学习力强化营', '心脑学习力阅读营'], ['五四学习法数学实训营', '心脑学习力自主营'], ['心脑学习力公开课', '心脑学习力自主营'],
+    ['心脑学习力自主营（数学）（数学）', '心脑学习力自主营'], ['心脑学习力自主营（数学）', '心脑学习力自主营'], ['自主营（数学）', '自主营']
   ];
   replacements.forEach(([from, to]) => { document.title = cleanCourseName(document.title.replaceAll(from, to)); });
   document.querySelectorAll('meta[content]').forEach(meta => { replacements.forEach(([from, to]) => { meta.content = cleanCourseName(meta.content.replaceAll(from, to)); }); });
@@ -165,10 +142,10 @@ function setupUnifiedLinks() {
   const brand = document.querySelector('.brand');
   if (brand) { brand.innerHTML = `<img src="${link('statics/images/logo.svg')}" alt="${COMPANY_SHORT_NAME} Logo" style="width:50px;height:50px;display:block;flex:none;object-fit:contain;filter:drop-shadow(0 8px 18px rgba(16,27,23,.18));"><span><strong>${COMPANY_SHORT_NAME}</strong><span>Education Platform</span></span>`; brand.href = link('index.html'); }
   const nav = document.querySelector('header nav');
-  if (nav) { nav.className = 'nav-dropdowns'; nav.innerHTML = `${createNavLink('首页', link('index.html'), active === 'home')}${createNavLink('关于我们', link('about.html'), active === 'about')}${createNavDropdown('课程产品', link('courses.html'), COURSE_ITEMS.map(item => ({ text: item.name, href: link(item.href) })), active === 'courses')}${createNavDropdown('专家团队', link('experts.html'), [{ text: '核心专家', href: link('experts.html') }, { text: '助教团队', href: link('assistants.html') }], active === 'team')}${createNavLink('经典案例', link('cases.html'), active === 'cases')}${createNavDropdown('新闻活动', link('news.html'), [{ text: '公司动态', href: link('company-news.html') }, { text: '成长资讯', href: link('growth-news.html') }, { text: '限时活动', href: link('limited-activity.html') }], active === 'news')}${createNavLink('加盟合作', link('join.html'), active === 'join')}${createNavLink('联系我们', link('contact.html'), active === 'contact')}`; setupDropdownEvents(); }
+  if (nav) { nav.className = 'nav-dropdowns'; nav.innerHTML = `${createNavLink('首页', link('index.html'), active === 'home')}${createNavLink('关于我们', link('about.html'), active === 'about')}${createNavDropdown('课程产品', link('courses.html'), COURSE_ITEMS.map(item => ({ text: item.name, href: link(item.href) })), active === 'courses')}${createNavDropdown('专家团队', link('team.html'), [{ text: '团队总览', href: link('team.html') }, { text: '核心专家', href: link('experts.html') }, { text: '助教团队', href: link('assistants.html') }], active === 'team')}${createNavLink('经典案例', link('cases.html'), active === 'cases')}${createNavDropdown('新闻活动', link('news.html'), [{ text: '公司动态', href: link('company-news.html') }, { text: '成长资讯', href: link('growth-news.html') }, { text: '限时活动', href: link('limited-activity.html') }], active === 'news')}${createNavLink('加盟合作', link('join.html'), active === 'join')}${createNavLink('联系我们', link('contact.html'), active === 'contact')}`; setupDropdownEvents(); }
   const cta = document.querySelector('.nav-cta'); if (cta) cta.innerHTML = `<a class="btn btn-line" href="${contactUrl()}">微信咨询</a><a class="btn btn-gold" href="${contactUrl()}">联系我们</a>`;
   const footer = document.querySelector('.footer');
-  if (footer) footer.innerHTML = `<div class="container"><div class="footer-grid"><div><div class="brand-mini">${COMPANY_SHORT_NAME}</div></div><div><h4>关于我们</h4><a href="${link('about.html')}">公司简介</a><a href="${link('about.html')}">服务方向</a><a href="${link('about.html')}">发展愿景</a></div><div><h4>课程产品</h4>${COURSE_ITEMS.map(item => `<a href="${link(item.href)}">${item.name}</a>`).join('')}</div><div><h4>团队案例</h4><a href="${link('experts.html')}">专家团队</a><a href="${link('assistants.html')}">助教团队</a><a href="${link('cases.html')}">成功案例</a></div><div><h4>新闻活动</h4><a href="${link('company-news.html')}">公司动态</a><a href="${link('growth-news.html')}">成长资讯</a><a href="${link('limited-activity.html')}">限时活动</a></div><div><h4>加盟合作</h4><a href="${link('join.html')}">合作对象</a><a href="${link('join.html')}">合作流程</a><a href="${link('contact.html')}">联系我们</a></div></div><div class="copyright">© 2026 ${COMPANY_FULL_NAME}</div></div>`;
+  if (footer) footer.innerHTML = `<div class="container"><div class="footer-grid"><div><div class="brand-mini">${COMPANY_SHORT_NAME}</div></div><div><h4>关于我们</h4><a href="${link('about.html')}">公司简介</a><a href="${link('about.html')}">服务方向</a><a href="${link('about.html')}">发展愿景</a></div><div><h4>课程产品</h4>${COURSE_ITEMS.map(item => `<a href="${link(item.href)}">${item.name}</a>`).join('')}</div><div><h4>团队案例</h4><a href="${link('team.html')}">专家团队</a><a href="${link('assistants.html')}">助教团队</a><a href="${link('cases.html')}">成功案例</a></div><div><h4>新闻活动</h4><a href="${link('company-news.html')}">公司动态</a><a href="${link('growth-news.html')}">成长资讯</a><a href="${link('limited-activity.html')}">限时活动</a></div><div><h4>加盟合作</h4><a href="${link('join.html')}">合作对象</a><a href="${link('join.html')}">合作流程</a><a href="${link('contact.html')}">联系我们</a></div></div><div class="copyright">© 2026 ${COMPANY_FULL_NAME}</div></div>`;
   const sticky = document.querySelector('.sticky'); if (sticky) sticky.innerHTML = `<a href="${contactUrl()}">微信</a><a href="${contactUrl()}">联系</a>`;
 }
 function normalizeLegacyAnchors() {
@@ -180,7 +157,7 @@ function ensureCards(container, selector, html) { if (!container) return; while 
 function updateCourseCard(card, item, mode = 'home') {
   if (!card || !item) return; const copy = COURSE_COPY[item.key];
   const title = card.querySelector('h3'); const text = card.querySelector('p'); const list = card.querySelector('ul'); const tag = card.querySelector('.tag,.label'); const more = card.querySelector('.more');
-  if (title) title.textContent = item.name; if (tag) tag.textContent = mode === 'system' ? copy.systemTag : copy.tag; if (text) text.textContent = copy.text; if (list) list.innerHTML = copy.list.map(point => `<li>${point}</li>`).join(''); if (more) { more.textContent = 'FIND MORE'; more.href = item.href; }
+  if (title) title.textContent = item.name; if (tag) tag.textContent = mode === 'system' ? copy.systemTag : copy.tag; if (text) text.textContent = copy.text; if (list) list.innerHTML = copy.list.map(point => `<li>${point}</li>`).join(''); if (more) { more.textContent = 'FIND MORE'; more.href = buildUrl(item.href); }
 }
 function updateCourseCards() {
   const productGrid = document.querySelector('#course .product-grid'); ensureCards(productGrid, '.product-card', () => '<article class="product-card reveal show"><span class="tag"></span><h3></h3><p></p><ul></ul><a class="more" href="#">FIND MORE</a></article>'); productGrid?.querySelectorAll('.product-card').forEach((card, index) => updateCourseCard(card, COURSE_ITEMS[index], 'home'));
@@ -189,19 +166,19 @@ function updateCourseCards() {
 }
 function createChallengeBlock(item) { const data = COURSE_CHALLENGES[item.key]; if (!data) return ''; return `<div class="detail-block reveal show course-challenge-block"><h2>${data.title}</h2><p class="course-challenge-intro">${data.intro}</p><div class="course-challenge-grid">${data.items.map(([title, text]) => `<div class="course-challenge-item"><b>${title}</b><span>${text}</span></div>`).join('')}</div><div class="course-challenge-note">${data.note}</div></div>`; }
 function setupDetailPage() {
-  const file = location.pathname.split('/').pop(); const map = { 'course-detail.html': COURSE_ITEMS[0], 'photo-memory-detail.html': COURSE_ITEMS[1], 'camp-detail.html': COURSE_ITEMS[2], 'public-class-detail.html': COURSE_ITEMS[3] };
+  const file = currentFile(); const map = { 'course-detail.html': COURSE_ITEMS[0], 'photo-memory-detail.html': COURSE_ITEMS[1], 'camp-detail.html': COURSE_ITEMS[2], 'public-class-detail.html': COURSE_ITEMS[3] };
   const item = map[file]; if (!item) return; const copy = COURSE_COPY[item.key];
   const heroTitle = document.querySelector('.detail-hero h1'); const heroDesc = document.querySelector('.detail-hero p'); if (heroTitle) heroTitle.textContent = item.name; if (heroDesc) heroDesc.textContent = copy.detailIntro || copy.text;
   const tags = document.querySelector('.detail-tags'); if (tags) tags.innerHTML = `<span>${copy.tag}</span><span>青少年学习力</span><span>阶段训练</span><span>过程反馈</span>`;
-  const pathText = { focus: ['第1阶段：身体锚定与呼吸训练，让孩子先从身体层面安定下来，建立进入学习状态的入口', '第2阶段：微观观察、听觉追踪和感官专注训练，帮助大脑学会过滤干扰、锁定任务', '第3阶段：图像记忆、心像显化和表达训练，把“记不住”转化为“看得见、说得出”', '第4阶段：情绪觉察、目标承诺和21天家庭陪跑，把营期变化延伸到家庭学习场景'], memory: ['第1-2天：静定训练、残像训练和脑屏激活，建立稳定成像基础', '第3-4天：从整段摄入到整页摄入，训练从脑内页面直接提取信息', '第5-6天：迁移到古诗文、英语单词和理科公式等学科内容', '第7天：通过陌生材料笔试和口试，检验真实记忆效果'], reading: ['破除逐字默读习惯', '训练整页摄入和脑内快照', '形成脑内电影或结构图', '通过复述和测试检验理解'], self: ['第1天：格物入门，掌握格定义五步法并完成第一章通关', '第2天：攻坚深化，训练格定理四步法并完成二三章学习', '第3天：知识联网，绘制数学知识全景图并进行模拟考', '第4天：自证结营，错题围剿、闭卷大考和自学计划制定'] };
+  const pathText = { focus: ['第1阶段：身体锚定与呼吸训练，让孩子先从身体层面安定下来，建立进入学习状态的入口', '第2阶段：微观观察、听觉追踪和感官专注训练，帮助大脑学会过滤干扰、锁定任务', '第3阶段：图像记忆、心像显化和表达训练，把“记不住”转化为“看得见、说得出”', '第4阶段：情绪觉察、目标承诺和21天家庭陪跑，把营期变化延伸到家庭学习场景'], memory: ['第1-2天：静定训练、残像训练和脑屏激活，建立稳定成像基础', '第3-4天：从整段摄入到整页摄入，训练从脑内页面直接提取信息', '第5-6天：迁移到古诗文、英语单词和理科公式等学科内容', '第7天：通过陌生材料笔试和口试，检验真实记忆效果'], reading: ['破除逐字默读习惯', '训练整页摄入和脑内快照', '形成脑内电影或结构图', '通过复述和测试检验理解'], self: ['第1天：方法入门，掌握自主阅读与核心概念梳理方法', '第2天：攻坚深化，训练方法规则梳理并完成阶段学习', '第3天：知识联网，绘制知识全景图并进行阶段反馈', '第4天：自证结营，错题围剿、阶段反馈和自主学习计划制定'] };
   let extra = '';
-  if (item.key === 'focus') extra = `<div class="detail-block reveal show"><h2>为什么孩子需要先训练专注力？</h2><div class="course-flow"><div class="flow-item"><b>1</b><span>坐不住</span><p>不是孩子故意拖拉，而是身体和注意系统还没有稳定下来，学习一开始就容易分心。</p></div><div class="flow-item"><b>2</b><span>记不牢</span><p>只靠反复读和硬背，容易学得慢、忘得快，需要把文字、声音和画面连接起来。</p></div><div class="flow-item"><b>3</b><span>容易烦</span><p>遇到难题就抵触，往往不是态度问题，而是情绪觉察和自我调节能力还需要训练。</p></div><div class="flow-item"><b>4</b><span>没动力</span><p>当孩子看不到自己的进步，就容易被动学习；课程通过可感知的小变化重建“我能行”。</p></div></div></div><div class="detail-block reveal show"><h2>数字化亮点</h2>${setList(['面向8-16岁青少年，处于专注力、记忆力和价值观形成的重要阶段', '课程目标包含专注力、记忆力、想象力、自我觉察和学习内驱力等底层能力', '训练后以“能静下来、能观察、能表达、能坚持”为主要反馈指标', '配合21天家庭陪跑机制，每天约10分钟家庭练习，帮助家长把营期效果延续到日常'])}</div>`;
-  if (item.key === 'memory') extra = `<div class="detail-block reveal show"><h2>记忆训练重点</h2>${setList(['训练静坐、数息、残像等基础专注能力，先让孩子坐得住、看得稳', '通过烛光观想、曼陀罗内观和实物心像激活脑内成像能力', '从整段摄入逐步过渡到整页摄入，训练闭眼后的信息提取', '把能力迁移到古诗文、英语单词、理科公式等真实学科内容'])}</div>`;
+  if (item.key === 'focus') extra = `<div class="detail-block reveal show"><h2>为什么孩子需要先训练专注力？</h2><div class="course-flow"><div class="flow-item"><b>1</b><span>坐不住</span><p>不是孩子故意拖拉，而是身体和注意系统还没有稳定下来，学习一开始就容易分心。</p></div><div class="flow-item"><b>2</b><span>记不牢</span><p>只靠反复读和硬背，容易学得慢、忘得快，需要把文字、声音和画面连接起来。</p></div><div class="flow-item"><b>3</b><span>容易烦</span><p>遇到难题就抵触，往往不是态度问题，而是情绪觉察和自我调节能力还需要训练。</p></div></div></div>`;
+  if (item.key === 'memory') extra = `<div class="detail-block reveal show"><h2>记忆训练重点</h2>${setList(['静定训练：先让孩子坐得住、心能安下来', '残像与脑屏训练：让大脑对图像和页面更敏感', '整页摄入：从逐字记忆转向整体画面摄入', '迁移应用：把方法应用到古诗、英语、公式和短文材料'])}</div>`;
   if (item.key === 'reading') extra = `<div class="detail-block reveal show"><h2>阅读突破重点</h2>${setList(['破除逐字默读习惯，尝试绕开语音通道进行视觉加工', '训练整页摄入和脑内快照，让文字转化为画面和结构', '叙事文形成脑内电影，议论文形成结构图', '通过速读复述和限时理解反馈观察真实阅读变化'])}</div>`;
-  if (item.key === 'self') extra = `<div class="detail-block reveal show"><h2>数学训练重点</h2>${setList(['用“逐字读—问自己—问AI—做例题—一句话总结”理解数学定义', '用“条件结论—逆定理—多种证明—生活实例”吃透数学定理', '训练孩子向AI提出精准问题，并验证AI答案是否可靠', '用费曼互讲、错题本和知识全景图检验是否真正学懂'])}</div>`;
+  if (item.key === 'self') extra = `<div class="detail-block reveal show"><h2>自主学习训练重点</h2>${setList(['用“逐字读—问自己—问AI—做练习—一句话总结”理解核心概念', '用“条件结论—方法规则—生活实例—反向验证”梳理学习内容', '训练孩子向AI提出精准问题，并验证AI答案是否可靠', '用费曼互讲、错题本和知识全景图检验是否真正学懂'])}</div>`;
   const main = document.querySelector('.detail-main');
-  if (main) { const pathItems = pathText[item.key] || copy.paths; const firstTitle = item.key === 'focus' ? '先解决学习状态，成绩提升才有入口' : item.key === 'memory' ? '先让孩子相信：记忆是可以训练的' : item.key === 'reading' ? '先解决“读不完、说不清”的阅读卡点' : item.key === 'self' ? '先让孩子学会自己学数学' : '课程定位'; const firstText = item.key === 'focus' ? '很多孩子不是不想学，而是进入学习状态太慢、抗干扰弱、记忆方式单一、遇到困难容易情绪化。专注营不是简单让孩子“坐着别动”，而是通过身体、感官、心像、情绪和家庭陪跑五个层面，系统重建学习状态。' : copy.detailIntro; main.innerHTML = `<div class="detail-block reveal show"><h2>${firstTitle}</h2><p>${firstText}</p></div>${extra}${createChallengeBlock(item)}<div class="detail-block reveal show"><h2>核心训练内容</h2>${setList(copy.list)}</div><div class="detail-block reveal show"><h2>典型训练路径</h2><div class="course-flow">${pathItems.map((text, index) => `<div class="flow-item"><b>${index + 1}</b><span>${copy.paths[index] || text}</span><p>${text}</p></div>`).join('')}</div></div><div class="detail-block reveal show"><h2>适合对象</h2>${setList(copy.audience)}</div><div class="detail-block reveal show"><h2>家长能获得什么</h2>${setList(copy.effects)}</div>`; }
-  const side = document.querySelector('.side-card'); if (side) side.innerHTML = `<h3>课程信息</h3><p>${copy.text}</p><div class="side-list"><div><b>课程</b><span>${item.name}</span></div><div><b>重点</b><span>${copy.list[0]}</span></div><div><b>方式</b><span>训练营 / 阶段反馈</span></div><div><b>价格</b><span>${item.price}</span></div></div><a class="btn btn-gold" href="${contactUrl()}">微信咨询</a><a class="btn btn-line" href="courses.html">返回课程产品</a>`;
+  if (main) { const pathItems = pathText[item.key] || copy.paths; const firstTitle = item.key === 'focus' ? '先解决学习状态，成绩提升才有入口' : item.key === 'memory' ? '先让孩子相信：记忆是可以训练的' : item.key === 'reading' ? '先解决“读不完、说不清”的阅读卡点' : item.key === 'self' ? '先让孩子学会自己学' : '课程定位'; const firstText = item.key === 'focus' ? '很多孩子不是不想学，而是进入学习状态太慢、抗干扰弱、记忆方式单一、遇到困难容易情绪化。专注营不是简单让孩子“坐着别动”，而是通过身体、感官、心像、情绪和家庭陪跑五个层面，系统重建学习状态。' : copy.detailIntro; main.innerHTML = `<div class="detail-block reveal show"><h2>${firstTitle}</h2><p>${firstText}</p></div>${extra}${createChallengeBlock(item)}<div class="detail-block reveal show"><h2>核心训练内容</h2>${setList(copy.list)}</div><div class="detail-block reveal show"><h2>典型训练路径</h2><div class="course-flow">${pathItems.map((text, index) => `<div class="flow-item"><b>${index + 1}</b><span>${copy.paths[index] || text}</span><p>${text}</p></div>`).join('')}</div></div><div class="detail-block reveal show"><h2>适合对象</h2>${setList(copy.audience)}</div><div class="detail-block reveal show"><h2>家长能获得什么</h2>${setList(copy.effects)}</div>`; }
+  const side = document.querySelector('.side-card'); if (side) side.innerHTML = `<h3>课程信息</h3><p>${copy.text}</p><div class="side-list"><div><b>课程</b><span>${item.name}</span></div><div><b>重点</b><span>${copy.list[0]}</span></div><div><b>方式</b><span>训练营 / 阶段反馈</span></div><div><b>价格</b><span>${item.price}</span></div></div><a class="btn btn-gold" href="${contactUrl()}">微信咨询</a><a class="btn btn-line" href="${buildUrl('courses.html')}">返回课程产品</a>`;
   const cta = document.querySelector('.detail-cta-wrap'); if (cta) cta.innerHTML = `<div><h2>${item.key === 'focus' ? '孩子专注力问题，不适合只靠催促解决' : '想进一步了解这门课程？'}</h2><p>可以通过微信或电话咨询课程，我们会根据孩子情况给出更具体的建议。</p></div><div class="detail-cta-actions"><a class="btn btn-gold" href="${contactUrl()}">微信咨询</a><a class="btn btn-line" href="${contactUrl()}">联系我们</a></div>`;
 }
 function setupHeroSlider() {
@@ -225,7 +202,7 @@ function setupTransition() {
 function loadScrollMotion() {
   if (document.querySelector('script[data-scroll-motion-loader]')) return;
   const script = document.createElement('script');
-  script.src = `${getPathPrefix()}statics/js/scroll-motion.js?v=20260607-sitewide`;
+  script.src = `${getPathPrefix()}statics/js/scroll-motion.js?v=20260608-bt-path`;
   script.defer = true;
   script.dataset.scrollMotionLoader = 'true';
   document.body.appendChild(script);
