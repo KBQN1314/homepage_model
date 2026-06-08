@@ -23,6 +23,7 @@
 | `pages/join.css` | 加盟合作页面级样式入口，负责加盟页 hero、合作对象、总部支持、合作流程和表单相关结构。 |
 | `pages/news.css` | 新闻活动页面级样式入口，负责新闻列表、分类页、文章详情、文章侧栏和新闻 CTA。 |
 | `pages/team.css` | 团队/专家页面级样式入口，负责团队页 hero、成员卡、分页、专家详情、团队 CTA 等结构。 |
+| `pages/cases.css` | 案例页面级样式入口，负责案例列表、案例详情、案例图片、案例指标、案例 CTA 等结构。 |
 | `team-avatars.css` | 团队头像资源层，专门维护专家/助教头像类和头像图片，不承载页面布局。 |
 | `style.css` | 历史基础样式，暂时保留，作为兼容层，后续逐步删除已迁移片段。 |
 | `effects.css` | 历史视觉增强和动效样式，暂时保留，后续逐步拆分。 |
@@ -44,7 +45,7 @@ components/runtime.css
 components/navigation.css
 ```
 
-首页、详情页、关于我们页、课程列表页、联系页、加盟合作页、新闻活动页和团队/专家页额外由对应 HTML 显式加载：
+首页、详情页、关于我们页、课程列表页、联系页、加盟合作页、新闻活动页、团队/专家页和案例页额外由对应 HTML 显式加载：
 
 ```text
 pages/home.css
@@ -55,6 +56,7 @@ pages/contact.css
 pages/join.css
 pages/news.css
 pages/team.css
+pages/cases.css
 ```
 
 该顺序遵循“变量 → 基础 → 布局 → 组件 → 页面公共视觉 → 运行时组件 → 导航交互层 → 页面专属入口”的规则。
@@ -78,8 +80,9 @@ pages/team.css
 15. 修改加盟合作页样式，优先放入 `pages/join.css`。
 16. 修改新闻列表、分类页或文章详情页样式，优先放入 `pages/news.css`。
 17. 修改团队/专家页面结构样式，优先放入 `pages/team.css`。
-18. 修改专家或助教头像资源，优先放入 `team-avatars.css`。
-19. 其他页面级特殊样式可以暂时保留在原页面 CSS，但不要继续增加 HTML 内联样式。
+18. 修改案例列表、案例详情或案例图片样式，优先放入 `pages/cases.css`。
+19. 修改专家或助教头像资源，优先放入 `team-avatars.css`。
+20. 其他页面级特殊样式可以暂时保留在原页面 CSS，但不要继续增加 HTML 内联样式。
 
 ## 后续迁移建议
 
@@ -87,7 +90,6 @@ pages/team.css
 
 ```text
 legacy/style.compat.css       # 将 style.css 变成真正的兼容入口
-pages/cases.css               # 迁移案例相关页面样式
 ```
 
 迁移时每次只处理一个组件族，确保页面视觉稳定后再删除旧样式片段。
