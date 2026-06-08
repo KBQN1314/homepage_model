@@ -76,7 +76,7 @@
   }
 
   function footerBrandHtml() {
-    return `<div class="footer-brand-card"><div class="footer-brand-mark">明</div><div class="brand-mini">${COMPANY_SHORT_NAME}</div><div class="footer-brand-en">EDUCATION PLATFORM</div><p>青少年学习力成长 · 家庭教育支持<br>· 课程合作共创</p></div>`;
+    return `<div class="footer-brand-card"><div class="brand-mini">${COMPANY_SHORT_NAME}</div><div class="footer-brand-en">EDUCATION PLATFORM</div><p class="footer-brand-summary">青少年学习力成长 · 家庭教育支持<br>· 课程合作共创</p></div>`;
   }
 
   function footerHtml(prefix) {
@@ -117,11 +117,12 @@
       .footer .container>hr,.footer hr{display:none!important;}
       .footer .footer-grid>div:first-child>*:not(.footer-brand-card){display:none!important;}
       .footer .footer-brand-card{position:relative!important;display:block!important;padding:0!important;color:#fff!important;}
-      .footer .footer-brand-mark{width:58px!important;height:58px!important;border-radius:18px!important;display:grid!important;place-items:center!important;margin:0 0 26px!important;background:linear-gradient(135deg,#057a55,#00a77a)!important;color:#f3d28d!important;font-size:30px!important;font-weight:900!important;line-height:1!important;box-shadow:0 16px 34px rgba(0,0,0,.18)!important;}
+      .footer .footer-brand-mark{display:none!important;}
       .footer .brand-mini{padding:0!important;position:static!important;margin:0!important;color:#fff!important;font-size:32px!important;line-height:1.2!important;font-weight:900!important;letter-spacing:1px!important;}
       .footer .brand-mini::before,.footer .brand-mini::after{display:none!important;content:none!important;background:none!important;}
       .footer .footer-brand-en{margin-top:12px!important;color:#c7af82!important;font-size:15px!important;line-height:1.4!important;letter-spacing:5px!important;text-transform:uppercase!important;}
-      .footer .footer-brand-card p{margin-top:24px!important;color:rgba(255,255,255,.66)!important;font-size:15px!important;line-height:1.9!important;font-weight:400!important;letter-spacing:.3px!important;}
+      .footer .footer-brand-card p:not(.footer-brand-summary),.footer .footer-grid>div:first-child>p{display:none!important;}
+      .footer .footer-brand-summary{margin-top:24px!important;color:rgba(255,255,255,.66)!important;font-size:15px!important;line-height:1.9!important;font-weight:400!important;letter-spacing:.3px!important;}
       .footer .footer-brand-card img,.footer .footer-brand-card svg,.footer .footer-brand-card .brand-logo,.footer .footer-brand-card .logo{display:none!important;}
       .footer .copyright{border-top:1px solid rgba(255,255,255,.12)!important;}
 
