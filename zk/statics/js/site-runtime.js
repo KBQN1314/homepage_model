@@ -43,6 +43,18 @@
     ['runtime-components', 'statics/style/components/runtime.css'],
     ['navigation', 'statics/style/components/navigation.css']
   ];
+  const PAGE_STYLESHEETS = {
+    home: 'statics/style/pages/home.css',
+    detail: 'statics/style/pages/detail.css',
+    about: 'statics/style/pages/about.css',
+    courses: 'statics/style/pages/courses.css',
+    contact: 'statics/style/pages/contact.css',
+    join: 'statics/style/pages/join.css',
+    news: 'statics/style/pages/news.css',
+    team: 'statics/style/pages/team.css',
+    cases: 'statics/style/pages/cases.css',
+    utility: 'statics/style/pages/utility.css'
+  };
 
   const q = (selector, root = document) => root.querySelector(selector);
   const qa = (selector, root = document) => Array.from(root.querySelectorAll(selector));
@@ -73,22 +85,44 @@
     return '';
   }
 
+  function pageStyleKey() {
+    const file = pageFile(), path = location.pathname;
+    if (file === 'index.html' || path.endsWith('/zk/')) return 'home';
+    if (DETAIL_MAP[file]) return 'detail';
+    if (file === 'about.html') return 'about';
+    if (file === 'courses.html') return 'courses';
+    if (file === 'contact.html') return 'contact';
+    if (file === 'join.html') return 'join';
+    if (['news.html', 'company-news.html', 'growth-news.html', 'limited-activity.html'].includes(file) || path.includes('/zk/news/')) return 'news';
+    if (['team.html', 'team-page-2.html', 'experts.html', 'assistants.html'].includes(file) || path.includes('/zk/expert/')) return 'team';
+    if (file === 'cases.html' || path.includes('/zk/cases/')) return 'cases';
+    if (['404.html', 'privacy.html', 'success.html'].includes(file)) return 'utility';
+    return '';
+  }
+
+  function appendStylesheet(key, href) {
+    if (!href || q(`link[data-zk-style="${key}"]`) || stylesheetLoaded(href)) return;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = buildUrl(href);
+    link.dataset.zkStyle = key;
+    document.head.appendChild(link);
+  }
+
   function injectStylesheets() {
     document.documentElement.style.setProperty('--zk-qr-url', `url("${buildUrl('statics/images/QR.png')}")`);
 
     // Most pages load statics/style/style.css, which imports the public core/component layers.
     // In that normal path, do not inject the same CSS files again. The fallback below is
     // kept only for future standalone pages that intentionally omit the compatibility entry.
-    if (stylesheetLoaded('statics/style/style.css')) return;
+    if (!stylesheetLoaded('statics/style/style.css')) {
+      RUNTIME_STYLESHEETS.forEach(([key, href]) => appendStylesheet(key, href));
+    }
 
-    RUNTIME_STYLESHEETS.forEach(([key, href]) => {
-      if (q(`link[data-zk-style="${key}"]`) || stylesheetLoaded(href)) return;
-      const link = document.createElement('link');
-      link.rel = 'stylesheet';
-      link.href = buildUrl(href);
-      link.dataset.zkStyle = key;
-      document.head.appendChild(link);
-    });
+    // Page-level CSS should be explicit in HTML. This is a safety net for future pages
+    // or legacy copies that forget their canonical pages/*.css entry.
+    const pageKey = pageStyleKey();
+    if (pageKey) appendStylesheet(`page-${pageKey}`, PAGE_STYLESHEETS[pageKey]);
   }
 
   function normalizeText(root = document.body) {
@@ -119,144 +153,155 @@
     items.forEach(item => {
       const link = q('.nav-link', item);
       if (!link) return;
-      link.addEventListener('click', event => { if (!isMobile()) return; event.preventDefault(); const open = !item.classList.contains('open'); closeAll(item); item.classList.toggle('open', open); link.setAttribute('aria-expanded', String(open)); });
-      item.addEventListener('mouseenter', () => { if (!isMobile()) { closeAll(item); item.classList.add('open'); link.setAttribute('aria-expanded', 'true'); } });
-      item.addEventListener('mouseleave', () => { if (!isMobile()) { item.classList.remove('open'); link.setAttribute('aria-expanded', 'false'); } });
+      item.addEventListener('mouseenter', () => { if (!isMobile()) item.classList.add('open'); });
+      item.addEventListener('mouseleave', () => { if (!isMobile()) item.classList.remove('open'); });
+      link.addEventListener('click', event => {
+        if (!isMobile()) return;
+        event.preventDefault();
+        const nextOpen = !item.classList.contains('open');
+        closeAll(item);
+        item.classList.toggle('open', nextOpen);
+        link.setAttribute('aria-expanded', String(nextOpen));
+      });
     });
-    document.addEventListener('click', event => { if (!event.target.closest('.nav-item.has-dropdown')) closeAll(); });
-    document.addEventListener('keydown', event => { if (event.key === 'Escape') closeAll(); });
-    addEventListener('resize', () => closeAll());
   }
 
-  function renderChrome() {
-    const brand = q('.brand');
-    if (brand) {
-      brand.href = buildUrl('index.html');
-      brand.innerHTML = `<img class="brand-logo-img" src="${buildUrl(DATA.brand.logo)}" alt="${DATA.brand.short} Logo"><span><strong>${DATA.brand.short}</strong><span>${DATA.brand.english}</span></span>`;
-    }
-    const nav = q('header nav');
-    if (nav) {
-      const link = file => buildUrl(file);
-      nav.className = 'nav-dropdowns';
-      nav.innerHTML = [navLink('首页', link('index.html'), 'home'), navLink('关于我们', link('about.html'), 'about'), dropdown('课程产品', link('courses.html'), DATA.courses.map(item => ({ text: item.name, href: link(item.href) })), 'courses'), dropdown('专家团队', link('experts.html'), [{ text: '核心专家', href: link('experts.html') }, { text: '助教团队', href: link('assistants.html') }], 'team'), navLink('经典案例', link('cases.html'), 'cases'), dropdown('新闻活动', link('news.html'), [{ text: '公司动态', href: link('company-news.html') }, { text: '成长资讯', href: link('growth-news.html') }, { text: '限时活动', href: link('limited-activity.html') }], 'news'), navLink('加盟合作', link('join.html'), 'join'), navLink('联系我们', link('contact.html'), 'contact')].join('');
-      bindDropdowns(nav);
-    }
-    const cta = q('.nav-cta');
-    if (cta) cta.innerHTML = `<a class="btn btn-line" href="${contactUrl()}">微信咨询</a><a class="btn btn-gold" href="${contactUrl()}">联系我们</a>`;
+  function renderHeader() {
+    const header = q('#header');
+    if (!header) return;
+    header.classList.add('scrolled');
+    const root = pathPrefix();
+    header.innerHTML = `<div class="nav-wrap">
+      <a class="brand" href="${root}index.html"><span class="brand-logo"></span><span><strong>${DATA.brand.short}</strong><span>Education Platform</span></span></a>
+      <nav>
+        ${navLink('首页', `${root}index.html`, 'home')}
+        ${dropdown('关于我们', `${root}about.html`, [{ text: '公司简介', href: `${root}about.html#intro` }, { text: '服务原则', href: `${root}about.html#principle` }], 'about')}
+        ${dropdown('课程产品', `${root}courses.html`, DATA.courses.map(course => ({ text: course.shortTitle, href: `${root}${course.href}` })), 'courses')}
+        ${dropdown('专家团队', `${root}experts.html`, [{ text: '核心专家', href: `${root}experts.html` }, { text: '助教团队', href: `${root}assistants.html` }], 'team')}
+        ${navLink('成功案例', `${root}cases.html`, 'cases')}
+        ${dropdown('新闻活动', `${root}news.html`, [{ text: '公司动态', href: `${root}company-news.html` }, { text: '成长资讯', href: `${root}growth-news.html` }, { text: '限时活动', href: `${root}limited-activity.html` }], 'news')}
+        ${navLink('加盟合作', `${root}join.html`, 'join')}
+        ${navLink('联系我们', `${root}contact.html`, 'contact')}
+      </nav>
+      <div class="nav-cta"><a class="btn btn-line" href="${contactUrl()}">微信咨询</a><a class="btn btn-gold" href="${contactUrl()}">联系我们</a></div>
+      <button class="hamb" type="button" aria-label="打开菜单" aria-expanded="false"><i></i><i></i><i></i></button>
+    </div>`;
+    bindDropdowns(q('nav', header));
+  }
+
+  function renderFooter() {
     const footer = q('.footer');
-    if (footer) footer.innerHTML = `<div class="container"><div class="footer-grid"><div><div class="brand-mini">${DATA.brand.short}</div></div><div><h4>关于我们</h4><a href="${buildUrl('about.html')}">公司简介</a><a href="${buildUrl('about.html')}">服务方向</a><a href="${buildUrl('about.html')}">发展愿景</a></div><div><h4>课程产品</h4>${DATA.courses.map(item => `<a href="${buildUrl(item.href)}">${item.name}</a>`).join('')}</div><div><h4>团队案例</h4><a href="${buildUrl('experts.html')}">专家团队</a><a href="${buildUrl('assistants.html')}">助教团队</a><a href="${buildUrl('cases.html')}">成功案例</a></div><div><h4>新闻活动</h4><a href="${buildUrl('company-news.html')}">公司动态</a><a href="${buildUrl('growth-news.html')}">成长资讯</a><a href="${buildUrl('limited-activity.html')}">限时活动</a></div><div><h4>加盟合作</h4><a href="${buildUrl('join.html')}">合作对象</a><a href="${buildUrl('join.html')}">合作流程</a><a href="${buildUrl('contact.html')}">联系我们</a></div></div><div class="copyright">© 2026 ${DATA.brand.full}</div></div>`;
+    if (!footer) return;
+    const root = pathPrefix();
+    footer.innerHTML = `<div class="container"><div class="footer-grid">
+      <div><h4>${DATA.brand.short}</h4><p>${DATA.brand.full}<br>${DATA.brand.slogan}</p></div>
+      <div><h4>关于我们</h4><a href="${root}about.html">公司简介</a><a href="${root}team.html">专家团队</a></div>
+      <div><h4>课程产品</h4>${DATA.courses.map(course => `<a href="${root}${course.href}">${course.shortTitle}</a>`).join('')}</div>
+      <div><h4>新闻活动</h4><a href="${root}company-news.html">公司动态</a><a href="${root}growth-news.html">成长资讯</a><a href="${root}limited-activity.html">限时活动</a></div>
+      <div><h4>合作支持</h4><a href="${root}join.html">加盟合作</a><a href="${root}contact.html">联系我们</a></div>
+      <div><h4>联系我们</h4><p>电话：${DATA.brand.phone}<br>微信：${DATA.brand.wechat}<br>${DATA.brand.address}</p></div>
+    </div><div class="copyright">© 2026 ${DATA.brand.full} 版权所有</div></div>`;
+  }
+
+  function renderSticky() {
     const sticky = q('.sticky');
-    if (sticky) sticky.innerHTML = `<a href="${contactUrl()}">微信</a><a href="${contactUrl()}">联系</a>`;
+    if (!sticky) return;
+    sticky.innerHTML = `<a href="${contactUrl()}">微信</a><a href="${contactUrl()}">联系</a>`;
   }
 
-  function normalizeLinks() {
-    const map = { '#assessment': contactUrl(), 'index.html#assessment': contactUrl(), '#join': buildUrl('join.html'), 'index.html#join': buildUrl('join.html'), '#contact': contactUrl(), '#join-form': contactUrl() };
-    qa('a[href]').forEach(a => { const href = a.getAttribute('href'); if (map[href]) a.href = map[href]; });
+  function renderCourseCards() {
+    const grid = q('.product-grid');
+    if (!grid) return;
+    grid.innerHTML = DATA.courses.map(course => `<article class="product-card reveal show"><span class="tag">${course.tag}</span><h3>${course.shortTitle}</h3><p>${course.summary}</p>${listHtml(course.bullets)}<a class="more" href="${course.href}">FIND MORE</a></article>`).join('');
   }
 
-  function ensureCards(container, selector, template) { if (!container) return; while (qa(selector, container).length < DATA.courses.length) container.insertAdjacentHTML('beforeend', template()); qa(selector, container).slice(DATA.courses.length).forEach(card => card.remove()); }
-  function updateCard(card, course, mode) {
-    if (!card || !course) return;
-    const copy = DATA.courseCopy[course.key];
-    const title = q('h3', card), text = q('p', card), itemList = q('ul', card), tag = q('.tag,.label', card), more = q('.more', card);
-    if (title) title.textContent = course.name;
-    if (tag) tag.textContent = mode === 'system' ? copy.systemTag : copy.tag;
-    if (text) text.textContent = copy.text;
-    if (itemList) itemList.innerHTML = copy.list.map(point => `<li>${escapeHtml(point)}</li>`).join('');
-    if (more) { more.textContent = 'FIND MORE'; more.href = course.href; }
-  }
-  function renderCourses() {
-    const productGrid = q('#course .product-grid');
-    ensureCards(productGrid, '.product-card', () => '<article class="product-card reveal show"><span class="tag"></span><h3></h3><p></p><ul></ul><a class="more" href="#">FIND MORE</a></article>');
-    qa('.product-card', productGrid || document.createElement('div')).forEach((card, index) => updateCard(card, DATA.courses[index], 'home'));
-    const systemGrid = q('.system-grid');
-    ensureCards(systemGrid, '.system-card', () => '<div class="system-card reveal show"><span class="label"></span><h3></h3><p></p></div>');
-    qa('.system-card', systemGrid || document.createElement('div')).forEach((card, index) => updateCard(card, DATA.courses[index], 'system'));
-    const courseList = q('.course-list');
-    ensureCards(courseList, '.course-card', () => '<article class="course-card reveal show"><h3></h3><p></p><ul></ul></article>');
-    qa('.course-card', courseList || document.createElement('div')).forEach((card, index) => updateCard(card, DATA.courses[index], 'list'));
-  }
-
-  function challengeHtml(course) {
-    const data = DATA.courseChallenges[course.key];
-    if (!data) return '';
-    return `<div class="detail-block reveal show course-challenge-block"><h2>${escapeHtml(data.title)}</h2><p class="course-challenge-intro">${escapeHtml(data.intro)}</p><div class="course-challenge-grid">${data.items.map(([title, text]) => `<div class="course-challenge-item"><b>${escapeHtml(title)}</b><span>${escapeHtml(text)}</span></div>`).join('')}</div><div class="course-challenge-note">${escapeHtml(data.note)}</div></div>`;
-  }
-  function extraHtml(key) {
-    return (EXTRA_BLOCKS[key] || []).map(block => block.flow ? `<div class="detail-block reveal show"><h2>${escapeHtml(block.title)}</h2><div class="course-flow">${block.flow.map(([title, text], index) => `<div class="flow-item"><b>${index + 1}</b><span>${escapeHtml(title)}</span><p>${escapeHtml(text)}</p></div>`).join('')}</div></div>` : `<div class="detail-block reveal show"><h2>${escapeHtml(block.title)}</h2>${listHtml(block.list)}</div>`).join('');
-  }
-  function renderDetail() {
+  function renderDetailPage() {
     const key = DETAIL_MAP[pageFile()];
     if (!key) return;
-    const course = DATA.courses.find(item => item.key === key), copy = DATA.courseCopy[key];
+    const course = DATA.courses.find(item => item.key === key);
+    const copy = DATA.courseCopy[key];
     if (!course || !copy) return;
-    const heroTitle = q('.detail-hero h1'), heroDesc = q('.detail-hero p'), tags = q('.detail-tags');
-    if (heroTitle) heroTitle.textContent = course.name;
-    if (heroDesc) heroDesc.textContent = copy.intro || copy.text;
-    if (tags) tags.innerHTML = `<span>${copy.tag}</span><span>青少年学习力</span><span>阶段训练</span><span>过程反馈</span>`;
-    const titleMap = { focus: '先解决学习状态，成绩提升才有入口', memory: '先让孩子相信：记忆是可以训练的', reading: '先解决“读不完、说不清”的阅读卡点', self: '先让孩子学会自己学数学' };
-    const firstText = key === 'focus' ? '很多孩子不是不想学，而是进入学习状态太慢、抗干扰弱、记忆方式单一、遇到困难容易情绪化。专注营不是简单让孩子“坐着别动”，而是通过身体、感官、心像、情绪和家庭陪跑五个层面，系统重建学习状态。' : copy.intro;
-    const main = q('.detail-main'), pathItems = PATH_TEXT[key] || copy.paths;
-    if (main) main.innerHTML = `<div class="detail-block reveal show"><h2>${escapeHtml(titleMap[key] || '课程定位')}</h2><p>${escapeHtml(firstText)}</p></div>${extraHtml(key)}${challengeHtml(course)}<div class="detail-block reveal show"><h2>核心训练内容</h2>${listHtml(copy.list)}</div><div class="detail-block reveal show"><h2>典型训练路径</h2><div class="course-flow">${pathItems.map((text, index) => `<div class="flow-item"><b>${index + 1}</b><span>${escapeHtml(copy.paths[index] || text)}</span><p>${escapeHtml(text)}</p></div>`).join('')}</div></div><div class="detail-block reveal show"><h2>适合对象</h2>${listHtml(copy.audience)}</div><div class="detail-block reveal show"><h2>孩子能获得什么</h2>${listHtml(copy.effects)}</div>`;
+
+    document.title = `${course.shortTitle}｜课程详情｜${DATA.brand.short}`;
+    q('.detail-hero h1') && (q('.detail-hero h1').textContent = course.shortTitle);
+    q('.detail-hero p') && (q('.detail-hero p').textContent = course.summary);
+    const tags = q('.detail-tags');
+    if (tags) tags.innerHTML = course.tags.map(tag => `<span>${tag}</span>`).join('');
+    const crumb = q('.breadcrumb');
+    if (crumb) crumb.innerHTML = `<a href="index.html">首页</a> / <a href="courses.html">课程产品</a> / ${course.shortTitle}`;
+
+    const detailMain = q('.detail-main');
+    if (detailMain) {
+      detailMain.innerHTML = `<div class="detail-block reveal show"><h2>课程介绍</h2><p>${copy.intro}</p></div>
+        <div class="detail-block reveal show"><h2>适合对象</h2>${listHtml(copy.targets)}</div>
+        <div class="detail-block reveal show"><h2>训练路径</h2><div class="course-flow">${PATH_TEXT[key].map((text, index) => `<div class="flow-item"><b>${String(index + 1).padStart(2, '0')}</b><span>${text.split('：')[0]}</span><p>${text.includes('：') ? text.split('：').slice(1).join('：') : text}</p></div>`).join('')}</div></div>
+        ${EXTRA_BLOCKS[key].map(block => `<div class="detail-block reveal show"><h2>${block.title}</h2>${block.flow ? `<div class="feature-grid">${block.flow.map(([title, text], index) => `<div class="feature-item"><b>${String(index + 1).padStart(2, '0')}</b><h3>${title}</h3><p>${text}</p></div>`).join('')}</div>` : listHtml(block.list)}</div>`).join('')}
+        <div class="course-challenge" data-course="${key}"><div class="challenge-head"><span>Stage Challenge</span><h2>${DATA.courseChallenges[key].title}</h2><p>${DATA.courseChallenges[key].description}</p></div><div class="challenge-grid">${DATA.courseChallenges[key].items.map(item => `<article class="challenge-card"><b>${item.day}</b><h3>${item.title}</h3><p>${item.text}</p></article>`).join('')}</div></div>`;
+    }
+
     const side = q('.side-card');
-    if (side) side.innerHTML = `<h3>课程信息</h3><p>${escapeHtml(copy.text)}</p><div class="side-list"><div><b>课程</b><span>${escapeHtml(course.name)}</span></div><div><b>重点</b><span>${escapeHtml(copy.list[0])}</span></div><div><b>方式</b><span>训练营 / 阶段反馈</span></div><div><b>价格</b><span>${escapeHtml(course.price)}</span></div></div><a class="btn btn-gold" href="${contactUrl()}">微信咨询</a><a class="btn btn-line" href="courses.html">返回课程产品</a>`;
+    if (side) side.innerHTML = `<h3>课程信息</h3><p>${course.summary}</p><div class="side-list"><div><b>适合年龄</b><span>${course.age}</span></div><div><b>课程形式</b><span>${course.format}</span></div><div><b>课程价格</b><span>${course.price}</span></div></div><a class="btn btn-gold" href="contact.html">微信咨询</a>`;
     const cta = q('.detail-cta-wrap');
-    if (cta) cta.innerHTML = `<div><h2>${key === 'focus' ? '孩子专注力问题，不适合只靠催促解决' : '想进一步了解这门课程？'}</h2><p>可以通过微信或电话咨询课程，我们会根据孩子情况给出更具体的建议。</p></div><div class="detail-cta-actions"><a class="btn btn-gold" href="${contactUrl()}">微信咨询</a><a class="btn btn-line" href="${contactUrl()}">联系我们</a></div>`;
+    if (cta) cta.innerHTML = `<div><h2>想了解孩子是否适合这门课程？</h2><p>可以先通过电话或微信说明孩子情况，我们会根据孩子当前学习状态给出更清晰的课程了解路径。</p></div><div class="detail-cta-actions"><a class="btn btn-gold" href="contact.html">微信咨询</a><a class="btn btn-line" href="courses.html">返回课程列表</a></div>`;
   }
 
-  function setupHeroSlider() {
-    const hero = q('.hero');
-    if (!hero) return;
-    const slides = qa('.slide', hero), dots = qa('.hero-dots button', hero);
-    if (!slides.length) return;
-    let index = Math.max(0, slides.findIndex(slide => slide.classList.contains('active')));
-    const show = next => { index = (next + slides.length) % slides.length; slides.forEach((slide, i) => slide.classList.toggle('active', i === index)); dots.forEach((dot, i) => dot.classList.toggle('active', i === index)); };
+  function bindHeroSlider() {
+    const slides = qa('.hero .slide'), dots = qa('.hero-dots button');
+    if (slides.length <= 1) return;
+    let index = 0;
+    const show = next => {
+      index = next % slides.length;
+      slides.forEach((slide, i) => slide.classList.toggle('active', i === index));
+      dots.forEach((dot, i) => dot.classList.toggle('active', i === index));
+    };
     dots.forEach((dot, i) => dot.addEventListener('click', () => show(i)));
-    setInterval(() => { if (!document.hidden) show(index + 1); }, DATA.heroSlideDuration);
+    setInterval(() => show(index + 1), 6200);
   }
-  function setupReveals() {
-    const reveals = qa('.reveal');
-    if (!reveals.length) return;
-    if (!('IntersectionObserver' in window)) { reveals.forEach(el => el.classList.add('show')); return; }
-    const observer = new IntersectionObserver(entries => entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('show'); observer.unobserve(entry.target); } }), { threshold: 0.12 });
-    reveals.forEach(el => observer.observe(el));
+
+  function ensureRevealVisible() {
+    setTimeout(() => qa('.reveal, .anim').forEach(el => el.classList.add('show')), 80);
   }
-  function setupTransition() {
-    if (q('.zk-page-transition') || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    const layer = document.createElement('div');
-    layer.className = 'zk-page-transition';
-    layer.innerHTML = '<div class="zk-mark">ZK</div>';
-    document.body.appendChild(layer);
-    qa('a[href]').forEach(anchor => anchor.addEventListener('click', event => {
-      const href = anchor.getAttribute('href');
-      if (!href || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:') || anchor.target === '_blank') return;
-      const next = new URL(href, location.href);
-      if (next.origin !== location.origin || (next.pathname === location.pathname && next.hash)) return;
-      event.preventDefault();
-      layer.classList.add('active');
-      setTimeout(() => { location.href = next.href; }, 620);
-    }));
-  }
-  function loadScrollMotion() {
-    if (q('script[data-scroll-motion-loader]') || q('script[src*="scroll-motion.js"]')) return;
+
+  function loadScriptOnce(id, src) {
+    if (q(`#${id}`)) return;
     const script = document.createElement('script');
-    script.src = `${buildUrl('statics/js/scroll-motion.js')}?v=${DATA.version}`;
+    script.id = id;
+    script.src = buildUrl(src);
     script.defer = true;
-    script.dataset.scrollMotionLoader = 'true';
     document.body.appendChild(script);
   }
+
+  function initPageTransitions() {
+    const overlay = document.createElement('div');
+    overlay.className = 'page-transition-overlay';
+    document.body.appendChild(overlay);
+    window.addEventListener('pageshow', () => requestAnimationFrame(() => overlay.classList.remove('is-active')));
+    qa('a[href]').forEach(link => {
+      const href = link.getAttribute('href');
+      if (!href || href.startsWith('#') || href.startsWith('tel:') || href.startsWith('mailto:') || link.target === '_blank') return;
+      const url = new URL(href, location.href);
+      if (url.origin !== location.origin || url.pathname === location.pathname && url.hash) return;
+      link.addEventListener('click', event => {
+        if (event.defaultPrevented || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+        event.preventDefault();
+        overlay.classList.add('is-active');
+        setTimeout(() => { location.href = url.href; }, 160);
+      });
+    });
+  }
+
   function init() {
-    window.ZKSite = Object.freeze({ version: DATA.version, brand: DATA.brand, courses: DATA.courses, courseChallengesManaged: true, stylesManaged: true, pathPrefix, buildUrl });
     injectStylesheets();
     normalizeText();
-    renderChrome();
-    normalizeLinks();
-    renderCourses();
-    renderDetail();
-    setupHeroSlider();
-    setupReveals();
-    setupTransition();
-    loadScrollMotion();
+    renderHeader();
+    renderFooter();
+    renderSticky();
+    renderCourseCards();
+    renderDetailPage();
+    bindHeroSlider();
+    ensureRevealVisible();
+    initPageTransitions();
+    loadScriptOnce('zk-scroll-motion', 'statics/js/scroll-motion.js');
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init, { once: true });
