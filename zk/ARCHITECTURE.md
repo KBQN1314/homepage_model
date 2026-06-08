@@ -19,6 +19,7 @@
 11. 关于我们页样式统一从 `statics/style/pages/about.css` 进入，不再引用旧 `about.css`。
 12. 课程列表页样式统一从 `statics/style/pages/courses.css` 进入，不再引用旧 `courses.css`。
 13. 联系页样式统一从 `statics/style/pages/contact.css` 进入，不再引用旧 `contact.css`。
+14. 加盟合作页样式统一从 `statics/style/pages/join.css` 进入，不再引用旧 `join.css`。
 
 ## 重要文件
 
@@ -43,6 +44,7 @@
 | `statics/style/pages/about.css` | 关于我们页面级样式入口，管理关于我们页 hero、概览、价值卡、服务对象、愿景和 CTA。 |
 | `statics/style/pages/courses.css` | 课程列表页面级样式入口，管理课程页 hero、课程体系、学习路径、能力维度、服务流程和 CTA。 |
 | `statics/style/pages/contact.css` | 联系页面级样式入口，管理联系页 hero、联系信息、二维码、地图占位和 FAQ。 |
+| `statics/style/pages/join.css` | 加盟合作页面级样式入口，管理加盟页 hero、合作对象、总部支持、合作流程和表单相关结构。 |
 | `statics/style/style.css` | 历史基础样式，暂时保留为兼容层，后续逐步删除已迁移片段。 |
 | `statics/style/effects.css` | 历史视觉增强、动画与页脚样式，暂时保留，后续逐步拆分。 |
 | `statics/style/README.md` | CSS 分层与后续迁移规则。 |
@@ -63,7 +65,7 @@ components/runtime.css
 components/navigation.css
 ```
 
-首页、课程详情页、关于我们页、课程列表页和联系页额外由对应 HTML 显式加载：
+首页、课程详情页、关于我们页、课程列表页、联系页和加盟合作页额外由对应 HTML 显式加载：
 
 ```text
 pages/home.css
@@ -71,6 +73,7 @@ pages/detail.css
 pages/about.css
 pages/courses.css
 pages/contact.css
+pages/join.css
 ```
 
 该顺序保证变量先加载，基础和布局其次，组件随后，页面公共视觉、运行时生成组件和导航交互样式最后接管；页面专属样式作为页面入口在 HTML 中声明。
@@ -180,6 +183,16 @@ zk/statics/style/pages/contact.css
 
 联系页 hero、联系信息、二维码、地图占位和 FAQ 都从这里进入；不要重新新增或引用旧 `contact.css`。
 
+### 修改加盟合作页样式
+
+优先修改：
+
+```text
+zk/statics/style/pages/join.css
+```
+
+加盟合作页 hero、合作对象、总部支持、合作流程和表单相关结构都从这里进入；不要重新新增或引用旧 `join.css`。
+
 ### 修改内页顶部 hero 背景
 
 优先修改：
@@ -188,7 +201,7 @@ zk/statics/style/pages/contact.css
 zk/statics/style/components/page-heroes.css
 ```
 
-非课程详情页、非关于我们页、非课程列表页、非联系页的通用顶部背景、遮罩和层级统一放在这里。课程详情页专属 hero 放在 `pages/detail.css`，关于我们页专属 hero 放在 `pages/about.css`，课程列表页专属 hero 放在 `pages/courses.css`，联系页专属 hero 放在 `pages/contact.css`。
+未单独迁入 `pages/` 的通用顶部背景、遮罩和层级统一放在这里。已迁移页面的专属 hero 放在对应 `pages/*.css`。
 
 ### 修改运行时生成组件样式
 
@@ -223,7 +236,8 @@ zk/statics/style/components/runtime.css
 - 关于我们页样式迁移已完成：`about.css` 已删除，关于我们页统一引用 `pages/about.css`。
 - 课程列表页样式迁移已完成：`courses.css` 已删除，课程列表页统一引用 `pages/courses.css`。
 - 联系页样式迁移已完成：`contact.css` 已删除，联系页统一引用 `pages/contact.css`。
+- 加盟合作页样式迁移已完成：`join.css` 已删除，加盟合作页统一引用 `pages/join.css`。
 
 ## 后续建议
 
-下一轮可以继续整理加盟合作页、新闻页、团队页等页面专属 CSS。每次迁移一个页面族，确保页面视觉稳定后再删除旧样式片段。
+下一轮可以继续整理新闻页、团队页、案例页等页面专属 CSS。每次迁移一个页面族，确保页面视觉稳定后再删除旧样式片段。
