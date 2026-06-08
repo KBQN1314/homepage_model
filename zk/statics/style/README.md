@@ -18,9 +18,10 @@
 | `pages/home.css` | 首页页面级样式入口，负责首页 section 样式、首页媒体资源路径和首页专属 polish。 |
 | `pages/detail.css` | 课程详情页页面级样式入口，负责详情页 hero、详情布局、侧栏、CTA、关联课程等。 |
 | `pages/about.css` | 关于我们页面级样式入口，负责关于我们页 hero、概览、价值卡、服务对象、愿景和 CTA。 |
+| `pages/courses.css` | 课程列表页面级样式入口，负责课程页 hero、课程体系、学习路径、能力维度、服务流程和 CTA。 |
 | `style.css` | 历史基础样式，暂时保留，作为兼容层，后续逐步删除已迁移片段。 |
 | `effects.css` | 历史视觉增强和动效样式，暂时保留，后续逐步拆分。 |
-| 页面专属 CSS | 如 `courses.css`、`contact.css` 等，暂时保留页面局部样式。 |
+| 页面专属 CSS | 如 `contact.css` 等，暂时保留页面局部样式。 |
 
 ## 加载顺序
 
@@ -38,12 +39,13 @@ components/runtime.css
 components/navigation.css
 ```
 
-首页、详情页和关于我们页额外由对应 HTML 显式加载：
+首页、详情页、关于我们页和课程列表页额外由对应 HTML 显式加载：
 
 ```text
 pages/home.css
 pages/detail.css
 pages/about.css
+pages/courses.css
 ```
 
 该顺序遵循“变量 → 基础 → 布局 → 组件 → 页面公共视觉 → 运行时组件 → 导航交互层 → 页面专属入口”的规则。
@@ -62,14 +64,14 @@ pages/about.css
 10. 修改首页 section、首页特殊布局或首页 polish，优先放入 `pages/home.css`。
 11. 修改课程详情页结构样式，优先放入 `pages/detail.css`。
 12. 修改关于我们页样式，优先放入 `pages/about.css`。
-13. 其他页面级特殊样式可以暂时保留在原页面 CSS，但不要继续增加 HTML 内联样式。
+13. 修改课程列表页样式，优先放入 `pages/courses.css`。
+14. 其他页面级特殊样式可以暂时保留在原页面 CSS，但不要继续增加 HTML 内联样式。
 
 ## 后续迁移建议
 
 下一轮可以继续处理：
 
 ```text
-pages/courses.css             # 逐步迁移课程列表页面样式
 pages/contact.css             # 逐步迁移联系页面样式
 legacy/style.compat.css       # 将 style.css 变成真正的兼容入口
 ```
