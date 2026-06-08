@@ -7,8 +7,8 @@
 ## 核心原则
 
 1. 页面 HTML 只负责提供语义结构、正文内容和必要挂载点。
-2. 全站公共数据集中放在 `statics/js/site-data.js`。
-3. 全站公共渲染逻辑集中放在 `statics/js/site-runtime.js`。
+2. 全站公共数据集中放在 `statics/js/site-data.js`；案例列表数据目前独立放在 `statics/js/site-cases-data.js`。
+3. 全站公共渲染逻辑集中放在 `statics/js/site-runtime.js`；案例列表渲染目前独立放在 `statics/js/site-cases-runtime.js`。
 4. `statics/js/main.js` 只作为兼容入口和加载器，不再直接承载业务逻辑。
 5. 导航、页脚、sticky 联系入口、课程卡片、课程详情页主体内容、课程挑战模块和旧文案修正都由统一运行时管理。
 6. 页面不要再手动重复引入 `scroll-motion.js` 或 `course-challenges.js`。
@@ -25,7 +25,9 @@
 | `statics/js/main.js` | 入口加载器，根据当前页面层级加载 `site-data.js` 与 `site-runtime.js`。 |
 | `statics/js/site-data.js` | 全站品牌信息、课程列表、课程详情文案、课程挑战数据。 |
 | `statics/js/site-runtime.js` | 全站运行时：导航、页脚、sticky、课程渲染、详情页渲染、动效加载、链接修正、公共与页面级样式兜底加载。 |
-| `statics/js/scroll-motion.js` | 滚动入场动画与移动端菜单增强。由运行时统一加载。 |
+| `statics/js/site-cases-data.js` | 案例列表数据。当前只承接 `cases.html` 的案例卡片字段，不承接案例详情正文。 |
+| `statics/js/site-cases-runtime.js` | 案例列表渲染器，根据 `ZKCaseList` 渲染 `cases.html` 的 `.cases-grid[data-case-list]`。 |
+| `statics/js/scroll-motion.js` | 滚动入场动画与移动端菜单增强，由运行时统一加载。 |
 | `statics/js/course-challenges.js` | 兼容 shim。课程挑战模块已并入 `site-runtime.js`，此文件不再负责渲染。 |
 | `statics/style/core/tokens.css` | 全站设计变量。 |
 | `statics/style/core/base.css` | reset、基础元素、loading、body、无障碍动效降级等基础层。 |
@@ -67,7 +69,11 @@
 
 ### 一级内容页结构
 
-`about.html`、`courses.html`、`contact.html`、`join.html`、`team.html`、`team-page-2.html`、`experts.html`、`assistants.html`、`cases.html` 目前采用“外壳运行时化、正文静态保留”的模式。导航、页脚和右下角联系入口由 `site-runtime.js` 统一渲染；页面 hero、正文模块、列表卡片、表单和 CTA 等内容仍保留在 HTML 中。除非先新增对应页面数据模型和渲染函数，否则不要删除这些正文结构。
+`about.html`、`courses.html`、`contact.html`、`join.html`、`team.html`、`team-page-2.html`、`experts.html`、`assistants.html` 目前采用“外壳运行时化、正文静态保留”的模式。导航、页脚和右下角联系入口由 `site-runtime.js` 统一渲染；页面 hero、正文模块、列表卡片、表单和 CTA 等内容仍保留在 HTML 中。
+
+### 案例列表页结构
+
+`cases.html` 已采用“外壳运行时化、列表数据化”的模式。页面只保留 hero、说明文案和 `.cases-grid[data-case-list]` 挂载点；案例卡片数据来自 `statics/js/site-cases-data.js`，渲染逻辑来自 `statics/js/site-cases-runtime.js`。
 
 ### 课程详情页结构
 
@@ -79,7 +85,7 @@
 
 ### 案例详情页结构
 
-案例详情页目前采用“外壳运行时化、正文静态保留”的模式。导航、页脚和右下角联系入口由 `site-runtime.js` 统一渲染；案例标题、正文、指标、上下篇链接仍保留在对应 HTML 中。除非先新增案例数据模型和渲染函数，否则不要删除案例详情正文内容。
+案例详情页目前采用“外壳运行时化、正文静态保留”的模式。导航、页脚和右下角联系入口由 `site-runtime.js` 统一渲染；案例标题、正文、指标、上下篇链接仍保留在对应 HTML 中。除非先新增案例详情数据模型和渲染函数，否则不要删除案例详情正文内容。
 
 ### 新闻文章详情页结构
 
@@ -100,6 +106,16 @@ zk/statics/js/site-data.js
 ```
 
 不要在每个详情页里重复修改。详情页会被运行时覆盖。
+
+### 修改案例列表卡片
+
+优先修改：
+
+```text
+zk/statics/js/site-cases-data.js
+```
+
+`cases.html` 的案例卡片由该数据文件和 `site-cases-runtime.js` 渲染，不要重新把 8 个案例卡片硬编码回 HTML。
 
 ### 修改导航、页脚或 sticky 内容
 
@@ -188,8 +204,8 @@ zk/statics/style/team-avatars.css
 - `main.js` 保留原文件名，避免所有页面大规模改 script 路径。
 - `style.css` 保留为兼容导入入口；`effects.css` 保留为动效入口。
 - 首页、一级内容页、课程详情页、新闻列表页、新闻文章详情页、团队/专家页、案例页、轻量独立页均已完成外壳运行时化。
-- 多数正文内容仍静态保留在 HTML 中；只有课程详情页内容已经主要由 `site-runtime.js` 根据文件名渲染。
+- 案例列表已经数据化；多数其他正文内容仍静态保留在 HTML 中；课程详情页内容主要由 `site-runtime.js` 根据文件名渲染。
 
 ## 后续建议
 
-下一轮可以开始新增专家、案例、新闻或首页的数据模型，把静态正文进一步抽离到数据层；也可以先整理 HTML 长行格式，提升后续代码审查可读性。每次迁移一个页面族，确保页面视觉稳定后再删除旧结构。
+下一轮可以继续新增新闻列表数据模型、专家列表数据模型，或把案例详情正文进一步抽离到数据层。每次迁移一个页面族，确保页面视觉稳定后再删除旧结构。
