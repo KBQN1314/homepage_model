@@ -106,6 +106,9 @@
       document.body.prepend(header);
     }
     header.id = header.id || 'header';
+    if (currentSection() !== 'home') {
+      header.classList.add('scrolled');
+    }
     if (!header.querySelector('.brand') || !header.querySelector('nav')) {
       header.innerHTML = headerHtml();
     }
@@ -134,23 +137,17 @@
     nodes.forEach(node => { node.nodeValue = normalizeTextValue(node.nodeValue); });
   }
 
-  function normalizeTeamNavLinks() {
-    document.querySelectorAll('header a, footer a, .footer a, .nav-dropdowns a').forEach(function (item) {
-      const label = (item.textContent || '').replace(/\s+/g, ' ').trim();
-      if (label === '专家团队') item.setAttribute('href', link('team.html'));
-    });
-  }
-
   function footerBrandHtml() {
     return `<div class="footer-brand-card"><div class="brand-mini">${COMPANY_SHORT_NAME}</div><div class="footer-brand-en">EDUCATION PLATFORM</div></div>`;
   }
 
-  function footerHtml() {
-    const courses = COURSE_ITEMS.map(([text, href]) => `<a href="${link(href)}">${text}</a>`).join('');
-    return `<div class="container"><div class="footer-grid"><div>${footerBrandHtml()}</div><div><h4>关于我们</h4><a href="${link('about.html')}">公司简介</a><a href="${link('about.html')}">服务方向</a><a href="${link('about.html')}">发展愿景</a></div><div><h4>课程产品</h4>${courses}</div><div><h4>团队案例</h4><a href="${link('team.html')}">专家团队</a><a href="${link('assistants.html')}">助教团队</a><a href="${link('cases.html')}">成功案例</a></div><div><h4>新闻活动</h4><a href="${link('company-news.html')}">公司动态</a><a href="${link('growth-news.html')}">成长资讯</a><a href="${link('limited-activity.html')}">限时活动</a></div><div><h4>加盟合作</h4><a href="${link('join.html')}">合作对象</a><a href="${link('join.html')}">合作流程</a><a href="${link('contact.html')}">联系我们</a></div></div><div class="copyright">© 2026 ${COMPANY_FULL_NAME}</div></div>`;
+  function footerHtml(prefix) {
+    const link = file => `${prefix}${file}`;
+    return `<div class="container"><div class="footer-grid"><div>${footerBrandHtml()}</div><div><h4>关于我们</h4><a href="${link('about.html')}">公司简介</a><a href="${link('about.html')}">服务方向</a><a href="${link('about.html')}">发展愿景</a></div><div><h4>课程产品</h4><a href="${link('course-detail.html')}">心脑学习力专注营</a><a href="${link('photo-memory-detail.html')}">心脑学习力记忆营</a><a href="${link('camp-detail.html')}">心脑学习力阅读营</a><a href="${link('public-class-detail.html')}">心脑学习力自主营</a></div><div><h4>团队案例</h4><a href="${link('team.html')}">专家团队</a><a href="${link('assistants.html')}">助教团队</a><a href="${link('cases.html')}">成功案例</a></div><div><h4>新闻活动</h4><a href="${link('company-news.html')}">公司动态</a><a href="${link('growth-news.html')}">成长资讯</a><a href="${link('limited-activity.html')}">限时活动</a></div><div><h4>加盟合作</h4><a href="${link('join.html')}">合作对象</a><a href="${link('join.html')}">合作流程</a><a href="${link('contact.html')}">联系我们</a></div></div><div class="copyright">© 2026 ${COMPANY_FULL_NAME}</div></div>`;
   }
 
   function ensureFooterModule() {
+    const prefix = pathPrefix();
     let footer = document.querySelector('footer.footer, .footer');
     if (!footer) {
       footer = document.createElement('footer');
@@ -159,7 +156,7 @@
       main.insertAdjacentElement('afterend', footer);
     }
     footer.classList.add('footer');
-    footer.innerHTML = footerHtml();
+    footer.innerHTML = footerHtml(prefix);
 
     let sticky = document.querySelector('.sticky');
     if (!sticky) {
@@ -167,7 +164,9 @@
       sticky.className = 'sticky';
       footer.insertAdjacentElement('afterend', sticky);
     }
-    sticky.innerHTML = `<a href="${link('contact.html')}">微信</a><a href="${link('contact.html')}">联系</a>`;
+    if (!sticky.innerHTML.trim()) {
+      sticky.innerHTML = `<a href="${prefix}contact.html">微信</a><a href="${prefix}contact.html">联系</a>`;
+    }
   }
 
   function injectStyle() {
@@ -176,23 +175,16 @@
     const style = document.createElement('style');
     style.id = 'siteMotionAndMobileStyle';
     style.textContent = `
-      header .brand img{width:50px;height:50px;display:block;flex:none;object-fit:contain;filter:drop-shadow(0 8px 18px rgba(16,27,23,.18));}
-      header .nav-dropdowns{display:flex;align-items:center;gap:30px;}
-      header .nav-item{position:relative;display:flex;align-items:center;}
-      header .nav-link,header .nav-direct{color:inherit;text-decoration:none;}
-      header .nav-panel{position:absolute;left:50%;top:calc(100% + 14px);min-width:190px;padding:14px;background:#fff;border:1px solid rgba(4,92,57,.12);border-radius:16px;box-shadow:0 18px 48px rgba(3,24,18,.14);opacity:0;visibility:hidden;pointer-events:none;transform:translate(-50%,-8px);transition:.24s ease;z-index:1002;display:grid;gap:6px;}
-      header .nav-item.open .nav-panel,header .nav-item:hover .nav-panel{opacity:1;visibility:visible;pointer-events:auto;transform:translate(-50%,0);}
-      header .nav-panel a{display:block;padding:9px 10px;border-radius:10px;color:#1e2b27;text-decoration:none;white-space:nowrap;font-weight:600;}
-      header .nav-panel a:hover{background:rgba(199,175,130,.16);color:#045c39;}
-
       .footer .footer-grid{border-bottom:0!important;}
       .footer .container>hr,.footer hr{display:none!important;}
       .footer .footer-grid>div:first-child>*:not(.footer-brand-card){display:none!important;}
       .footer .footer-grid>div:first-child p,.footer .footer-brand-card p,.footer .footer-brand-summary{display:none!important;}
       .footer .footer-brand-card{position:relative!important;display:block!important;padding:0!important;color:#fff!important;}
+      .footer .footer-brand-mark{display:none!important;}
       .footer .brand-mini{padding:0!important;position:static!important;margin:0!important;color:#fff!important;font-size:32px!important;line-height:1.2!important;font-weight:900!important;letter-spacing:1px!important;}
       .footer .brand-mini::before,.footer .brand-mini::after{display:none!important;content:none!important;background:none!important;}
       .footer .footer-brand-en{margin-top:12px!important;color:#c7af82!important;font-size:15px!important;line-height:1.4!important;letter-spacing:5px!important;text-transform:uppercase!important;}
+      .footer .footer-brand-card img,.footer .footer-brand-card svg,.footer .footer-brand-card .brand-logo,.footer .footer-brand-card .logo{display:none!important;}
       .footer .copyright{border-top:1px solid rgba(255,255,255,.12)!important;}
 
       .article-nav{display:flex!important;gap:14px!important;flex-wrap:wrap!important;margin-top:30px!important;}
@@ -206,24 +198,21 @@
       .scroll-motion.motion-in,.scroll-motion.motion-in.reveal,.scroll-motion.reveal.show.motion-in{opacity:1!important;transform:translate3d(0,0,0)!important;}
 
       @media(max-width:1100px){
-        body.mobile-menu-open{overflow:hidden!important;touch-action:none;}
-        body.mobile-menu-open::before{content:'';position:fixed;inset:0;background:rgba(4,19,15,.52)!important;z-index:998;pointer-events:none;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);}
-        header{z-index:1000!important;}
-        header .hamb{display:inline-flex!important;align-items:center!important;justify-content:center!important;cursor:pointer;position:relative;z-index:1010;background:rgba(255,255,255,.98)!important;border:1px solid rgba(4,92,57,.14)!important;border-radius:999px!important;box-shadow:0 10px 28px rgba(4,42,29,.16)!important;width:48px!important;height:48px!important;padding:0!important;}
-        body.mobile-menu-open header .hamb{position:fixed!important;top:calc(env(safe-area-inset-top,0px) + 18px)!important;right:18px!important;background:#fff!important;}
-        header .hamb i{width:22px!important;height:2px!important;background:#045c39!important;border-radius:999px!important;transition:transform .25s ease,opacity .25s ease;}
+        body.mobile-menu-open::before{content:'';position:fixed;inset:0;background:rgba(10,20,17,.48)!important;z-index:998;backdrop-filter:blur(3px);}
+        header .hamb{display:inline-flex!important;cursor:pointer;position:relative;z-index:1005;background:rgba(255,255,255,.96)!important;border-color:rgba(4,92,57,.2)!important;box-shadow:0 8px 24px rgba(16,27,23,.12)!important;}
+        header .hamb i{background:#045c39!important;transition:transform .25s ease,opacity .25s ease;}
         header .nav-cta{display:none!important;}
-        header nav,header .nav-dropdowns{position:fixed!important;top:0!important;right:0!important;left:auto!important;width:min(84vw,372px)!important;height:100vh!important;height:100dvh!important;display:block!important;padding:calc(env(safe-area-inset-top,0px) + 88px) 22px 32px!important;background:#fff!important;background-image:linear-gradient(180deg,#fff 0%,#fbfaf6 100%)!important;color:#1e2b27!important;border:0!important;border-left:1px solid rgba(4,92,57,.12)!important;border-radius:26px 0 0 26px!important;box-shadow:-26px 0 70px rgba(3,24,18,.24)!important;transform:translateX(106%)!important;opacity:1!important;visibility:hidden!important;pointer-events:none!important;transition:transform .32s cubic-bezier(.19,1,.22,1),visibility .32s ease!important;z-index:1004!important;overflow-y:auto!important;}
-        header nav::before,header .nav-dropdowns::before{content:'网站目录';display:block;margin:0 0 18px!important;color:#045c39!important;font-size:22px!important;font-weight:900!important;letter-spacing:1px!important;}
-        header nav::after,header .nav-dropdowns::after{content:'中科明心 · Education Platform';display:block;margin-top:18px!important;padding-top:18px!important;border-top:1px solid rgba(4,92,57,.1)!important;color:#8a958f!important;font-size:12px!important;letter-spacing:1.5px!important;text-transform:uppercase!important;}
-        body.mobile-menu-open header nav,body.mobile-menu-open header .nav-dropdowns{visibility:visible!important;pointer-events:auto!important;transform:translateX(0)!important;}
-        header nav a,header .nav-dropdowns a,header .nav-link,header .nav-direct{display:flex!important;align-items:center!important;justify-content:space-between!important;width:100%!important;min-height:52px!important;margin:0 0 10px!important;padding:0 16px!important;color:#20302b!important;background:#f7f5ef!important;border:1px solid rgba(4,92,57,.08)!important;border-radius:14px!important;font-size:17px!important;font-weight:800!important;line-height:1.35!important;box-shadow:0 6px 18px rgba(4,42,29,.045)!important;}
-        header nav a::before,header .nav-dropdowns a::before,header .nav-link::before,header .nav-direct::before{content:'';width:7px;height:7px;border-radius:50%;background:#c7af82;margin-right:10px;flex:none;}
-        header nav a::after,header .nav-link::after,header .nav-direct::after{content:'›'!important;display:block!important;margin-left:auto!important;color:#c7af82!important;font-size:22px!important;line-height:1!important;background:none!important;position:static!important;width:auto!important;height:auto!important;}
-        header nav a:hover,header nav a.nav-active,header nav a.active,header .nav-link:hover,header .nav-direct:hover{color:#045c39!important;background:#fff8e8!important;border-color:rgba(199,175,130,.42)!important;box-shadow:0 10px 24px rgba(199,175,130,.16)!important;}
+        header nav,header .nav-dropdowns{position:fixed!important;right:0!important;left:auto!important;top:0!important;width:min(380px,84vw)!important;height:100vh!important;display:block!important;padding:92px 24px 30px!important;background:#fff!important;color:#1e2b27!important;border:0!important;border-radius:24px 0 0 24px!important;box-shadow:-28px 0 70px rgba(3,24,18,.24)!important;transform:translateX(104%)!important;opacity:1!important;visibility:visible!important;pointer-events:auto!important;transition:transform .32s cubic-bezier(.19,1,.22,1)!important;z-index:1004!important;overflow-y:auto!important;}
+        body.mobile-menu-open header nav,body.mobile-menu-open header .nav-dropdowns{transform:translateX(0)!important;}
+        header nav::before,header .nav-dropdowns::before{content:'网站目录';position:absolute;left:24px;top:28px;color:#045c39;font-size:22px;font-weight:900;}
+        header nav::after,header .nav-dropdowns::after{content:'中科明心 · Education Platform';display:block;margin-top:22px;padding-top:22px;border-top:1px solid rgba(4,92,57,.1);color:#8d9893;font-size:12px;letter-spacing:1px;}
+        header nav a,header .nav-dropdowns a,header .nav-link,header .nav-direct{display:flex!important;align-items:center!important;justify-content:space-between!important;margin:0 0 10px!important;padding:16px 18px!important;color:#1e2b27!important;background:#f7f5ef!important;border:1px solid rgba(4,92,57,.08)!important;border-radius:16px!important;font-size:16px!important;font-weight:800!important;line-height:1.35!important;opacity:1!important;text-shadow:none!important;text-decoration:none!important;}
+        header nav a::after,header .nav-link::after,header .nav-direct::after{content:'›'!important;display:block!important;color:#c7af82!important;font-size:22px!important;line-height:1!important;}
+        header nav a:hover,header nav a.nav-active,header nav a.active,header .nav-link:hover,header .nav-direct:hover{color:#045c39!important;background:#f0eadf!important;}
         header .nav-item{width:100%!important;}
-        header .nav-panel{position:static!important;display:none!important;transform:none!important;opacity:1!important;visibility:visible!important;pointer-events:auto!important;box-shadow:none!important;border:0!important;background:#f1eee6!important;padding:8px 12px!important;margin:0 0 10px!important;border-radius:14px!important;}
+        header .nav-panel{position:static!important;display:none!important;transform:none!important;opacity:1!important;visibility:visible!important;pointer-events:auto!important;box-shadow:none!important;border:0!important;background:transparent!important;padding:0 0 4px 14px!important;margin:-2px 0 8px!important;border-radius:0!important;}
         header .nav-item.open .nav-panel{display:block!important;}
+        body.mobile-menu-open header .hamb{position:fixed!important;right:22px!important;top:22px!important;width:48px!important;height:48px!important;border-radius:50%!important;background:#fff!important;}
         body.mobile-menu-open header .hamb i:nth-child(1){transform:translateY(7px) rotate(45deg);}
         body.mobile-menu-open header .hamb i:nth-child(2){opacity:0;}
         body.mobile-menu-open header .hamb i:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
@@ -234,30 +223,19 @@
   }
 
   function setupDropdownEvents() {
-    const items = Array.from(document.querySelectorAll('.nav-item.has-dropdown'));
-    if (!items.length) return;
-    const isMobile = () => matchMedia('(max-width: 1100px)').matches;
-    const closeAll = except => items.forEach(item => {
-      if (item === except) return;
-      item.classList.remove('open');
-      item.querySelector('.nav-link')?.setAttribute('aria-expanded', 'false');
-    });
-    items.forEach(item => {
+    document.querySelectorAll('.has-dropdown').forEach(function (item) {
       if (item.dataset.dropdownReady === 'true') return;
       item.dataset.dropdownReady = 'true';
       const trigger = item.querySelector('.nav-link');
       if (!trigger) return;
-      trigger.addEventListener('click', event => {
-        if (!isMobile()) return;
-        event.preventDefault();
-        const open = !item.classList.contains('open');
-        closeAll(item);
-        item.classList.toggle('open', open);
-        trigger.setAttribute('aria-expanded', open ? 'true' : 'false');
+      trigger.addEventListener('click', function (event) {
+        if (window.matchMedia('(max-width: 1100px)').matches) {
+          event.preventDefault();
+          item.classList.toggle('open');
+          trigger.setAttribute('aria-expanded', item.classList.contains('open') ? 'true' : 'false');
+        }
       });
     });
-    document.addEventListener('click', event => { if (!event.target.closest('.nav-item.has-dropdown')) closeAll(); });
-    addEventListener('resize', () => closeAll());
   }
 
   function setupMobileMenu() {
@@ -276,16 +254,9 @@
     });
     document.addEventListener('click', function (event) {
       if (!document.body.classList.contains('mobile-menu-open')) return;
-      if (event.target.closest('header')) return;
+      if (event.target.closest('header nav, header .nav-dropdowns, .hamb')) return;
       document.body.classList.remove('mobile-menu-open');
       hamb.setAttribute('aria-expanded', 'false');
-    });
-    document.querySelectorAll('header nav a, header .nav-dropdowns a').forEach(function (item) {
-      item.addEventListener('click', function () {
-        if (item.classList.contains('nav-link') && item.closest('.has-dropdown')) return;
-        document.body.classList.remove('mobile-menu-open');
-        hamb.setAttribute('aria-expanded', 'false');
-      });
     });
   }
 
@@ -351,11 +322,10 @@
     injectStyle();
     setupDropdownEvents();
     setupMobileMenu();
-    normalizeTeamNavLinks();
     normalizeSelfCourseTexts();
     setupScrollMotion();
-    setTimeout(function () { ensureHeaderModule(); ensureFooterModule(); setupDropdownEvents(); setupMobileMenu(); normalizeTeamNavLinks(); normalizeSelfCourseTexts(); }, 180);
-    setTimeout(function () { ensureHeaderModule(); ensureFooterModule(); setupDropdownEvents(); normalizeTeamNavLinks(); normalizeSelfCourseTexts(); }, 520);
+    setTimeout(function () { ensureHeaderModule(); ensureFooterModule(); setupDropdownEvents(); setupMobileMenu(); normalizeSelfCourseTexts(); }, 180);
+    setTimeout(function () { ensureHeaderModule(); ensureFooterModule(); normalizeSelfCourseTexts(); }, 520);
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
