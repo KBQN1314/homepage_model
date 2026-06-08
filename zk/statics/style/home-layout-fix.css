@@ -174,78 +174,30 @@
   line-height: 1.8;
 }
 
-/* Hero slide stability: bind the three slide backgrounds by their real DOM order. */
+/* Static homepage hero: background rotation and progress UI are intentionally disabled. */
+.hero .progress-line,
+.hero .hero-dots {
+  display: none !important;
+}
+
 .hero > .progress-line + .slide {
+  opacity: 1 !important;
+  visibility: visible !important;
+  animation: none !important;
   background-image:
     linear-gradient(90deg, rgba(0, 0, 0, .65), rgba(0, 0, 0, .25)),
     url('../images/hero-1.svg') !important;
   background-size: cover !important;
   background-position: center !important;
-}
-
-.hero > .progress-line + .slide + .slide {
-  background-image:
-    linear-gradient(90deg, rgba(4, 42, 29, .72), rgba(0, 0, 0, .15)),
-    url('../images/hero-2.svg') !important;
-  background-size: cover !important;
-  background-position: center !important;
-}
-
-.hero > .progress-line + .slide + .slide + .slide {
-  background-image:
-    linear-gradient(90deg, rgba(0, 0, 0, .62), rgba(0, 0, 0, .15)),
-    url('../images/hero-3.svg') !important;
-  background-size: cover !important;
-  background-position: center !important;
-}
-
-.hero .slide {
   background-repeat: no-repeat !important;
 }
 
-/* CSS fallback for homepage hero background rotation. */
-.hero .slide {
-  opacity: 0 !important;
-  animation-duration: 21s !important;
-  animation-iteration-count: infinite !important;
-  animation-timing-function: ease-in-out !important;
-}
-
-.hero .slide.active {
-  opacity: 1;
-}
-
-.hero > .progress-line + .slide {
-  animation-name: heroFadeOne !important;
-}
-
-.hero > .progress-line + .slide + .slide {
-  animation-name: heroFadeTwo !important;
-}
-
+.hero > .progress-line + .slide + .slide,
 .hero > .progress-line + .slide + .slide + .slide {
-  animation-name: heroFadeThree !important;
-}
-
-@keyframes heroFadeOne {
-  0%, 28%, 100% { opacity: 1; transform: scale(1) translateX(0); }
-  33%, 95% { opacity: 0; transform: scale(1.04) translateX(-1.5%); }
-}
-
-@keyframes heroFadeTwo {
-  0%, 28%, 67%, 100% { opacity: 0; transform: scale(1.04) translateX(1.5%); }
-  33%, 61% { opacity: 1; transform: scale(1) translateX(0); }
-}
-
-@keyframes heroFadeThree {
-  0%, 61%, 100% { opacity: 0; transform: scale(1.04) translateX(1.5%); }
-  67%, 95% { opacity: 1; transform: scale(1) translateX(0); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .hero .slide {
-    animation: none !important;
-  }
+  opacity: 0 !important;
+  visibility: hidden !important;
+  animation: none !important;
+  pointer-events: none !important;
 }
 
 /* Homepage news button spacing. */
@@ -317,13 +269,5 @@
 
   .contact-map {
     padding: 36px 24px;
-  }
-
-  .news-more {
-    margin-top: 34px !important;
-  }
-
-  .news-more .btn {
-    width: min(100%, 260px);
   }
 }
