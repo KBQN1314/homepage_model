@@ -203,6 +203,51 @@
   background-repeat: no-repeat !important;
 }
 
+/* CSS fallback for homepage hero background rotation. */
+.hero .slide {
+  opacity: 0 !important;
+  animation-duration: 21s !important;
+  animation-iteration-count: infinite !important;
+  animation-timing-function: ease-in-out !important;
+}
+
+.hero .slide.active {
+  opacity: 1;
+}
+
+.hero > .progress-line + .slide {
+  animation-name: heroFadeOne !important;
+}
+
+.hero > .progress-line + .slide + .slide {
+  animation-name: heroFadeTwo !important;
+}
+
+.hero > .progress-line + .slide + .slide + .slide {
+  animation-name: heroFadeThree !important;
+}
+
+@keyframes heroFadeOne {
+  0%, 28%, 100% { opacity: 1; transform: scale(1) translateX(0); }
+  33%, 95% { opacity: 0; transform: scale(1.04) translateX(-1.5%); }
+}
+
+@keyframes heroFadeTwo {
+  0%, 28%, 67%, 100% { opacity: 0; transform: scale(1.04) translateX(1.5%); }
+  33%, 61% { opacity: 1; transform: scale(1) translateX(0); }
+}
+
+@keyframes heroFadeThree {
+  0%, 61%, 100% { opacity: 0; transform: scale(1.04) translateX(1.5%); }
+  67%, 95% { opacity: 1; transform: scale(1) translateX(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero .slide {
+    animation: none !important;
+  }
+}
+
 /* Homepage news button spacing. */
 .news-more {
   margin-top: 46px !important;
