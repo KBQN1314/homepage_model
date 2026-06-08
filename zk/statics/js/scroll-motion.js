@@ -72,9 +72,18 @@
     nodes.forEach(node => { node.nodeValue = normalizeTextValue(node.nodeValue); });
   }
 
+  function footerBrandHtml() {
+    return `<div class="footer-brand-card"><div class="footer-brand-mark">明</div><div class="brand-mini">${COMPANY_SHORT_NAME}</div><div class="footer-brand-en">EDUCATION PLATFORM</div><p>青少年学习力成长 · 家庭教育支持<br>· 课程合作共创</p></div>`;
+  }
+
   function footerHtml(prefix) {
     const link = file => `${prefix}${file}`;
-    return `<div class="container"><div class="footer-grid"><div><div class="brand-mini">${COMPANY_SHORT_NAME}</div></div><div><h4>关于我们</h4><a href="${link('about.html')}">公司简介</a><a href="${link('about.html')}">服务方向</a><a href="${link('about.html')}">发展愿景</a></div><div><h4>课程产品</h4><a href="${link('course-detail.html')}">心脑学习力专注营</a><a href="${link('photo-memory-detail.html')}">心脑学习力记忆营</a><a href="${link('camp-detail.html')}">心脑学习力阅读营</a><a href="${link('public-class-detail.html')}">心脑学习力自主营</a></div><div><h4>团队案例</h4><a href="${link('experts.html')}">专家团队</a><a href="${link('assistants.html')}">助教团队</a><a href="${link('cases.html')}">成功案例</a></div><div><h4>新闻活动</h4><a href="${link('company-news.html')}">公司动态</a><a href="${link('growth-news.html')}">成长资讯</a><a href="${link('limited-activity.html')}">限时活动</a></div><div><h4>加盟合作</h4><a href="${link('join.html')}">合作对象</a><a href="${link('join.html')}">合作流程</a><a href="${link('contact.html')}">联系我们</a></div></div><div class="copyright">© 2026 ${COMPANY_FULL_NAME}</div></div>`;
+    return `<div class="container"><div class="footer-grid"><div>${footerBrandHtml()}</div><div><h4>关于我们</h4><a href="${link('about.html')}">公司简介</a><a href="${link('about.html')}">服务方向</a><a href="${link('about.html')}">发展愿景</a></div><div><h4>课程产品</h4><a href="${link('course-detail.html')}">心脑学习力专注营</a><a href="${link('photo-memory-detail.html')}">心脑学习力记忆营</a><a href="${link('camp-detail.html')}">心脑学习力阅读营</a><a href="${link('public-class-detail.html')}">心脑学习力自主营</a></div><div><h4>团队案例</h4><a href="${link('experts.html')}">专家团队</a><a href="${link('assistants.html')}">助教团队</a><a href="${link('cases.html')}">成功案例</a></div><div><h4>新闻活动</h4><a href="${link('company-news.html')}">公司动态</a><a href="${link('growth-news.html')}">成长资讯</a><a href="${link('limited-activity.html')}">限时活动</a></div><div><h4>加盟合作</h4><a href="${link('join.html')}">合作对象</a><a href="${link('join.html')}">合作流程</a><a href="${link('contact.html')}">联系我们</a></div></div><div class="copyright">© 2026 ${COMPANY_FULL_NAME}</div></div>`;
+  }
+
+  function normalizeFooterBrand(footer) {
+    const first = footer && footer.querySelector('.footer-grid > div:first-child');
+    if (first) first.innerHTML = footerBrandHtml();
   }
 
   function ensureFooterModule() {
@@ -89,6 +98,7 @@
     if (!footer.innerHTML.trim() || !footer.querySelector('.footer-grid')) {
       footer.innerHTML = footerHtml(prefix);
     }
+    normalizeFooterBrand(footer);
 
     let sticky = document.querySelector('.sticky');
     if (!sticky) {
@@ -104,14 +114,19 @@
   function injectStyle() {
     const old = document.getElementById('siteMotionAndMobileStyle');
     if (old) old.remove();
-    const prefix = pathPrefix();
     const style = document.createElement('style');
     style.id = 'siteMotionAndMobileStyle';
     style.textContent = `
-      .footer .brand-mini{padding-top:72px!important;position:relative!important;}
-      .footer .brand-mini::before{content:''!important;display:block!important;position:absolute!important;left:0!important;top:0!important;width:58px!important;height:58px!important;background-image:url('${prefix}statics/images/logo.svg')!important;background-repeat:no-repeat!important;background-position:left top!important;background-size:58px auto!important;overflow:hidden!important;filter:drop-shadow(0 10px 18px rgba(0,0,0,.16))!important;}
-      .footer .brand-mini img,.footer .brand-mini svg,.footer .brand-mini .brand-logo,.footer .brand-mini .logo{display:none!important;}
-      .footer .brand-mini::after{content:'EDUCATION PLATFORM\A\A青少年学习力成长 · 家庭教育支持\A· 课程合作共创'!important;white-space:pre-line!important;display:block!important;margin-top:8px!important;color:rgba(255,255,255,.66)!important;font-size:14px!important;line-height:1.72!important;font-weight:400!important;letter-spacing:.5px!important;}
+      .footer .footer-grid{border-bottom:0!important;}
+      .footer .container>hr,.footer hr{display:none!important;}
+      .footer .footer-brand-card{position:relative!important;display:block!important;padding:0!important;color:#fff!important;}
+      .footer .footer-brand-mark{width:58px!important;height:58px!important;border-radius:18px!important;display:grid!important;place-items:center!important;margin:0 0 26px!important;background:linear-gradient(135deg,#057a55,#00a77a)!important;color:#f3d28d!important;font-size:30px!important;font-weight:900!important;line-height:1!important;box-shadow:0 16px 34px rgba(0,0,0,.18)!important;}
+      .footer .brand-mini{padding:0!important;position:static!important;margin:0!important;color:#fff!important;font-size:32px!important;line-height:1.2!important;font-weight:900!important;letter-spacing:1px!important;}
+      .footer .brand-mini::before,.footer .brand-mini::after{display:none!important;content:none!important;background:none!important;}
+      .footer .footer-brand-en{margin-top:12px!important;color:#c7af82!important;font-size:15px!important;line-height:1.4!important;letter-spacing:5px!important;text-transform:uppercase!important;}
+      .footer .footer-brand-card p{margin-top:24px!important;color:rgba(255,255,255,.66)!important;font-size:15px!important;line-height:1.9!important;font-weight:400!important;letter-spacing:.3px!important;}
+      .footer .footer-brand-card img,.footer .footer-brand-card svg,.footer .footer-brand-card .brand-logo,.footer .footer-brand-card .logo{display:none!important;}
+      .footer .copyright{border-top:1px solid rgba(255,255,255,.12)!important;}
 
       .article-nav{display:flex!important;gap:14px!important;flex-wrap:wrap!important;margin-top:30px!important;}
       .article-nav a{display:inline-flex!important;align-items:center!important;justify-content:center!important;min-height:46px!important;padding:13px 24px!important;border-radius:999px!important;background:#c7af82!important;color:#fff!important;border:1px solid rgba(199,175,130,.72)!important;box-shadow:0 12px 26px rgba(199,175,130,.22)!important;font-weight:700!important;line-height:1.2!important;text-decoration:none!important;transition:transform .28s ease,box-shadow .28s ease,background .28s ease!important;}
@@ -121,7 +136,7 @@
       .scroll-motion,.scroll-motion.reveal,.scroll-motion.reveal.show{opacity:0!important;transform:translate3d(0,34px,0)!important;transition-property:opacity,transform!important;transition-duration:1.02s,1.16s!important;transition-timing-function:cubic-bezier(.19,1,.22,1),cubic-bezier(.19,1,.22,1)!important;transition-delay:var(--motion-delay,0ms),var(--motion-delay,0ms)!important;will-change:opacity,transform;}
       .scroll-motion.motion-card,.scroll-motion.motion-card.reveal,.scroll-motion.motion-card.reveal.show{transform:translate3d(0,42px,0)!important;}
       .scroll-motion.motion-soft,.scroll-motion.motion-soft.reveal,.scroll-motion.motion-soft.reveal.show{transform:translate3d(0,22px,0)!important;}
-      .scroll-motion.motion-in,.scroll-motion.motion-in.reveal,.scroll-motion.motion-in.reveal.show{opacity:1!important;transform:translate3d(0,0,0)!important;}
+      .scroll-motion.motion-in,.scroll-motion.motion-in.reveal,.scroll-motion.reveal.show.motion-in{opacity:1!important;transform:translate3d(0,0,0)!important;}
 
       @media(max-width:1100px){
         body.mobile-menu-open::before{content:'';position:fixed;inset:0;background:rgba(255,255,255,.62)!important;z-index:998;pointer-events:none;backdrop-filter:blur(2px);}
