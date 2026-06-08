@@ -144,6 +144,36 @@ zk/statics/style/pages/utility.css
 
 已迁移页面不要重新新增或引用旧的 `home.css`、`home-polish.css`、`course-detail.css`、`about.css`、`courses.css`、`contact.css`、`join.css`、`news.css`、`team.css`、`cases.css`。
 
+### 修改课程详情页结构
+
+四个课程详情页已经采用最小运行时 shell。HTML 只需要保留以下运行时挂载点：
+
+```html
+<header id="header"></header>
+<section class="detail-hero">
+  <div class="container reveal show">
+    <div class="page-kicker">Course Detail</div>
+    <h1></h1>
+    <p></p>
+    <div class="detail-tags"></div>
+    <div class="breadcrumb"></div>
+  </div>
+</section>
+<main class="main">
+  <section class="sec detail-overview">
+    <div class="container detail-layout">
+      <div class="detail-main"></div>
+      <aside class="side-card reveal show"></aside>
+    </div>
+  </section>
+  <section class="sec detail-cta"><div class="container"><div class="detail-cta-wrap reveal show"></div></div></section>
+</main>
+<footer class="footer"></footer>
+<div class="sticky"></div>
+```
+
+课程标题、简介、标签、面包屑、课程介绍、训练路径、挑战模块、侧栏和 CTA 都由 `site-runtime.js` 根据当前文件名自动渲染。
+
 ### 修改动效
 
 优先修改：
@@ -186,7 +216,8 @@ zk/statics/style/team-avatars.css
 - `style.css` 保留为兼容导入入口；`effects.css` 保留为动效入口。
 - 首页、课程详情页、关于我们页、课程列表页、联系页、加盟合作页、新闻活动页、团队/专家页、案例页、轻量独立页样式迁移已完成，对应旧 CSS 入口已删除或替换。
 - 404、隐私政策和提交成功页已采用最小运行时 shell：页面只保留 header 占位，不再复制整段导航 HTML。
+- 四个课程详情页已采用最小运行时 shell：详情内容由 `site-runtime.js` 根据文件名统一渲染。
 
 ## 后续建议
 
-下一轮可以继续把更多页面改成最小运行时 shell，优先处理课程详情页、案例详情页、专家详情页这类强依赖运行时统一内容的页面。每次迁移一个页面族，确保页面视觉稳定后再删除重复 HTML 片段。
+下一轮可以继续把案例详情页、专家详情页等页面改成最小运行时 shell，或者进一步整理页面 `<head>` 中的重复 CSS 与 meta 结构。每次迁移一个页面族，确保页面视觉稳定后再删除重复 HTML 片段。
