@@ -35,6 +35,10 @@
   const RUNTIME_STYLESHEETS = [
     ['tokens', 'statics/style/core/tokens.css'],
     ['base', 'statics/style/core/base.css'],
+    ['layout', 'statics/style/core/layout.css'],
+    ['buttons', 'statics/style/components/buttons.css'],
+    ['chrome', 'statics/style/components/chrome.css'],
+    ['cards', 'statics/style/components/cards.css'],
     ['runtime-components', 'statics/style/components/runtime.css'],
     ['nav-dropdown', 'statics/style/nav-dropdown.css']
   ];
