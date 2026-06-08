@@ -30,8 +30,9 @@
 | `statics/style/components/buttons.css` | 全站按钮体系：主按钮、金色按钮、线框按钮、焦点态、移动端按钮适配。 |
 | `statics/style/components/chrome.css` | 站点外壳：header、brand、hamburger、footer、sticky 联系入口。 |
 | `statics/style/components/cards.css` | 复用卡片体系：课程卡、新闻卡、痛点卡、案例卡、信任卡等。 |
+| `statics/style/components/page-heroes.css` | 非首页 hero 背景、遮罩和内页顶部视觉统一。 |
 | `statics/style/components/runtime.css` | 运行时生成组件的样式：课程挑战、二维码背景、品牌 logo、页面转场。 |
-| `statics/style/nav-dropdown.css` | 下拉导航、移动端菜单、非首页 hero 背景，由运行时统一注入。后续可迁入 `components/navigation.css`。 |
+| `statics/style/components/navigation.css` | 下拉导航、移动端菜单和导航交互状态。 |
 | `statics/style/style.css` | 历史基础样式，暂时保留为兼容层，后续逐步删除已迁移片段。 |
 | `statics/style/effects.css` | 历史视觉增强、动画与页脚样式，暂时保留，后续逐步拆分。 |
 | `statics/style/README.md` | CSS 分层与后续迁移规则。 |
@@ -47,11 +48,12 @@ core/layout.css
 components/buttons.css
 components/chrome.css
 components/cards.css
+components/page-heroes.css
 components/runtime.css
-nav-dropdown.css
+components/navigation.css
 ```
 
-该顺序保证变量先加载，基础和布局其次，组件随后，运行时生成组件和导航特殊样式最后接管。
+该顺序保证变量先加载，基础和布局其次，组件随后，页面公共视觉、运行时生成组件和导航交互样式最后接管。
 
 ## 修改规则
 
@@ -95,7 +97,7 @@ zk/statics/style/core/layout.css
 
 例如容器宽度、section 上下间距、标题区排版等。
 
-### 修改按钮、站点外壳、卡片
+### 修改按钮、站点外壳、卡片、导航
 
 优先修改：
 
@@ -103,9 +105,20 @@ zk/statics/style/core/layout.css
 zk/statics/style/components/buttons.css
 zk/statics/style/components/chrome.css
 zk/statics/style/components/cards.css
+zk/statics/style/components/navigation.css
 ```
 
 不要继续把这些通用样式堆回 `style.css`。
+
+### 修改内页顶部 hero 背景
+
+优先修改：
+
+```text
+zk/statics/style/components/page-heroes.css
+```
+
+非首页页面的顶部背景、遮罩和层级统一放在这里。
 
 ### 修改运行时生成组件样式
 
@@ -132,11 +145,10 @@ zk/statics/style/components/runtime.css
 ## 当前保留的兼容策略
 
 - 现有 HTML 路径不变，避免旧链接失效。
-- 现有 CSS 文件名不变，避免全站一次性破坏样式引用。
 - `course-challenges.js` 保留为 shim，避免旧缓存或旧页面引用时报错。
 - `main.js` 保留原文件名，避免所有页面大规模改 script 路径。
 - `style.css`、`effects.css` 与页面专属 CSS 暂时保留；新公共样式已逐步进入 `core/` 与 `components/`。
 
 ## 后续建议
 
-下一轮可以继续把 `nav-dropdown.css` 拆为 `components/navigation.css`，并将 `style.css` 中首页专属 section 迁入 `pages/home.css`。每次迁移一个组件族，确保页面视觉稳定后再删除旧样式片段。
+下一轮可以继续把 `style.css` 中首页专属 section 迁入 `pages/home.css`，并把课程详情页结构统一到 `pages/detail.css`。每次迁移一个组件族，确保页面视觉稳定后再删除旧样式片段。
