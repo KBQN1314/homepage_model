@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>宝塔部署自检｜中科明心</title>
+  <style>
+    :root{--green:#045c39;--gold:#c7af82;--ink:#1e2b27;--muted:#68736e;--bg:#f6f3eb;--ok:#087f5b;--bad:#c92a2a;--warn:#b7791f;}
+    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:"Microsoft YaHei",Arial,sans-serif;line-height:1.7}.wrap{max-width:1060px;margin:0 auto;padding:40px 20px 72px}.hero{padding:38px 40px;border-radius:26px;background:linear-gradient(135deg,#063d2b,#0b6b4b);color:#fff;box-shadow:0 24px 60px rgba(3,24,18,.18)}.hero h1{margin:0 0 12px;font-size:34px}.hero p{margin:0;color:rgba(255,255,255,.82)}.panel{margin-top:22px;padding:28px 30px;border-radius:22px;background:#fff;box-shadow:0 18px 42px rgba(16,27,23,.08)}.panel h2{margin:0 0 16px;color:var(--green);font-size:24px}.status{display:grid;gap:12px}.row{display:grid;grid-template-columns:150px 1fr 120px;gap:14px;align-items:center;padding:14px 16px;border:1px solid #eee7d9;border-radius:16px;background:#fffdf8}.name{font-weight:800}.path{font-family:Consolas,Monaco,monospace;color:#50615b;word-break:break-all}.badge{justify-self:end;padding:5px 12px;border-radius:999px;font-weight:800;font-size:13px}.ok{background:rgba(8,127,91,.1);color:var(--ok)}.bad{background:rgba(201,42,42,.1);color:var(--bad)}.warn{background:rgba(183,121,31,.12);color:var(--warn)}.tips{margin:0;padding-left:20px;color:var(--muted)}.tips li{margin:7px 0}.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px}.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:11px 20px;border-radius:999px;text-decoration:none;font-weight:800}.btn-primary{background:var(--green);color:#fff}.btn-gold{background:var(--gold);color:#fff}.small{color:var(--muted);font-size:14px}@media(max-width:720px){.hero{padding:28px 24px}.hero h1{font-size:28px}.row{grid-template-columns:1fr}.badge{justify-self:start}.panel{padding:24px 20px}}
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <section class="hero">
+      <h1>宝塔部署自检</h1>
+      <p>用于检查当前网站目录下的关键静态资源是否能正常访问。建议在宝塔部署完成后访问本页面。</p>
+    </section>
+
+    <section class="panel">
+      <h2>资源路径检查</h2>
+      <div id="status" class="status" aria-live="polite"></div>
+      <p class="small">检查结果基于当前页面所在目录。若本页面被放在网站根目录，资源路径应显示为 <code>statics/...</code>。</p>
+    </section>
+
+    <section class="panel">
+      <h2>正确的宝塔目录结构</h2>
+      <ul class="tips">
+        <li>应把 <strong>zk 目录里面的内容</strong> 上传到网站根目录，而不是把整个 zk 文件夹上传成一层目录。</li>
+        <li>正确结构应包含：<code>index.html</code>、<code>about.html</code>、<code>statics/</code>、<code>expert/</code>、<code>cases/</code>、<code>news/</code>。</li>
+        <li>如果顶部菜单全部摊开，通常是 <code>statics/style/nav-dropdown.css</code> 没加载成功。</li>
+        <li>如果 logo 破图，通常是 <code>statics/images/logo.svg</code> 路径错误或没有上传。</li>
+        <li>修改后请清理宝塔缓存、浏览器缓存，必要时用无痕窗口检查。</li>
+      </ul>
+      <div class="actions">
+        <a class="btn btn-primary" href="index.html">返回首页</a>
+        <a class="btn btn-gold" href="BAOTA_DEPLOY.md">查看部署说明</a>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    (function(){
+      const checks = [
+        ['首页', 'index.html', 'document'],
+        ['主脚本', 'statics/js/main.js', 'script'],
+        ['动效脚本', 'statics/js/scroll-motion.js', 'script'],
+        ['基础样式', 'statics/style/style.css', 'style'],
+        ['导航样式', 'statics/style/nav-dropdown.css', 'style'],
+        ['动效样式', 'statics/style/effects.css', 'style'],
+        ['Logo', 'statics/images/logo.svg', 'image'],
+        ['标准内页背景', 'statics/images/standard.svg', 'image']
+      ];
+      const status = document.getElementById('status');
+      function badge(state, text){ return `<span class="badge ${state}">${text}</span>`; }
+      function row(name, path, state, text){
+        return `<div class="row"><div class="name">${name}</div><div class="path">${path}</div>${badge(state,text)}</div>`;
+      }
+      function check(path){
+        return fetch(path, { method:'HEAD', cache:'no-store' }).then(res => res.ok ? 'ok' : 'bad').catch(() => 'bad');
+      }
+      status.innerHTML = checks.map(item => row(item[0], item[1], 'warn', '检查中')).join('');
+      Promise.all(checks.map(item => check(item[1]))).then(results => {
+        status.innerHTML = checks.map((item, index) => {
+          const ok = results[index] === 'ok';
+          return row(item[0], item[1], ok ? 'ok' : 'bad', ok ? '正常' : '异常');
+        }).join('');
+      });
+    }());
+  </script>
+</body>
+</html>
