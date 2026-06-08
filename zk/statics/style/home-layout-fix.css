@@ -174,14 +174,9 @@
   line-height: 1.8;
 }
 
-/* Static homepage hero: background rotation and progress UI are intentionally disabled.
-   Keep this override after home.css so old multi-slide declarations cannot re-enable rotation. */
-.hero .progress-line,
-.hero .hero-dots {
-  display: none !important;
-}
-
-.hero > .progress-line + .slide {
+/* Static homepage hero. Background rotation and progress UI are removed from index.html. */
+.hero .slide,
+.hero .slide.active {
   opacity: 1 !important;
   visibility: visible !important;
   animation: none !important;
@@ -193,13 +188,9 @@
   background-repeat: no-repeat !important;
 }
 
-.hero > .progress-line + .slide + .slide,
-.hero > .progress-line + .slide + .slide + .slide,
-.hero .slide:not(:first-of-type) {
-  opacity: 0 !important;
-  visibility: hidden !important;
-  animation: none !important;
-  pointer-events: none !important;
+.hero .progress-line,
+.hero .hero-dots {
+  display: none !important;
 }
 
 /* Homepage hero staggered entrance. Keep the floating info card static to avoid repeated animation conflicts. */
@@ -323,8 +314,18 @@
     justify-self: stretch;
   }
 
-  .contact-info {
-    padding: 36px 26px;
+  .contact-wrap {
+    gap: 22px;
+  }
+
+  .contact-info,
+  .contact-map {
+    min-height: auto;
+  }
+
+  .contact-info,
+  .contact-map {
+    padding: 34px 26px;
   }
 
   .info-list > div {
@@ -332,7 +333,7 @@
     gap: 2px;
   }
 
-  .contact-map {
-    padding: 36px 24px;
+  .contact-map h3 {
+    font-size: 28px;
   }
 }
