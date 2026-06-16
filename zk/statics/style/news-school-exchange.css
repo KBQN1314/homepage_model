@@ -1,0 +1,5 @@
+/* Cover image for the 2026-06-15 school education project exchange article. */
+.news-page-thumb.school-exchange-news-cover {
+  background-image: url('../../news/company/images/2026.6.15/p1.svg');
+  background-position: center center;
+}
